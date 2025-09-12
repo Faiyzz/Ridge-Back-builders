@@ -9,10 +9,9 @@ import clsx from "clsx";
 const ACCENT = "#FFE241";
 
 const navLinks = [
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "About", href: "/about/page" },
+  { label: "Services", href: "/services/page" },
 ];
-
 const projectItems = [
   { label: "All Projects", href: "/projects" },
   { label: "Websites", href: "/projects/websites" },
