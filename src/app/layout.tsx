@@ -1,6 +1,5 @@
-// src/app/layout.tsx
 import Footer from "./components/footer";
-import Navbar from "./components/header";
+import Navbar from "./components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 
@@ -17,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth ">
       <body className="min-h-screen bg-white antialiased">
-        <Navbar />
+        <Navbar/>
         {children}
         <Footer />
       </body>

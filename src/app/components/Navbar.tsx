@@ -5,13 +5,15 @@ import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 const ACCENT = "#FFE241";
 
 const navLinks = [
-  { label: "About", href: "/about/page" },
-  { label: "Services", href: "/services/page" },
+  { label: "About", href: "/about" },       
+  { label: "Services", href: "/services" },
 ];
+
 const projectItems = [
   { label: "All Projects", href: "/projects" },
   { label: "Websites", href: "/projects/websites" },
@@ -23,9 +25,9 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    // FLOATING (no background), overlays hero, scrolls away
     <nav className="absolute inset-x-0 top-0 z-50 w-full">
       <div className="mx-auto max-w-7xl px-4 pt-4 md:pt-6">
         <div className="flex h-16 items-center justify-between">
@@ -43,15 +45,23 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden items-center gap-10 md:flex">
-            {navLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-white/90 hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,.6)]"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={clsx(
+                    "text-sm font-medium transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,.6)]",
+                    active
+                      ? "text-white"
+                      : "text-white/90 hover:text-white"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
 
             {/* Projects dropdown */}
             <div
@@ -88,7 +98,6 @@ export default function Navbar() {
 
               <div
                 className={clsx(
-                  // translucent panel for readability; no solid navbar bg
                   "absolute left-1/2 -translate-x-1/2 mt-3 w-56 rounded-xl border border-white/10 bg-black/60 backdrop-blur-md shadow-xl transition-all",
                   projectsOpen
                     ? "opacity-100 translate-y-0 visible"
@@ -96,43 +105,40 @@ export default function Navbar() {
                 )}
               >
                 <ul className="py-2">
-                  {projectItems.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="block px-3 py-2 text-sm text-white/90 hover:text-black"
-                        style={{
-                          transition: "color .2s, background-color .2s",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = ACCENT;
-                          e.currentTarget.style.color = "#000";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "rgba(255,255,255,0.9)";
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {projectItems.map((item) => {
+                    const active = pathname === item.href;
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          className={clsx(
+                            "block px-3 py-2 text-sm hover:text-black",
+                            active ? "text-white" : "text-white/90"
+                          )}
+                          style={{ transition: "color .2s, background-color .2s" }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = ACCENT;
+                            e.currentTarget.style.color = "#000";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "transparent";
+                            e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.9)";
+                          }}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
 
-            {/* Outline CTA (transparent by default) with gold shine on hover */}
-            <Link
-              href="/contact"
-              className="group relative inline-flex items-center"
-              aria-label="Contact Us"
-            >
+            {/* CTA */}
+            <Link href="/contact" className="group relative inline-flex items-center" aria-label="Contact Us">
               <span
                 className="relative overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white/90 transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,.6)]"
-                style={{
-                  border: `1px solid ${ACCENT}`,
-                  background: "transparent",
-                }}
+                style={{ border: `1px solid ${ACCENT}`, background: "transparent" }}
               >
                 <span className="relative z-10">Contact Us</span>
                 <span
@@ -154,19 +160,13 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile overlay menu (kept) */}
+      {/* Mobile overlay menu */}
       {mobileOpen && (
         <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm md:hidden">
           <div className="mx-auto max-w-7xl px-4">
             <div className="flex h-16 items-center justify-between">
               <Link href="/" onClick={() => setMobileOpen(false)}>
-                <Image
-                  src="/images/PNG 1.png"
-                  alt="RB"
-                  width={40}
-                  height={40}
-                  className="h-9 w-auto"
-                />
+                <Image src="/images/PNG 1.png" alt="RB" width={40} height={40} className="h-9 w-auto" />
               </Link>
               <button
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md text-white/90"
@@ -179,26 +179,32 @@ export default function Navbar() {
 
             <div className="py-6">
               <ul className="space-y-2">
-                {navLinks.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block rounded-lg px-3 py-2 text-base text-white/90 hover:text-black"
-                      style={{ transition: "all .2s" }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = ACCENT;
-                        e.currentTarget.style.color = "#000";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = "transparent";
-                        e.currentTarget.style.color = "rgba(255,255,255,0.9)";
-                      }}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                {navLinks.map((item) => {
+                  const active = pathname === item.href;
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={clsx(
+                          "block rounded-lg px-3 py-2 text-base hover:text-black",
+                          active ? "text-white" : "text-white/90"
+                        )}
+                        style={{ transition: "all .2s" }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = ACCENT;
+                          e.currentTarget.style.color = "#000";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.9)";
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
 
                 {/* Mobile Projects accordion */}
                 <li>
@@ -209,43 +215,42 @@ export default function Navbar() {
                   >
                     <span>Projects</span>
                     <ChevronDown
-                      className={clsx(
-                        "h-5 w-5 transition-transform",
-                        mobileProjectsOpen && "rotate-180"
-                      )}
+                      className={clsx("h-5 w-5 transition-transform", mobileProjectsOpen && "rotate-180")}
                       style={{ color: ACCENT }}
                     />
                   </button>
                   <div
                     className={clsx(
                       "overflow-hidden transition-[max-height,opacity] duration-300",
-                      mobileProjectsOpen
-                        ? "max-h-96 opacity-100"
-                        : "max-h-0 opacity-0"
+                      mobileProjectsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                     )}
                   >
                     <ul className="mt-1 space-y-1 pl-3">
-                      {projectItems.map((p) => (
-                        <li key={p.href}>
-                          <Link
-                            href={p.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="block rounded-lg px-3 py-2 text-sm text-white/85 hover:text-black"
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.backgroundColor = ACCENT;
-                              e.currentTarget.style.color = "#000";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.backgroundColor =
-                                "transparent";
-                              e.currentTarget.style.color =
-                                "rgba(255,255,255,0.85)";
-                            }}
-                          >
-                            {p.label}
-                          </Link>
-                        </li>
-                      ))}
+                      {projectItems.map((p) => {
+                        const active = pathname === p.href;
+                        return (
+                          <li key={p.href}>
+                            <Link
+                              href={p.href}
+                              onClick={() => setMobileOpen(false)}
+                              className={clsx(
+                                "block rounded-lg px-3 py-2 text-sm hover:text-black",
+                                active ? "text-white" : "text-white/85"
+                              )}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = ACCENT;
+                                e.currentTarget.style.color = "#000";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = "transparent";
+                                e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.85)";
+                              }}
+                            >
+                              {p.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </li>
@@ -254,14 +259,17 @@ export default function Navbar() {
                   <Link
                     href="/articles"
                     onClick={() => setMobileOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-base text-white/90 hover:text-black"
+                    className={clsx(
+                      "block rounded-lg px-3 py-2 text-base hover:text-black",
+                      pathname === "/articles" ? "text-white" : "text-white/90"
+                    )}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = ACCENT;
                       e.currentTarget.style.color = "#000";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+                      e.currentTarget.style.color = pathname === "/articles" ? "#fff" : "rgba(255,255,255,0.9)";
                     }}
                   >
                     Articles
