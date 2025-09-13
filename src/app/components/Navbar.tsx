@@ -10,10 +10,8 @@ import { usePathname } from "next/navigation";
 const ACCENT = "#FFE241";
 
 const navLinks = [
-
   { label: "About", href: "/about" },
   { label: "Blogs", href: "/blogs" },
-
   { label: "Services", href: "/services" },
 ];
 
@@ -56,9 +54,7 @@ export default function Navbar() {
                   href={item.href}
                   className={clsx(
                     "text-sm font-medium transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,.6)]",
-                    active
-                      ? "text-white"
-                      : "text-white/90 hover:text-white"
+                    active ? "text-white" : "text-white/90 hover:text-white"
                   )}
                 >
                   {item.label}
@@ -118,14 +114,19 @@ export default function Navbar() {
                             "block px-3 py-2 text-sm hover:text-black",
                             active ? "text-white" : "text-white/90"
                           )}
-                          style={{ transition: "color .2s, background-color .2s" }}
+                          style={{
+                            transition: "color .2s, background-color .2s",
+                          }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = ACCENT;
                             e.currentTarget.style.color = "#000";
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "transparent";
-                            e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.9)";
+                            e.currentTarget.style.backgroundColor =
+                              "transparent";
+                            e.currentTarget.style.color = active
+                              ? "#fff"
+                              : "rgba(255,255,255,0.9)";
                           }}
                         >
                           {item.label}
@@ -138,10 +139,17 @@ export default function Navbar() {
             </div>
 
             {/* CTA */}
-            <Link href="/contact" className="group relative inline-flex items-center" aria-label="Contact Us">
+            <Link
+              href="/contact"
+              className="group relative inline-flex items-center"
+              aria-label="Contact Us"
+            >
               <span
                 className="relative overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-white/90 transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,.6)]"
-                style={{ border: `1px solid ${ACCENT}`, background: "transparent" }}
+                style={{
+                  border: `1px solid ${ACCENT}`,
+                  background: "transparent",
+                }}
               >
                 <span className="relative z-10">Contact Us</span>
                 <span
@@ -169,7 +177,6 @@ export default function Navbar() {
           <div className="mx-auto max-w-7xl px-4">
             <div className="flex h-16 items-center justify-between">
               <Link href="/" onClick={() => setMobileOpen(false)}>
-
                 <Image
                   src="/images/PNG 1.png"
                   alt="RB"
@@ -177,7 +184,6 @@ export default function Navbar() {
                   height={50}
                   className="h-9 w-auto"
                 />
-
               </Link>
               <button
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md text-white/90"
@@ -208,7 +214,9 @@ export default function Navbar() {
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.9)";
+                          e.currentTarget.style.color = active
+                            ? "#fff"
+                            : "rgba(255,255,255,0.9)";
                         }}
                       >
                         {item.label}
@@ -226,14 +234,19 @@ export default function Navbar() {
                   >
                     <span>Projects</span>
                     <ChevronDown
-                      className={clsx("h-5 w-5 transition-transform", mobileProjectsOpen && "rotate-180")}
+                      className={clsx(
+                        "h-5 w-5 transition-transform",
+                        mobileProjectsOpen && "rotate-180"
+                      )}
                       style={{ color: ACCENT }}
                     />
                   </button>
                   <div
                     className={clsx(
                       "overflow-hidden transition-[max-height,opacity] duration-300",
-                      mobileProjectsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                      mobileProjectsOpen
+                        ? "max-h-96 opacity-100"
+                        : "max-h-0 opacity-0"
                     )}
                   >
                     <ul className="mt-1 space-y-1 pl-3">
@@ -253,8 +266,11 @@ export default function Navbar() {
                                 e.currentTarget.style.color = "#000";
                               }}
                               onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = "transparent";
-                                e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.85)";
+                                e.currentTarget.style.backgroundColor =
+                                  "transparent";
+                                e.currentTarget.style.color = active
+                                  ? "#fff"
+                                  : "rgba(255,255,255,0.85)";
                               }}
                             >
                               {p.label}
@@ -280,7 +296,10 @@ export default function Navbar() {
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = pathname === "/articles" ? "#fff" : "rgba(255,255,255,0.9)";
+                      e.currentTarget.style.color =
+                        pathname === "/articles"
+                          ? "#fff"
+                          : "rgba(255,255,255,0.9)";
                     }}
                   >
                     Articles
