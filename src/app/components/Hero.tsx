@@ -1,7 +1,17 @@
-// app/page.tsx
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
+import React, { useEffect, useMemo, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useAnimation,
+  useInView,
+  MotionConfig,
+  useReducedMotion,
+} from "framer-motion";
 
 type Project = {
   id: number;
@@ -14,201 +24,344 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     id: 1,
-    title: "Modern Avenue 20",
+    title: "Family Home Build",
     blurb:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut.",
+      "Cozy, light-filled spaces with practical layouts and stress-free project updates.",
     priceNote: "From 50000 per M",
-    img: "/images/c1.jpg",
+    img: "/images/building.jpg",
   },
   {
     id: 2,
-    title: "Modern Avenue 20",
+    title: "Modern Duplex",
     blurb:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut.",
-    priceNote: "From 50000 per M",
-    img: "/images/c1.jpg",
+      "Smart two-unit design that maximizes space, privacy, and rental potential.",
+    priceNote: "From 55000 per M",
+    img: "/images/duplex.jpeg",
   },
   {
     id: 3,
-    title: "Modern Avenue 20",
+    title: "Quick Renovation",
     blurb:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut.",
-    priceNote: "From 50000 per M",
-    img: "/images/c1.jpg",
+      "Kitchen, bath, or full-home refresh—clean timelines, clear budgets, great finishes.",
+    priceNote: "From 15000 per M",
+    img: "/images/QR.jpeg",
   },
 ];
 
-// Gold built from #FFE241
+// Gold base gradient for text
 const GOLD_TEXT =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)] bg-clip-text text-transparent";
+
+// Gold + inside-text shine on hover
+const GOLD_TEXT_SHINE = [
+  "bg-clip-text text-transparent",
+  "[background-image:linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%),linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent)]",
+  "[background-size:100%_100%,200%_100%]",
+  "[background-position:0%_0%,-200%_0%]",
+  "transition-[background-position] duration-1000 ease-out",
+  "group-hover:[background-position:0%_0%,200%_0%]",
+  "drop-shadow-[0_0_8px_rgba(255,226,65,.45)]",
+  "uppercase tracking-wider font-semibold",
+].join(" ");
+
 const GOLD_BG =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)]";
 
-export default function Hero() {
+// ===== Framer Motion variants / timing =====
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const heroVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.05 },
+  },
+  exit: {
+    opacity: 0,
+    y: -12,
+    transition: { duration: 0.28, ease: EASE },
+  },
+};
+
+const listVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.08 },
+  },
+  exit: { transition: { staggerChildren: 0.06, staggerDirection: -1 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 28, scale: 0.985 },
+  show: { opacity: 1, y: 0, scale: 1 },
+  out: {
+    opacity: 0.6,
+    y: 10,
+    scale: 0.995,
+    transition: { duration: 0.25, ease: EASE },
+  },
+  exit: {
+    opacity: 0,
+    y: 18,
+    scale: 0.985,
+    transition: { duration: 0.28, ease: EASE },
+  },
+};
+
+// Reusable “animate on enter + animate back when scrolled out” wrapper
+function InOutCard({
+  children,
+  as: Tag = motion.article,
+  className,
+}: {
+  children: React.ReactNode;
+  as?: typeof motion.article;
+  className?: string;
+}) {
+  const controls = useAnimation();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { amount: 0.3, margin: "0px 0px -10% 0px" });
+
+  useEffect(() => {
+    controls.start(inView ? "show" : "out");
+  }, [inView, controls]);
+
   return (
-    <main className="min-h-screen w-full bg-white">
-      {/* HERO: solid + dark to 80%, then last 20% fades to white */}
-      <section className="relative isolate">
-        <div className="relative h-[72vh] w-full overflow-hidden bg-white">
+    <Tag
+      ref={ref as any}
+      className={clsx(
+        "transform-gpu will-change-transform will-change-opacity",
+        className
+      )}
+      layout
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={cardVariants}
+      whileHover={{ y: -2 }}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+/* ---------- Pretty project card with separate image + text panel ---------- */
+function ProjectCard({
+  p,
+  imageHeightClass,
+}: {
+  p: Project;
+  imageHeightClass: string; // e.g. "h-[22rem]" or "h-[22rem] lg:h-[24rem] xl:h-[26rem]"
+}) {
+  return (
+    <InOutCard
+      className={clsx(
+        "group relative overflow-visible rounded-[28px]",
+        // big soft shadow + inner ring
+        "shadow-[0_18px_60px_-12px_rgba(0,0,0,0.45)]"
+      )}
+    >
+      {/* Outer container with subtle border and hover elevation */}
+      <div
+        className={clsx(
+          "relative rounded-[28px] bg-neutral-950/90 ring-1 ring-white/10",
+          "transition-transform duration-300"
+        )}
+      >
+        {/* Image block */}
+        <div
+          className={clsx(
+            "relative overflow-hidden rounded-[28px]",
+            imageHeightClass
+          )}
+        >
           <Image
-            src="/images/home.jpg"
-            alt="City highrise"
+            src={p.img}
+            alt={p.title}
             fill
-            priority
-            className="
-              object-cover
-              brightness-[.55]
-              [mask-image:linear-gradient(to_bottom,white_0%,white_00%,rgba(255,255,255,0)_100%)]
-            "
+            className="object-cover transform-gpu will-change-transform transition-transform duration-700 group-hover:scale-[1.04]"
           />
-          {/* dark overlay for readability (kept over full image) */}
-          <div className="pointer-events-none absolute inset-0 bg-black/40" />
+          {/* dark overlay + top glow */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          <div
+            className="pointer-events-none absolute -inset-8 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20"
+            style={{
+              background:
+                "radial-gradient(600px at 50% 20%, #ffe24133, transparent 60%)",
+            }}
+          />
+          {/* subtle shine sweep */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 translate-x-[-120%] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.55),transparent)] opacity-0 transition-all duration-700 group-hover:translate-x-[240%] group-hover:opacity-100"
+          />
         </div>
 
-        {/* Centered hero copy (clear of floating nav) */}
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-start justify-center pt-24 md:pt-28">
-          <div className="mx-auto max-w-3xl px-4 text-center text-white">
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
-              BUILT <span className={GOLD_TEXT}>STRONG</span>,{" "}
-              <span className={GOLD_TEXT}>BUILT</span> RIGHT
-            </h1>
-
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-white/85 md:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-            </p>
-
-            <div className="mt-6 flex justify-center">
-              <Link
-                href="#projects"
-                className={`group relative overflow-hidden ${GOLD_BG} rounded-full px-6 py-2.5 text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]`}
-              >
-                <span className="relative z-10">Our Projects</span>
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-y-0 -left-full w-1/2 translate-x-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.85),transparent)] transition-transform duration-1000 group-hover:translate-x-[300%]"
-                />
-              </Link>
+        {/* Floating text panel (separate card) */}
+        <div className="relative -mt-8 px-5 pb-5 sm:px-6 sm:pb-6">
+          <div
+            className={clsx(
+              "mx-auto max-w-[92%] rounded-2xl bg-neutral-900/85",
+              "backdrop-blur-md ring-1 ring-white/10",
+              "shadow-[0_12px_40px_-18px_rgba(0,0,0,0.9)]"
+            )}
+          >
+            {/* tiny gold accent line */}
+            <div
+              className="h-[3px] w-14 rounded-full mx-auto mt-4"
+              style={{ background: "linear-gradient(90deg,#d4af37,#ffe241)" }}
+            />
+            <div className="px-5 py-5 text-center sm:px-6 sm:py-6">
+              <h3 className="text-lg font-semibold text-white md:text-xl">
+                {p.title}
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/85 md:text-sm">
+                {p.blurb}
+              </p>
+              <div className="mt-3 flex items-center justify-center">
+                <span className={clsx(GOLD_TEXT_SHINE, "text-[12px]")}>
+                  {p.priceNote}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </InOutCard>
+  );
+}
 
-      {/* PROJECT CARDS */}
-      <section
-        id="projects"
-        className="relative z-20 -mt-36 pb-28 pt-4 md:-mt-32"
-      >
-        <div className="mx-auto max-w-6xl px-4">
-          {/* MOBILE: center card full; side cards smaller & overlapped onto hero */}
-          <div className="relative h-[24rem] md:hidden">
-            {PROJECTS.map((p, i) => {
-              const isCenter = i === 1;
-              return (
-                <article
-                  key={p.id}
+export default function HomePage() {
+  const prefersReduced = useReducedMotion();
+  const POSTS = useMemo(() => PROJECTS, []);
+
+  return (
+    <MotionConfig
+      transition={{ type: "spring", stiffness: 120, damping: 22, mass: 0.6 }}
+      reducedMotion={prefersReduced ? "always" : "user"}
+    >
+      <main className="min-h-screen w-full bg-white">
+        {/* HERO */}
+        <section className="relative isolate">
+          <div className="relative h-[min(100svh,900px)] w-full overflow-hidden bg-white">
+            <Image
+              src="/images/home.jpg"
+              alt="City highrise"
+              fill
+              priority
+              className="object-cover brightness-[.6] transform-gpu will-change-transform"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-black/45" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[32%] bg-gradient-to-b from-transparent via-white/25 to-white" />
+          </div>
+
+          {/* Hero copy with entrance + exit */}
+          <motion.div
+            className="absolute inset-0 z-10 flex items-end justify-center pb-[clamp(5rem,30vh,18rem)]"
+            variants={heroVariants}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            layout
+          >
+            <div className="mx-auto max-w-4xl px-4 text-center text-white">
+              <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
+                BUILT <span className={GOLD_TEXT}>STRONG</span>,{" "}
+                <span className={GOLD_TEXT}>BUILT</span> RIGHT
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+              </p>
+              <div className="mt-6 flex justify-center">
+                <Link
+                  href="#projects"
                   className={clsx(
-                    "absolute bottom-0 overflow-hidden rounded-[28px] bg-neutral-900 shadow-2xl ring-1 ring-black/10",
-                    // sizes & positions
-                    isCenter
-                      ? "left-1/2 w-[78%] -translate-x-1/2 z-[3]"
-                      : i === 0
-                      ? "left-1/2 w-[62%] -translate-x-[82%] scale-[.86] z-[2]"
-                      : "left-1/2 w-[62%] translate-x-[52%] scale-[.86] z-[2]"
+                    "group relative overflow-hidden rounded-full px-6 py-2.5 text-sm font-semibold text-black",
+                    "shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]",
+                    "transform-gpu will-change-transform",
+                    GOLD_BG
                   )}
                 >
-                  <div
-                    className={clsx(
-                      "relative w-full",
-                      isCenter ? "h-[18.5rem]" : "h-[15.5rem]"
-                    )}
-                  >
-                    <Image
-                      src={p.img}
-                      alt={p.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/35" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-                  </div>
-
-                  <div
-                    className={clsx(
-                      "pointer-events-none absolute inset-x-3 bottom-3",
-                      isCenter ? "" : ""
-                    )}
-                  >
-                    <div className="rounded-2xl bg-black/55 p-4 text-center backdrop-blur-md ring-1 ring-white/10">
-                      <h3 className="text-base font-semibold text-white">
-                        {p.title}
-                      </h3>
-                      <p className="mt-1 text-[12px] leading-relaxed text-white/85">
-                        {p.blurb}
-                      </p>
-                      <div className="mt-2">
-                        <span
-                          className={`relative inline-block text-[11px] font-semibold tracking-wider uppercase ${GOLD_TEXT} drop-shadow-[0_0_8px_rgba(255,226,65,.45)]`}
-                        >
-                          {p.priceNote}
-                          <span
-                            aria-hidden
-                            className="absolute inset-y-0 -left-full w-1/2 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.9),transparent)] transition-transform duration-1000 group-hover:translate-x-[260%]"
-                          />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          {/* DESKTOP/TABLET: classic 3-column with taller media */}
-          <div className="hidden grid-cols-2 gap-7 md:grid lg:grid-cols-3">
-            {PROJECTS.map((p) => (
-              <article
-                key={p.id}
-                className="group relative overflow-hidden rounded-[28px] bg-neutral-900 shadow-2xl ring-1 ring-black/10"
-              >
-                <div className="relative h-[25rem] lg:h-[26rem] w-full">
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    fill
-                    className="object-cover"
+                  <span className="relative z-10">Our Projects</span>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-y-0 -left-full w-1/2 translate-x-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.85),transparent)] transition-transform duration-1000 group-hover:translate-x-[300%]"
                   />
-                  <div className="absolute inset-0 bg-black/35" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-                </div>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </section>
 
-                <div className="pointer-events-none absolute inset-x-5 bottom-5">
-                  <div className="rounded-2xl bg-black/55 p-5 text-center backdrop-blur-md ring-1 ring-white/10">
-                    <h3 className="text-lg font-semibold text-white md:text-xl">
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 text-[13px] leading-relaxed text-white/85 md:text-sm">
-                      {p.blurb}
-                    </p>
-                    <div className="mt-3 flex items-center justify-center">
-                      <span
-                        className={`relative inline-block text-[12px] font-semibold tracking-wider uppercase ${GOLD_TEXT} drop-shadow-[0_0_8px_rgba(255,226,65,.45)]`}
-                      >
-                        {p.priceNote}
-                        <span
-                          aria-hidden
-                          className="absolute inset-y-0 -left-full w-1/2 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.9),transparent)] transition-transform duration-1000 group-hover:translate-x-[260%]"
-                        />
-                      </span>
-                    </div>
+        {/* PROJECT CARDS */}
+        <section
+          id="projects"
+          className="relative z-20 -mt-[clamp(8rem,12vh,14rem)] pb-28 pt-4"
+        >
+          <div className="mx-auto max-w-6xl px-4">
+            {/* ===== MOBILE: horizontal snap scroll ===== */}
+            <AnimatePresence mode="popLayout">
+              <motion.div
+                key="mobile-list"
+                className={[
+                  "md:hidden",
+                  "flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory",
+                  "px-1 -mx-1 pb-2",
+                  "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+                ].join(" ")}
+                variants={listVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{
+                  once: false,
+                  amount: 0.2,
+                  margin: "0px 0px -5% 0px",
+                }}
+                exit="exit"
+                layout
+              >
+                {POSTS.map((p) => (
+                  <div
+                    key={`m-${p.id}`}
+                    className="shrink-0 snap-center w-[85%] first:ml-3 last:mr-3"
+                  >
+                    <ProjectCard p={p} imageHeightClass="h-[22rem]" />
                   </div>
-                </div>
-              </article>
-            ))}
+                ))}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* ===== DESKTOP/TABLET: grid ===== */}
+            <AnimatePresence mode="popLayout">
+              <motion.div
+                key="desktop-grid"
+                className="hidden grid-cols-2 gap-8 md:grid lg:grid-cols-3"
+                variants={listVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{
+                  once: false,
+                  amount: 0.2,
+                  margin: "0px 0px -5% 0px",
+                }}
+                exit="exit"
+                layout
+              >
+                {POSTS.map((p) => (
+                  <ProjectCard
+                    key={`d-${p.id}`}
+                    p={p}
+                    imageHeightClass="h-[20rem] lg:h-[22rem] xl:h-[24rem]"
+                  />
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </MotionConfig>
   );
 }

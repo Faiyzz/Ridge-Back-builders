@@ -8,3 +8,8 @@
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none;    /* Firefox */
 }
+/* Fades the bottom 30% of whatever it’s applied to, revealing white page bg */
+.mask-fade-bottom-30{
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}

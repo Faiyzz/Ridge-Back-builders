@@ -9,8 +9,9 @@ import clsx from "clsx";
 const ACCENT = "#FFE241";
 
 const navLinks = [
-  { label: "About", href: "/about/page" },
-  { label: "Services", href: "/services/page" },
+  { label: "About", href: "/about" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Services", href: "/services" },
 ];
 const projectItems = [
   { label: "All Projects", href: "/projects" },
@@ -34,9 +35,9 @@ export default function Navbar() {
             <Image
               src="/images/PNG 1.png"
               alt="RB"
-              width={100}
-              height={100}
-              className="h-auto w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,.6)]"
+              width={90}
+              height={90}
+              className="h-15 w-15 drop-shadow-[0_2px_12px_rgba(0,0,0,.6)]"
               priority
             />
           </Link>
@@ -163,8 +164,8 @@ export default function Navbar() {
                 <Image
                   src="/images/PNG 1.png"
                   alt="RB"
-                  width={40}
-                  height={40}
+                  width={50}
+                  height={50}
                   className="h-9 w-auto"
                 />
               </Link>
