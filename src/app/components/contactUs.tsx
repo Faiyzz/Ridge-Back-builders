@@ -19,7 +19,7 @@ export default function ContactUs() {
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] ring-1 ring-black/10 overflow-hidden">
               <Image
-                src="/images/contact.jpg" // <- replace with your asset
+                src="/images/contact.webp" // <- replace with your asset
                 alt="Scaffolding at sunset"
                 width={900}
                 height={1200}

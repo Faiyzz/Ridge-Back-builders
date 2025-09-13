@@ -36,7 +36,7 @@ const PROJECTS: Project[] = [
     blurb:
       "Smart two-unit design that maximizes space, privacy, and rental potential.",
     priceNote: "From 55000 per M",
-    img: "/images/duplex.jpeg",
+    img: "/images/modrend.jpg",
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const PROJECTS: Project[] = [
     blurb:
       "Kitchen, bath, or full-home refresh—clean timelines, clear budgets, great finishes.",
     priceNote: "From 15000 per M",
-    img: "/images/QR.jpeg",
+    img: "/images/quick.jpeg",
   },
 ];
 
@@ -246,7 +246,7 @@ export default function HomePage() {
         <section className="relative isolate">
           <div className="relative h-[min(100svh,900px)] w-full overflow-hidden bg-white">
             <Image
-              src="/images/home.jpg"
+              src="/images/h1.HEIC"
               alt="City highrise"
               fill
               priority

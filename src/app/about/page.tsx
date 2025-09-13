@@ -45,7 +45,7 @@ const AboutPage = () => {
 
       <section className="relative min-h-[100dvh] overflow-visible">
         <Image
-          src="/images/c1.jpg"
+          src="/images/aboutbg.jpg"
           alt="Construction"
           fill
           priority
@@ -84,11 +84,11 @@ const AboutPage = () => {
           </div>
         </div>
 
-        <div className="absolute left-1/2 top-[15rem] md:top-32 z-30 w-full max-w-4xl -translate-x-1/2 translate-y-1/2 pointer-events-auto">
+        <div className="pt-10 absolute left-1/2 top-[15rem] md:top-32 z-30 w-full max-w-4xl -translate-x-1/2 translate-y-1/2 pointer-events-auto">
           <div className="flex items-end justify-end m-3 md:m-0 relative">
             <div className="absolute left-0">
               <Image
-                src="/images/engineer.png"
+                src="/images/abbg3.png"
                 alt="image"
                 width={450}
                 height={450}
@@ -97,7 +97,7 @@ const AboutPage = () => {
             </div>
             <div>
               <Image
-                src="/images/teal-bg.png"
+                src="/images/abbg2.png"
                 alt="image"
                 width={650}
                 height={650}
@@ -196,7 +196,7 @@ const AboutPage = () => {
               {/* Right: Images */}
               <div className="">
                 <Image
-                  src="/images/Interior.png"
+                  src="/images/g4.png"
                   alt="image"
                   height={600}
                   width={600}
