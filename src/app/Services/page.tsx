@@ -261,7 +261,7 @@ export default function ConstructionServicesPage() {
               {PROJECTS.map((p, i) => (
                 <article
                   key={i}
-                  className="flex items-center gap-4 overflow-hidden rounded-2xl bg-white p-4 ring-1 ring-black/5"
+                  className="flex items-center gap-4 overflow-hidden rounded-2xl bg-white p-4 md:w-[30rem] ring-1 ring-black/5"
                 >
                   <div className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl">
                     <Image
