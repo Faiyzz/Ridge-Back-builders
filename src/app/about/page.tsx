@@ -126,7 +126,7 @@ const AboutPage = () => {
         <section className="mt-40">
           <div className="container mx-auto px-6">
             {/* Header Row */}
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex justify-between items-start mb-4 ">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
                 About Us
               </h2>
@@ -135,7 +135,7 @@ const AboutPage = () => {
               </button>
             </div>
 
-            <p className="text-gray-600 text-sm md:text-lg mb-8 md:mb-2 max-w-2xl">
+            <p className="pt-10 text-gray-600 text-sm md:text-lg mb-8 md:mb-2 max-w-2xl">
               At Besnik Consultancy, we take pride in our values – service,
               integrity, and excellence.
             </p>
