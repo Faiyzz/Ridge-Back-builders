@@ -1,9 +1,9 @@
 "use client";
 
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, MotionConfig } from "framer-motion";
+import { motion, MotionConfig, Variants } from "framer-motion";
 
 type Service = {
   id: number;
@@ -13,6 +13,7 @@ type Service = {
 };
 
 const ACCENT = "#FFE241";
+const SIDE_GAP = 24; // equal left/right gutter in px
 
 const SERVICES: Service[] = [
   {
@@ -38,12 +39,44 @@ const SERVICES: Service[] = [
   },
   {
     id: 4,
-    title: "Construction Project Management ",
+    title: "Construction Project Management",
     description:
-      "We coordinate schedules, trades, budgets, and quality to deliver on time and on spec..",
+      "We coordinate schedules, trades, budgets, and quality to deliver on time and on spec.",
     image: "/images/pm.avif",
   },
 ];
+
+// Card variants (typed) — include reveal + active/inactive states
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 20, scale: 0.985 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 200, damping: 22 },
+  },
+  active: {
+    scale: 1,
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 220, damping: 20 },
+  },
+  inactive: {
+    scale: 0.965,
+    opacity: 0.9,
+    y: 4,
+    transition: { type: "spring", stiffness: 200, damping: 22 },
+  },
+};
+
+// Parent stagger for load-in
+const trackStagger: Variants = {
+  hidden: { opacity: 1 }, // keep parent visible; children will animate
+  show: {
+    opacity: 1,
+    transition: { when: "beforeChildren", staggerChildren: 0.06 },
+  },
+};
 
 export default function ServicesSection() {
   const items = useMemo(() => SERVICES, []);
@@ -51,14 +84,32 @@ export default function ServicesSection() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
 
+  // --- smooth auto-snap helpers ---
+  const snapTimer = useRef<number | null>(null);
+  const pointerDownRef = useRef(false);
+
+  const clearSnapTimer = () => {
+    if (snapTimer.current) {
+      window.clearTimeout(snapTimer.current);
+      snapTimer.current = null;
+    }
+  };
+
+  const scheduleSnapTo = (idx: number, delay = 140) => {
+    clearSnapTimer();
+    snapTimer.current = window.setTimeout(() => {
+      scrollToIndex(idx);
+    }, delay);
+  };
+
   // Center first card on mount
   useEffect(() => {
-    const tid = setTimeout(() => scrollToIndex(0), 0);
-    return () => clearTimeout(tid);
+    const tid = window.setTimeout(() => scrollToIndex(0), 0);
+    return () => window.clearTimeout(tid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Pick active by card center closest to viewport center
+  // Compute active by closest-to-center; auto-snap after scroll stops
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -79,19 +130,49 @@ export default function ServicesSection() {
       });
 
       setActive(bestIdx);
+
+      if (!pointerDownRef.current) scheduleSnapTo(bestIdx, 150);
     };
 
     const onResize = () => onScroll();
+    const onPointerDown = () => {
+      pointerDownRef.current = true;
+      clearSnapTimer();
+    };
+    const onPointerUp = () => {
+      pointerDownRef.current = false;
+      scheduleSnapTo(active, 120);
+    };
 
     onScroll();
     track.addEventListener("scroll", onScroll, { passive: true });
+    track.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointerup", onPointerUp);
     window.addEventListener("resize", onResize);
 
     return () => {
       track.removeEventListener("scroll", onScroll);
+      track.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
       window.removeEventListener("resize", onResize);
+      clearSnapTimer();
     };
-  }, [items.length]);
+  }, [items.length, active]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        next();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
 
   const scrollToIndex = (idx: number) => {
     const track = trackRef.current;
@@ -134,7 +215,7 @@ export default function ServicesSection() {
 
         {/* Carousel */}
         <div className="relative mt-8 sm:mt-10 md:mt-12">
-          {/* Left/Right buttons (desktop/tablet). Mobile can swipe. */}
+          {/* Left/Right buttons */}
           <button
             aria-label="Previous"
             onClick={prev}
@@ -150,43 +231,54 @@ export default function ServicesSection() {
             <ChevronRight className="h-5 w-5" />
           </button>
 
-          {/* Track */}
+          {/* Track with equal gutters + mask fade */}
           <div
             ref={trackRef}
             className="no-scrollbar mx-auto w-full overflow-x-auto scroll-smooth snap-x snap-mandatory touch-pan-x"
-            style={{
-              WebkitOverflowScrolling: "touch",
-              maskImage:
-                "linear-gradient(to right, transparent, black 36px, black calc(100% - 36px), transparent)",
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent, black 36px, black calc(100% - 36px), transparent)",
-            }}
+            style={
+              {
+                ["--gap" as any]: `${SIDE_GAP}px`,
+                WebkitOverflowScrolling: "touch",
+                maskImage:
+                  "linear-gradient(to right, transparent, black var(--gap), black calc(100% - var(--gap)), transparent)",
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent, black var(--gap), black calc(100% - var(--gap)), transparent)",
+              } as React.CSSProperties
+            }
           >
-            <div className="mx-auto flex max-w-7xl gap-4 px-4 pr-10 sm:gap-6 sm:px-6 sm:pr-16 md:px-10 md:pr-24">
+            <motion.div
+              variants={trackStagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mx-auto flex max-w-7xl gap-6 px-[var(--gap)]"
+            >
               {items.map((s, i) => {
                 const isActive = i === active;
-                // Side cards are slightly smaller/faded; active pops forward
-                const scale = isActive ? 1 : 0.965;
-                const opacity = isActive ? 1 : 0.88;
-                const y = isActive ? 0 : 4;
 
                 return (
                   <motion.div
                     key={s.id}
-                    ref={(el) => {
-                      cardRefs.current[i] = el;
-                    }}
-                    initial={{ opacity: 0, y: 22, scale: 0.98 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    animate={{ scale, opacity, y }}
+                    ref={(el) => (cardRefs.current[i] = el)}
+                    variants={cardVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                    animate={isActive ? "active" : "inactive"}
+                    whileHover={{ y: -6, scale: 1.01 }}
                     className={`
                       group snap-center min-w-0 flex-shrink-0
                       basis-[90%] sm:basis-[80%] md:basis-[66%] lg:basis-[58%] xl:basis-[52%] 2xl:basis-[48%]
                       rounded-2xl bg-white shadow-[0_10px_30px_rgba(0,0,0,0.12)]
                       ring-1 ring-black/5
                       transform-gpu will-change-transform will-change-opacity
+                      transition-shadow
                     `}
+                    style={{
+                      boxShadow: isActive
+                        ? "0 16px 40px rgba(0,0,0,0.16)"
+                        : "0 10px 30px rgba(0,0,0,0.12)",
+                    }}
                   >
                     <div className="w-full">
                       {/* Image */}
@@ -237,13 +329,18 @@ export default function ServicesSection() {
                           style={{ backgroundColor: ACCENT }}
                           initial={{ scaleX: 0.4, originX: 0 }}
                           animate={{ scaleX: isActive ? 1 : 0.6, originX: 0 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 26,
+                          }}
                         />
                       </div>
                     </div>
                   </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           </div>
 
           {/* Dots */}
@@ -258,6 +355,7 @@ export default function ServicesSection() {
                   width: i === active ? 18 : 8,
                   backgroundColor: i === active ? ACCENT : "rgba(0,0,0,0.15)",
                 }}
+                whileHover={{ scale: 1.15 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
               />
             ))}
