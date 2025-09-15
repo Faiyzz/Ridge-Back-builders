@@ -32,7 +32,7 @@ export type Blog = {
       number: number;
       title: string;
       summary: string;
-      bullets: string[];
+      bullets?: string[];
       media?: { src: string; alt?: string };
     }[];
   };
@@ -309,72 +309,108 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
+      paragraph: `Remodeling your kitchen in Florida isn't just about creating a beautiful space — it's about building one that performs well in a hot, humid, and storm-prone environment...  
+      At **Ridgeback Builders**, we specialize in kitchen remodeling projects...`,
     },
-    caseStudy: {
-      paragraph:
-        "A Naples galley kitchen felt cramped and dated. We opened a non-load-bearing wall, added impact window upgrades, and installed moisture-tolerant cabinets with quartz counters. The result: a brighter cook space with better ventilation and smarter storage.",
-    },
+
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "Choose Materials Built for Heat and Humidity",
+          summary:
+            "Florida's environment demands durable, moisture-resistant materials...",
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            `**Quartz countertops:** more durable than granite and resistant to mold and stains`,
+            `**Porcelain tile flooring:** water-resistant and cool underfoot`,
+            `**PVC cabinets or marine-grade plywood:** warping-resistant even in coastal zones`,
+            `**Glass or metal backsplash:** easier to clean and more heat resistant  
+            We helped one Tampa homeowner switch from MDF cabinets to waterproof PVC...`,
           ],
           media: {
-            src: "/images/process/flood-step-1.jpg",
+            src: "/lovable-uploads/cd34e88a-ed09-49ac-b344-d254670d23b7.png",
             alt: "Emergency response",
           },
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: " Maximize Ventilation & Airflow",
+          summary:
+            "A Florida kitchen without proper ventilation can feel like a sauna...",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "Install high-efficiency range hoods vented directly outside",
+            "Use ceiling fans or ductless fans to move air",
+            "Include operable windows for natural ventilation",
           ],
           media: {
-            src: "/images/process/flood-step-2.jpg",
+            src: "/lovable-uploads/de0364e6-8599-4d7e-8914-6965e7b30f4a.png",
             alt: "Drying process",
           },
         },
         {
           number: 3,
-          title: "Build & Implementation",
-          summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
+          title: "Go for an Open Layout — But Be Smart About It",
+          summary: "Florida homeowners love open-concept kitchens...",
           bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
+            "If the wall is load-bearing",
+            "If it contains plumbing or ductwork",
+            "If reinforcements (like beams or columns) are needed",
           ],
           media: {
-            src: "/images/process/step-3.jpg",
+            src: "/lovable-uploads/24ddca78-b823-40fc-9122-89a82c5975b0.png",
             alt: "Build & Implementation",
           },
         },
         {
           number: 4,
-          title: "Handover & Support",
-          summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
+          title: "Add Smart Storage Without Cluttering the Design",
+          summary: "",
           bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
+            "Deep drawers instead of lower cabinets",
+            "ull-out pantries",
+            "Corner lazy Susans",
+            "Built-in microwave drawers",
+          ],
+        },
+        {
+          number: 5,
+          title: "Focus on Natural Light + Cool Colors",
+          summary: "",
+          bullets: [
+            "White or soft gray cabinets + brushed nickel hardware",
+            "Light-colored quartz counters",
+            "Under-cabinet LED lighting",
+            "Sea glass backsplash, open shelving",
+          ],
+        },
+        {
+          number: 6,
+          title: "Always Plan for Power and Plumbing Needs",
+          summary: "",
+          bullets: [
+            "Upgrading electrical for modern appliances",
+            "Rerouting plumbing for islands",
+            "Code-compliant outlets and lighting",
+            "Surge protection during storms",
           ],
           media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
+            src: "/lovable-uploads/d4f41a5d-7c97-485a-9c2c-ef02895046bd.png",
+            alt: "Build & Implementation",
           },
+        },
+
+        {
+          number: 7,
+          title: "Don't Skip Permits or Licensing — Florida Codes Are Strict",
+          summary: "",
+          bullets: [
+            "Lee County",
+            "Collier County",
+            "Charlotte County",
+            "Sarasota County",
+            "Palm Beach County",
+          ],
         },
       ],
     },
@@ -391,70 +427,93 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "In Fort Myers, we built a lanai kitchen with marine-grade cabinets, sealed outlets, proper grill ventilation, and heat-resistant counters. Entertaining is easier, clean-up is quicker, and the finishes stand up to rain and salt air.",
+      paragraph: `In Florida, outdoor living isn't a luxury — it's a way of life. From weekend grilling to poolside dinners with friends, outdoor kitchens are becoming one of the most requested upgrades among Florida homeowners. But building a functional, weatherproof kitchen in your lanai takes more than just a grill and a countertop.  
+      At **Ridgeback Builders, we've built outdoor kitchens** in Lehigh Acres, Fort Myers, Naples, Port Charlotte, Sarasota, Bradenton, Tampa, West Palm Beach, and Port St. Lucie — and we've learned exactly what it takes to make them beautiful, functional, and Florida-proof.`,
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "Start with the Right Foundation — Literally",
+          summary:
+            "Your lanai floor may not be ready for the weight and heat of an outdoor kitchen.",
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            "Concrete slab strength & slope",
+            "Drainage and water runoff",
+            `Leveling and load support.  
+            If your lanai isn't reinforced or properly graded, we'll pour a new concrete base to support cabinetry, countertops, and appliances — especially if you're adding a heavy built-in grill or brick oven.`,
           ],
           media: {
-            src: "/images/process/flood-step-1.jpg",
+            src: "/lovable-uploads/76443640-15e8-4615-9e33-822db27e1522.png",
             alt: "Emergency response",
           },
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: "Choose Hurricane-Resistant, Florida-Safe Materials",
+          summary:
+            "Outdoor kitchens must withstand intense UV, coastal air, heavy rain, and — at times — tropical storms. We recommend:",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "Stainless steel cabinets (marine-grade 304/316)",
+            "Quartzite or sealed granite countertops",
+            "Tile, stone, or sealed concrete finishes",
+            "Non-slip flooring materials",
           ],
-          media: {
-            src: "/images/process/flood-step-2.jpg",
-            alt: "Drying process",
-          },
         },
         {
           number: 3,
-          title: "Build & Implementation",
+          title: "Add the Essentials — But Plan Smart",
           summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
+            "Every Florida outdoor kitchen should be designed for comfort, convenience, and energy efficiency. Here's what most homeowners request:",
           bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
+            "Built-in gas or propane grill (or smoker)",
+            "Mini fridge and/or ice maker",
+            "Stainless steel sink with drainage line",
+            "Pull-out trash and storage cabinets",
+            `A weather-rated ceiling fan or hood vent.  
+            **Pro tip:** Always run dedicated GFCI outlets and proper gas or water lines. Ridgeback Builders handles all utility work with licensed contractors where available.`,
           ],
           media: {
-            src: "/images/process/step-3.jpg",
+            src: "/lovable-uploads/87a0198f-a57f-4948-8a82-f145bf1a027e.png",
             alt: "Build & Implementation",
           },
         },
         {
           number: 4,
-          title: "Handover & Support",
-          summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
+          title: "Keep It Cool and Covered",
+          summary: `Your lanai may already be screened or partially covered, but most homeowners still need a custom roof extension, pergola, or insulated cover to shield the kitchen from sun and rain.  
+          We recently helped a family in Sarasota build a pavilion-style cover with recessed lighting, dual ceiling fans, and LED task lights. It made the space usable even in July and added serious resale value.`,
           bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
+            "Misters or fans for airflow",
+            "Insect protection",
+            "Overhead lighting for evening entertaining",
+          ],
+        },
+        {
+          number: 5,
+          title: "Blend the Design with the Home",
+          summary: `Your outdoor kitchen should feel like an extension of your interior, not an afterthought.`,
+          bullets: [
+            "Match stone, paver, or tile materials to your patio and landscaping",
+            "Coordinate cabinet and counter colors with your home's exterior",
+            `Listen to your hosting style to create design recommendations  
+            In Bradenton, we recently built a coastal-style lanai kitchen with light blue cabinetry and brushed stainless hardware to match the home's coastal interior. Seamless. Stylish. Functional.`,
+          ],
+        },
+        {
+          number: 6,
+          title: "Think Beyond Cooking — Make It a Destination",
+          summary: `Want your lanai to be more than just a grill station? Add features like:`,
+          bullets: [
+            "Outdoor bar with stools",
+            "TV wall with weather-rated screen",
+            "Pizza oven or smoker station",
+            "A fire pit or lounge area nearby",
+            "Built-in Bluetooth speakers or sound system",
           ],
           media: {
-            src: "/images/process/step-4.jpg",
+            src: "/lovable-uploads/01dbfcbf-1bb4-433b-b0ff-39888c6b63bf.png",
             alt: "Handover & Support",
           },
         },
@@ -473,72 +532,74 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "A Tampa remodel needed a kitchen pass-through. Our structural review confirmed a bearing wall; we installed a properly sized LVL beam with permits and inspections, delivering an open layout without compromising safety.",
+      paragraph: `Whether you're opening up your kitchen, expanding your living space, or just trying to add natural light to a room, one of the most critical — and risky — steps is removing an interior wall. The first question we always ask is: Is it load-bearing?  
+      At **Ridgeback Builders, we've helped homeowners across** Fort Myers, Naples, Port Charlotte, Sarasota, Tampa, Bradenton, West Palm Beach, and Port St. Lucie make safe, structurally sound modifications during renovations. Here's what you need to know before removing or relocating a wall in your Florida home.`,
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "Here is what you need to know",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "What Is a Load-Bearing Wall?",
+          summary:
+            "A load-bearing wall supports the structural weight of your home — including the roof, second floor (if applicable), trusses, and ceiling joists. Removing or altering this wall without reinforcement can cause:",
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            "Cracks in ceilings and walls",
+            "Sagging floors above",
+            "Foundation shifts",
+            `In worst cases, partial collapse over time  
+            Non-load-bearing walls, often called partition walls, are used simply to divide spaces. These can typically be removed or modified without structural consequences — if confirmed by a professional.`,
           ],
-          media: {
-            src: "/images/process/flood-step-1.jpg",
-            alt: "Emergency response",
-          },
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: "How Ridgeback Builders Identifies Structural Walls",
+          summary:
+            "When we're brought in to consult on a remodel, we begin with a wall assessment that may include:",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "Reviewing original construction plans or blueprints",
+            "Determining ceiling joist direction",
+            "Inspecting attics or crawlspaces for weight transfer points",
+            `Using wall scanners to detect beams, plumbing, or ductwork  
+              In many cases, especially in older homes in Fort Myers or Tampa, we discover structural support hidden in what looks like a basic drywall partition. That's why homeowners trust **Ridgeback Builders to confirm the wall's role** before construction begins.`,
           ],
           media: {
-            src: "/images/process/flood-step-2.jpg",
+            src: "/lovable-uploads/8936c2a8-4aea-4a84-b5c9-1b10912a1e5b.png",
             alt: "Drying process",
           },
         },
         {
           number: 3,
-          title: "Build & Implementation",
+          title: "Understanding Wood Studs vs. Metal Studs in Florida Homes",
           summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
-          bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
-          ],
+            "Framing type plays a major role in renovation decisions. Here's how Florida homes generally break down:",
           media: {
-            src: "/images/process/step-3.jpg",
+            src: "/lovable-uploads/788988ed-eb72-4dfe-8521-a1b57a44bb34.png",
             alt: "Build & Implementation",
           },
         },
         {
           number: 4,
-          title: "Handover & Support",
-          summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
+          title: "Wood Works",
+          summary: "",
           bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
+            "Common in single-family homes built before 2010 (still used today)",
+            "Ideal for both structural and non-structural use",
+            "Easier to modify for doorways, windows, and support headers",
+            "Can be vulnerable to termites and humidity without treatment",
           ],
-          media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
-          },
+        },
+        {
+          number: 5,
+          title: "Metal Studs",
+          summary: "",
+          bullets: [
+            "Frequently used in condos and newer construction in coastal areas",
+            "Typically used for non-load-bearing partitions only",
+            "Rust-resistant and lighter, but require special fastening techniques",
+            `Not suitable for bearing vertical loads unless part of engineered framing  
+            Recently, **Ridgeback Builders remodeled a Bradenton condo** with metal stud interior walls. Although the homeowner assumed the walls were structural, we verified that they were non-load-bearing, allowing for safe, cost-effective removal and a more open floor plan, raising the property's value.`,
+          ],
         },
       ],
     },
@@ -555,72 +616,59 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        'We replaced a sinking driveway in Port Charlotte with a compacted base, 4"–5" slab, fiber reinforcement, and clean control joints. Proper curing minimized cracking and the apron now drains correctly during heavy rains.',
+      paragraph: `Adding a gazebo, pergola, shed, or any other outdoor structure to your Florida property is a great way to expand your living space, entertain guests, and increase property value. But the success of that addition depends on a solid foundation — specifically, a properly built concrete slab.  
+      At **Ridgeback Builders**, we've poured concrete pads and foundations for homeowners across Fort Myers, Naples, Port Charlotte, Sarasota, Tampa, Bradenton, West Palm Beach, and Port St. Lucie. Whether you're adding a shed, workshop, or outdoor retreat, her's everything you need to know before installing a slab.`,
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "Identify the Structure for Shed",
+          summary: `**For sheds, we recommend:**`,
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            "4–6 inches of slab thickness",
+            "Vapor barrier to control moisture from the ground",
+            "Over 3000 PSI reinforced concrete",
+            "Control joints to minimize concrete cracking",
           ],
           media: {
-            src: "/images/process/flood-step-1.jpg",
+            src: "/lovable-uploads/b7n2.jpeg",
             alt: "Emergency response",
           },
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: "Identify the Structure Gazebo or Pergola",
+          summary: `**For Gazebo or Pergola, we recommend:**`,
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "A clean, level finish with decorative options",
+            "Built-in deep footers (perimeter) for post anchoring",
+            "Slope planning for water runoff",
+            "Aesthetic touches like colored concrete or stamped finishes",
           ],
-          media: {
-            src: "/images/process/flood-step-2.jpg",
-            alt: "Drying process",
-          },
         },
         {
           number: 3,
-          title: "Build & Implementation",
+          title: "Concrete Mix and Finishing Options",
           summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
+            "Ridgeback Builders uses the right mix for Florida's hot and humid conditions. Our standard is over 3,000 PSI concrete, with optional air-entrainment or additives for extra moisture resistance.",
           bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
+            "Smooth or broom finish",
+            "Stamped patterns, colored concrete, or exposed aggregate",
+            "Slip-resistant coatings",
+            "UV-stable sealers",
           ],
           media: {
-            src: "/images/process/step-3.jpg",
+            src: "/lovable-uploads/b7n3.jpeg",
             alt: "Build & Implementation",
           },
         },
         {
           number: 4,
-          title: "Handover & Support",
-          summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
-          bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
-          ],
-          media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
-          },
+          title: "Anchoring and Florida Code Compliance",
+          summary: `Outdoor structures must meet Florida Building Code wind-load requirements. That means we embed anchor bolts, tie-downs, or post brackets based on the slab type and local wind zone.  
+          In a Naples project, Ridgeback Builders installed a 10x14 shed slab with hurricane-rated tie-downs and passed all inspections on the first visit.`,
         },
       ],
     },
@@ -637,7 +685,7 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
+      paragraph: "",
     },
     caseStudy: {
       paragraph:
@@ -719,23 +767,22 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "We added a side entry to a Bonita Springs garage by framing a new opening with an engineered header, installing an impact-rated door, and flashing the assembly to keep water out—fully permitted and inspected.",
+      paragraph: `Florida’s real estate market has fueled a huge demand for accessory dwelling units (ADUs) and efficiency units. Whether you're creating a rentable suite for extra income, a guest room, or a space for extended family, converting part of your home into an efficiency unit can be a high-ROI upgrade.  
+      At **Ridgeback Builders**, we help homeowners throughout Fort Myers, Naples, Port Charlotte, Sarasota, Tampa, Bradenton, West Palm Beach, and Port St. Lucie convert garages, spare rooms, and additions into functional, rentable units that meet code and add long-term value.`,
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "Efficiency Unit",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "What Is an Efficiency Unit?",
+          summary: "An efficiency unit is a small, self-contained living space that typically includes",
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            "A bedroom or sleeping area",
+            "A small kitchenette",
+            "A bathroom",
+            `A private entry  
+            Some are attached (converted garages or rooms), while others are detached (shed-to-suite conversions or additions).`,
           ],
           media: {
             src: "/images/process/flood-step-1.jpg",
@@ -744,15 +791,17 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: "Define the Space You’ll Convert",
+          summary: "",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "Garage conversions",
+            "Florida room enclosures",
+            "Split-layout additions with shared walls",
+            `Backyard ADUs or tiny homes on slab  
+            Ridgeback Builders assesses zoning and building codes to determine what’s possible in your municipality.`
           ],
           media: {
-            src: "/images/process/flood-step-2.jpg",
+            src: "/lovable-uploads/b10n2.jpeg",
             alt: "Drying process",
           },
         },
@@ -801,71 +850,84 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "We converted a rear suite into a rentable efficiency with a kitchenette, dedicated subpanel, legal egress, and sound attenuation. The unit rents quickly and complies with local zoning.",
+      paragraph: `Florida’s real estate market has fueled a huge demand for accessory dwelling units (ADUs) and efficiency units. Whether you're creating a rentable suite for extra income, a guest room, or a space for extended family, converting part of your home into an efficiency unit can be a high-ROI upgrade.  
+      At **Ridgeback Builders**, we help homeowners throughout Fort Myers, Naples, Port Charlotte, Sarasota, Tampa, Bradenton, West Palm Beach, and Port St. Lucie convert garages, spare rooms, and additions into functional, rentable units that meet code and add long-term value.`,
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "Efficiency Unit",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "What Is an Efficiency Unit?",
+          summary: "An efficiency unit is a small, self-contained living space that typically includes",
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            "A bedroom or sleeping area",
+            "A small kitchenette",
+            "A bathroom",
+            `A private entry  
+            Some are attached (converted garages or rooms), while others are detached (shed-to-suite conversions or additions).`,
           ],
-          media: {
-            src: "/images/process/flood-step-1.jpg",
-            alt: "Emergency response",
-          },
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
+          title: "Define the Space You’ll Convert",
           summary: "Control moisture levels to prevent further growth.",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "Garage conversions",
+            "Florida room enclosures",
+            "Split-layout additions with shared walls",
+            `Backyard ADUs or tiny homes on slab  
+            Ridgeback Builders assesses zoning and building codes to determine what’s possible in your municipality.`
           ],
-          media: {
-            src: "/images/process/flood-step-2.jpg",
-            alt: "Drying process",
-          },
         },
         {
           number: 3,
-          title: "Build & Implementation",
+          title: "Understand Florida Zoning Laws and Permits",
           summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
+            "Each city has different rules for ADUs and rental suites. You’ll need to consider:",
           bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
+            "Zoning restrictions (some areas limit short-term rentals)",
+            "Square footage minimums",
+            "Parking space requirements",
+            "Separate utility access (in some counties)",
+            `Egress and ventilation codes  
+            Ridgeback Builders handles the permitting process from start to finish, working with your city or county to ensure everything is up to code.`
           ],
           media: {
-            src: "/images/process/step-3.jpg",
+            src: "/lovable-uploads/b10n2.jpeg",
             alt: "Build & Implementation",
           },
         },
         {
           number: 4,
-          title: "Handover & Support",
+          title: "Plan the Layout for Comfort and Functionality",
           summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
+            "We help you maximize space by including:",
           bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
+            "Compact kitchenettes with mini-fridge and sink",
+            "Efficient plumbing routes for the bathroom",
+            "Soundproofing between the unit and the main home",
+            "Smart storage solutions",
+            `Private entry doors for independence  
+            In a recent Tampa project, we converted a 1-car garage into a 350 sq. ft. efficiency unit with a full bath, kitchenette, and rear access door — perfect for Airbnb rental or long-term lease.`
+          ],
+        },
+        {
+          number: 5,
+          title: " Build for Durability and Long-Term ROI",
+          summary:
+            "We use Florida-grade materials and finishes designed to last, such as:",
+          bullets: [
+            "Mold-resistant drywall and insulation",
+            "Impact-rated windows",
+            "Energy-efficient HVAC and lighting",
+            "Water-resistant flooring",
+            `Moisture-barrier protected plumbing  
+            Efficiency units should be both low-maintenance and cost-effective to operate, especially for short-term renters.`
           ],
           media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
+            src: "/lovable-uploads/b10n3.jpeg",
+            alt: "Build & Implementation",
           },
         },
       ],
@@ -883,72 +945,77 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "A family in North Port selected a semi-custom plan we tailored for wind loads, energy performance, and coastal finishes. The home passed inspections smoothly and came in on budget.",
+      paragraph: "Dreaming of building a custom home in Florida? Whether you're looking at the vibrant streets of Tampa or the peaceful neighborhoods of Naples, Ridgeback Builders is here to help you understand the different ways to bring your vision to life.",
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "Home in Florida",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
+          title: "Traditional Site-Built Custom Homes",
+          summary: "Your home is designed, engineered, and built entirely on-site based on your lifestyle, lot size, and preferences.",
           bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
+            "Total customization from foundation to roof",
+            "Fits irregular or sloped lots",
+            `Built for Florida weather – hurricane-resistant, impact windows, elevated slabs  
+            💡 Ideal If: You already own land or want full creative control.`
           ],
-          media: {
-            src: "/images/process/flood-step-1.jpg",
-            alt: "Emergency response",
-          },
+         
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: " Labor-Only Construction (You Supply the Materials)",
+          summary: "You provide the blueprints and materials, and Ridgeback Builders brings the skilled team.",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "Cost savings through self-sourced materials",
+            "Eco-friendly or premium materials flexibility",
+            `Licensed, insured, efficient construction labor  
+            💡 Ideal If: You're an investor with materials ready and just need a contractor.`
           ],
           media: {
-            src: "/images/process/flood-step-2.jpg",
+            src: "/lovable-uploads/b11n1.jpg",
             alt: "Drying process",
           },
         },
         {
           number: 3,
-          title: "Build & Implementation",
+          title: " Modular and Prefabricated Homes",
           summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
+            "Modular homes are built off-site and assembled on your land — popular for their speed and affordability.",
           bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
+            "3–6 month build time",
+            "Lower cost per square foot",
+            `Better quality control  
+            💡 Ideal If: You need a budget-friendly or fast-build solution.  
+            ⚠️ Note: We don’t manufacture modular homes but help with pads, add-ons, and site prep.`,
           ],
-          media: {
-            src: "/images/process/step-3.jpg",
-            alt: "Build & Implementation",
-          },
+         
         },
         {
           number: 4,
-          title: "Handover & Support",
+          title: "Kit Homes or Home Building Packages",
           summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
+            "Pre-designed home kits include all frame and roof materials ready to assemble.",
           bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
+            "Entry-level cost starting from $50–85/sq ft",
+            "Quick assembly with skilled crews",
+            `Minimal waste and pre-cut materials  
+            💡 Ideal If: You’re building a guest house, vacation home, or affordable rental.`,
           ],
-          media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
-          },
+         
+        },
+        {
+          number: 5,
+          title: " Semi-Custom Homes in Planned Communities",
+          summary:
+            "You choose from builder-approved layouts and finishes in a master-planned neighborhood.",
+          bullets: [
+            "Fast permitting and build",
+            "Access to neighborhood amenities",
+            `Some customizations available  
+            💡 Ideal If: You want an HOA-friendly home with faster build time.`,
+          ],
+         
         },
       ],
     },
@@ -965,72 +1032,50 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "On a rural parcel outside Sarasota, we coordinated surveys, soil tests, septic design, and driveway access before breaking ground—preventing expensive mid-build surprises.",
+      paragraph: "Building your dream home on your own land in Florida is an exciting journey — but choosing the wrong lot can lead to delays, extra expenses, and serious setbacks. Here’s what you need to know before building on your lot",
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
-          bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
-          ],
-          media: {
-            src: "/images/process/flood-step-1.jpg",
-            alt: "Emergency response",
-          },
+          title: "Define Your Homebuilding Vision",
+          summary: "Before selecting land, think about your future home and lifestyle. Do you need a large backyard, pool space, or a detached garage? Make sure the lot supports your layout, orientation, and preferences. South-facing lots are great for maximizing natural light in Florida’s sunny climate.",
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
-          bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
-          ],
-          media: {
-            src: "/images/process/flood-step-2.jpg",
-            alt: "Drying process",
-          },
+          title: " Understand Zoning Requirements in Florida",
+          summary: `Zoning laws vary by city and county. Confirm your lot is zoned for residential construction, and check for restrictions like setbacks, height limits, or environmental regulations. A custom builder like **Ridgeback Builders** can help you navigate these rules with ease.`,
         },
         {
           number: 3,
-          title: "Build & Implementation",
-          summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
-          bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
-          ],
-          media: {
-            src: "/images/process/step-3.jpg",
-            alt: "Build & Implementation",
-          },
+          title: "Get a Land Survey and Soil Test",
+          summary: "These are critical steps. A land survey verifies your property lines and buildable space. A soil test will determine if special foundations are needed — especially in sandy or clay-heavy regions of Florida.",
         },
         {
           number: 4,
-          title: "Handover & Support",
-          summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
-          bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
-          ],
-          media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
-          },
+          title: "Check for Flood Zones and Drainage Issues",
+          summary: "Florida weather means flood zones are a real concern. You may need a raised foundation or special insurance. Good drainage is essential to prevent long-term issues like water damage or foundation shifting.",
+        },
+        {
+          number: 5,
+          title: "Verify Utility Access and Infrastructure",
+          summary: "Does your lot have access to electricity, water, sewer, and internet? Some areas require wells, septic tanks, or utility line extensions — all of which affect your timeline and budget.",
+        },
+        {
+          number: 6,
+          title: "Consider Road Access and Lot Shape",
+          summary: "Landlocked or oddly shaped lots may need private driveways or custom layout designs. Accessibility and practicality should be considered early in the process.",
+        },
+        {
+          number: 7,
+          title: "Evaluate the Neighborhood and Long-Term Value",
+          summary: "Look at growth trends, nearby amenities, and school zones. A great lot in a declining area can limit your resale value and overall satisfaction.",
+        },
+        {
+          number: 8,
+          title: "Know Your Budget and Financing Options",
+          summary: "Buying land and building are usually financed separately. Lot loans may have higher down payments. Consider a construction-to-permanent loan that wraps everything into one. Always budget for site prep, permitting, and utilities.",
         },
       ],
     },
@@ -1047,72 +1092,71 @@ we've seen too many DIY jobs fall apart because standard drywall or cheap ventil
       },
     },
     Desc: {
-      paragraph: "kdsjbfkd;n;aknsd;ofhoiasf;lknsa;",
-    },
-    caseStudy: {
-      paragraph:
-        "Through value engineering on a Fort Myers renovation, we redirected budget from low-impact finishes to better insulation and high-durability surfaces—reducing maintenance without sacrificing style.",
+      paragraph: `In today’s world, bigger isn’t always better. Florida homeowners are shifting toward smarter, more efficient living — homes that offer thoughtful design, energy savings, and personalized functionality.  
+      At Ridgeback Builders, we believe in building homes that aren’t just large — but live large.`,
     },
     howWeDoIt: {
-      heading: "How We Remove Mold & Restore After Floods",
+      heading: "",
       steps: [
         {
           number: 1,
-          title: "Emergency Response",
-          summary: "Immediate water extraction and site stabilization.",
-          bullets: [
-            "Deploy pumps & extractors",
-            "Install dehumidifiers",
-            "Remove saturated drywall",
-          ],
-          media: {
-            src: "/images/process/flood-step-1.jpg",
-            alt: "Emergency response",
-          },
+          title: "Floorplans That Maximize Every Square Foot",
+          summary: "One of the most common mistakes in custom construction is overbuilding. We design space-efficient homes that prioritize flow, natural light, and daily usability — from open-plan living to clever storage.",
         },
         {
           number: 2,
-          title: "Drying & Dehumidification",
-          summary: "Control moisture levels to prevent further growth.",
+          title: "Energy-Efficient Home Building in Florida",
+          summary: "Building smarter means building for long-term savings and comfort. Our energy-efficient practices include:",
           bullets: [
-            "Commercial fans and dehumidifiers",
-            "Monitor with moisture meters",
-            "Target hidden wall cavities",
+            "High-efficiency HVAC systems",
+            "Impact-rated, insulated windows",
+            "Foam or radiant barrier attic insulation",
+            "Regulated plumbing fixtures",
+            "Smart thermostats and LED lighting systems",
           ],
-          media: {
-            src: "/images/process/flood-step-2.jpg",
-            alt: "Drying process",
-          },
         },
         {
           number: 3,
-          title: "Build & Implementation",
+          title: "Cost-Conscious Material Selection",
           summary:
-            "Licensed pros execute the plan with quality control, inspections, and steady communication.",
-          bullets: [
-            "Scheduled, insured crews",
-            "Progress updates & inspections",
-            "Adjustments handled quickly",
-          ],
-          media: {
-            src: "/images/process/step-3.jpg",
-            alt: "Build & Implementation",
-          },
+            "Smart building includes smart spending. Whether full-service or labor-only, we guide you toward materials that balance quality, price, and design — without sacrificing aesthetics.",
         },
         {
           number: 4,
-          title: "Handover & Support",
+          title: "Adaptable Designs for Real Life",
           summary:
-            "Final QA, documentation, and care guidance so your project lasts and stays compliant.",
+            "We design homes that grow with your needs. Our solutions include:",
           bullets: [
-            "Walkthrough & punch list",
-            "Warranty & care guide",
-            "Ongoing support",
+            "Multi-use spaces like office-guest room hybrids",
+            "Accessible features for aging in place",
+            `Custom built-ins that reduce furniture needs  
+            Smart design now = fewer renovations later.`,
           ],
-          media: {
-            src: "/images/process/step-4.jpg",
-            alt: "Handover & Support",
-          },
+        },
+        {
+          number: 5,
+          title: "Local Expertise That Cuts Through Red Tape",
+          summary:
+            "Permits, zoning, and inspections can be overwhelming. We handle:",
+          bullets: [
+            "Setback and zoning rules",
+            "Wind-load and hurricane-resistant codes",
+            `Septic and utility regulations  
+            With Ridgeback Builders, your project stays compliant — and on time.`,
+          ],
+        },
+        {
+          number: 6,
+          title: "Smaller Footprint, Greater Impact",
+          summary:
+            "Smarter homes are also more sustainable. We integrate:",
+          bullets: [
+            "On-demand hot water heaters",
+            "Solar-ready wiring options",
+            "Site-sensitive drainage and landscaping",
+            `Waste-reducing construction practices  
+            The result? A home that respects Florida’s environment while saving you money.`,
+          ],
         },
       ],
     },
