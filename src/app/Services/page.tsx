@@ -16,32 +16,32 @@ const SERVICES: Card[] = [
   {
     title: "Residential",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
-    img: "/images/service-residential.jpg",
+    img: "/images/residential.avif",
   },
   {
     title: "Commercial",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
-    img: "/images/service-commercial.jpg",
+    img: "/images/comertial.webp",
   },
   {
     title: "Renovation",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
-    img: "/images/service-renovation.jpg",
+    img: "/images/renovation.avif",
   },
   {
     title: "Design Consultancy",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
-    img: "/images/service-design.jpg",
+    img: "/images/dc.avif",
   },
   {
     title: "Structural Repair",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
-    img: "/images/service-structural.jpg",
+    img: "/images/rebar.jpg",
   },
   {
     title: "Landscaping",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
-    img: "/images/service-landscape.jpg",
+    img: "/images/land.webp",
   },
 ];
 
@@ -105,7 +105,7 @@ export default function ConstructionServicesPage() {
             </p>
             <button
               className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110"
-              style={{ background: ACCENT } as any}
+              style={{ background: ACCENT }}
             >
               Learn More{" "}
               <span className="translate-y-[1px]">&raquo;&raquo;</span>

@@ -77,7 +77,7 @@ const AboutPage = () => {
             </p>
             <button
               className="mt-6 inline-flex items-center text-sm gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110 md:hidden"
-              style={{ background: ACCENT } as any}
+              style={{ background: ACCENT }}
             >
               Contact Us
             </button>

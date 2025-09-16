@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
+import type { CSSProperties } from "react";
 
 type Project = "Apartment" | "House" | "Office" | "Retail";
 type Area = "Full Space" | "Living Area" | "Kitchen" | "Bedroom";
@@ -33,13 +34,13 @@ export default function QuoteSection() {
   const [sqmPrice, setSqmPrice] = useState(10000); // 1000–25000
   const [designerFinish, setDesignerFinish] = useState(false);
 
-  const estimate = useMemo(() => {
+  const estimate = (() => {
     let base = sqm * sqmPrice * floors;
     base *= PROJECT_MULTIPLIER[project];
     base *= BUILD_MULTIPLIER[buildType];
     if (designerFinish) base *= 1.12;
     return Math.round(base);
-  }, [sqm, sqmPrice, floors, project, buildType, designerFinish]);
+  })();
 
   const resetAll = () => {
     setProject("Apartment");
@@ -70,7 +71,7 @@ export default function QuoteSection() {
       </div>
 
       {/* Layout */}
-      <div className="relative grid min-h-[540px] grid-cols-1 md:grid-cols-2">
+      <div className="relative grid min-h[540px] grid-cols-1 md:grid-cols-2">
         {/* Left panel */}
         <div className="flex items-center">
           <div className="w-full p-5 sm:p-8 md:p-10">
@@ -323,6 +324,12 @@ function Slider({
   compact?: boolean;
 }) {
   const pct = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+
+  // Properly typed CSS variable for the track fill percent
+  const styleVars: CSSProperties & Record<"--filled", string> = {
+    "--filled": `${pct}%`,
+  };
+
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
@@ -339,7 +346,7 @@ function Slider({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className={`quote-range ${compact ? "compact" : ""}`}
-        style={{ ["--filled" as any]: `${pct}%` }}
+        style={styleVars}
         aria-label={label}
       />
       <div className="mt-1 flex justify-between text-[10px] text-white/50">
