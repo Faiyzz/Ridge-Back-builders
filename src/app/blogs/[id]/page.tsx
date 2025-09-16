@@ -8,6 +8,9 @@ export const dynamic = "force-dynamic";
 
 const ACCENT = "#FFE241";
 
+// Narrow type for the optional Desc field used below
+type WithDesc = { Desc?: { paragraph?: string } };
+
 export default async function BlogDetail({
   params,
 }: {
@@ -27,6 +30,9 @@ export default async function BlogDetail({
   const heroImage =
     post.banner?.image?.src ?? post.ogImage ?? "/placeholder-hero.jpg";
   const heroAlt = post.banner?.image?.alt ?? post.title;
+
+  // Safely access optional Desc paragraph without using `any`
+  const descParagraph = (post as WithDesc).Desc?.paragraph;
 
   return (
     <main className="min-h-screen bg-white text-black">
@@ -63,11 +69,11 @@ export default async function BlogDetail({
         </div>
 
         {/* Optional description */}
-        {(post as any).Desc?.paragraph && (
+        {descParagraph && (
           <section className="mx-auto mt-8 max-w-5xl px-2 pb-4">
             <div className="p-2">
               <div className="mt-3 text-sm md:text-[17px] prose max-w-none text-black">
-                <ReactMarkdown>{(post as any).Desc.paragraph}</ReactMarkdown>
+                <ReactMarkdown>{descParagraph}</ReactMarkdown>
               </div>
             </div>
           </section>
@@ -88,9 +94,7 @@ export default async function BlogDetail({
               <ul className="ml-5 mt-2 list-disc space-y-2 text-sm md:text-[17px] text-black/80">
                 {post.caseStudy.bullets.map((b, i) => (
                   <li key={i}>
-                    <ReactMarkdown components={{ p: "span" }}>
-                      {b}
-                    </ReactMarkdown>
+                    <ReactMarkdown components={{ p: "span" }}>{b}</ReactMarkdown>
                   </li>
                 ))}
               </ul>

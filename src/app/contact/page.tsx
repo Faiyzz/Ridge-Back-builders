@@ -6,8 +6,9 @@ import React from "react";
 import ContactSection from "../components/Faq";
 import ContactUs from "../components/contactUs";
 
+// Optional: Reusable hero component (NOT the default export)
 type HeroContactProps = {
-  imageSrc: string;
+  imageSrc?: string;
   title?: string;
   highlight?: string;
   subtitle?: string;
@@ -15,7 +16,8 @@ type HeroContactProps = {
   ctaText?: string;
 };
 
-export default function HeroContact({
+function HeroContact({
+  imageSrc = "/images/c1.jpg",
   title = "Contact",
   highlight = "US",
   subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -26,7 +28,7 @@ export default function HeroContact({
     <section className="relative isolate overflow-hidden bg-white">
       <div className="relative h-[70vh] sm:h-[72vh] md:h-[80vh] lg:h-[86vh]">
         <Image
-          src="/images/c1.jpg"
+          src={imageSrc}
           alt="Construction frame under a dramatic sky"
           fill
           priority
@@ -59,17 +61,19 @@ export default function HeroContact({
                 href={ctaHref}
                 className="inline-flex items-center rounded-full border border-yellow-300/70 bg-white/90 px-5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm backdrop-blur transition hover:bg-white"
               >
-                {ctaText}{" "}
-                <span aria-hidden className="ml-2">
-                  ›
-                </span>
+                {ctaText} <span aria-hidden className="ml-2">›</span>
               </Link>
             </div>
           )}
         </div>
       </div>
+
       <ContactUs />
       <ContactSection />
     </section>
   );
+}
+
+export default function Page() {
+  return <HeroContact />;
 }
