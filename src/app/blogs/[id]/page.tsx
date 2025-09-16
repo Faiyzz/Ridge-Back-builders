@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { BLOGS } from "../../data";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -187,12 +188,12 @@ export default async function BlogDetail({
         </div>
 
         <div className="mt-8 flex justify-center">
-          <a
+          <Link
             href="/blogs"
             className="rounded-full border border-black/10 px-4 py-2 text-xs text-black/80 hover:bg-black/5"
           >
             ← BACK TO ALL ARTICLES
-          </a>
+          </Link>
         </div>
 
         {post.updatedAt && (

@@ -16,7 +16,6 @@ type HeroContactProps = {
 };
 
 export default function HeroContact({
-  imageSrc,
   title = "Contact",
   highlight = "US",
   subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",

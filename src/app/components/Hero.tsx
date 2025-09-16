@@ -120,7 +120,7 @@ function InOutCard({
   className?: string;
 }) {
   const controls = useAnimation();
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLElement | null>(null); // <- HTMLElement, not any
   const inView = useInView(ref, { amount: 0.3, margin: "0px 0px -10% 0px" });
 
   useEffect(() => {
@@ -129,7 +129,7 @@ function InOutCard({
 
   return (
     <Tag
-      ref={ref as any}
+      ref={ref} // <- no any cast
       className={clsx(
         "transform-gpu will-change-transform will-change-opacity",
         className

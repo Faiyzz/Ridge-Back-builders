@@ -6,6 +6,10 @@ import Link from "next/link";
 
 type LinkItem = { label: string; href: string; external?: boolean };
 
+// Type helper for CSS variables you use in style={}
+type CSSVars = React.CSSProperties &
+  Record<"--accent" | "--tw-ring-color", string>;
+
 const ACCENT = "#FFE241";
 
 const groups: { heading: string; links: LinkItem[] }[] = [
@@ -21,7 +25,7 @@ const groups: { heading: string; links: LinkItem[] }[] = [
     heading: "Company",
     links: [
       { label: "Services", href: "/services" },
-      { label: "Articles", href: "/articles" },
+      { label: "Articles", href: "/blogs" },
       { label: "About", href: "/about" },
     ],
   },
@@ -172,7 +176,7 @@ export default function Footer() {
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}
                         className="text-sm text-neutral-400 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
-                        style={{ ["--tw-ring-color" as any]: ACCENT }}
+                        style={{ "--tw-ring-color": ACCENT } as CSSVars}
                       >
                         {l.label}
                       </Link>
@@ -215,7 +219,7 @@ export default function Footer() {
               <Link
                 href="/contact"
                 className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium bg-white/5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
-                style={{ color: ACCENT, ["--tw-ring-color" as any]: ACCENT }}
+                style={{ color: ACCENT, "--tw-ring-color": ACCENT } as CSSVars}
               >
                 Get a Quote
               </Link>
@@ -247,17 +251,6 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-          <p className="text-xs text-neutral-400">
-            Developed by{" "}
-            <Link
-              href="https://yourname.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white"
-            >
-              YourName
-            </Link>
-          </p>
         </div>
       </div>
 
@@ -297,12 +290,7 @@ function SocialIcon({
       rel="noopener noreferrer"
       aria-label={label}
       className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.06] text-neutral-300 hover:text-black hover:bg-[--accent] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 transition-colors"
-      style={
-        {
-          ["--accent" as any]: ACCENT,
-          ["--tw-ring-color" as any]: ACCENT,
-        } as React.CSSProperties
-      }
+      style={{ "--accent": ACCENT, "--tw-ring-color": ACCENT } as CSSVars}
     >
       {children}
       <span className="sr-only">{label}</span>

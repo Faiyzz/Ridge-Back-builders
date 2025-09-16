@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, MotionConfig, Variants } from "framer-motion";
@@ -84,30 +90,56 @@ export default function ServicesSection() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
 
+  // keep a ref mirror of active so callbacks can be stable
+  const activeRef = useRef(0);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
+
   // --- smooth auto-snap helpers ---
   const snapTimer = useRef<number | null>(null);
   const pointerDownRef = useRef(false);
 
-  const clearSnapTimer = () => {
+  const clearSnapTimer = useCallback(() => {
     if (snapTimer.current) {
       window.clearTimeout(snapTimer.current);
       snapTimer.current = null;
     }
-  };
+  }, []);
 
-  const scheduleSnapTo = (idx: number, delay = 140) => {
-    clearSnapTimer();
-    snapTimer.current = window.setTimeout(() => {
-      scrollToIndex(idx);
-    }, delay);
-  };
+  const scrollToIndex = useCallback((idx: number) => {
+    const track = trackRef.current;
+    const el = cardRefs.current[idx];
+    if (!track || !el) return;
+    const left = el.offsetLeft - (track.clientWidth - el.clientWidth) / 2;
+    track.scrollTo({ left, behavior: "smooth" });
+  }, []);
+
+  const scheduleSnapTo = useCallback(
+    (idx: number, delay = 140) => {
+      clearSnapTimer();
+      snapTimer.current = window.setTimeout(() => {
+        scrollToIndex(idx);
+      }, delay);
+    },
+    [clearSnapTimer, scrollToIndex]
+  );
+
+  const next = useCallback(() => {
+    const idx = Math.min(activeRef.current + 1, items.length - 1);
+    scrollToIndex(idx);
+  }, [items.length, scrollToIndex]);
+
+  const prev = useCallback(() => {
+    const idx = Math.max(activeRef.current - 1, 0);
+    scrollToIndex(idx);
+  }, [scrollToIndex]);
 
   // Center first card on mount
   useEffect(() => {
     const tid = window.setTimeout(() => scrollToIndex(0), 0);
     return () => window.clearTimeout(tid);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [scrollToIndex]);
 
   // Compute active by closest-to-center; auto-snap after scroll stops
   useEffect(() => {
@@ -141,7 +173,7 @@ export default function ServicesSection() {
     };
     const onPointerUp = () => {
       pointerDownRef.current = false;
-      scheduleSnapTo(active, 120);
+      scheduleSnapTo(activeRef.current, 120);
     };
 
     onScroll();
@@ -157,7 +189,7 @@ export default function ServicesSection() {
       window.removeEventListener("resize", onResize);
       clearSnapTimer();
     };
-  }, [items.length, active]);
+  }, [items.length, scheduleSnapTo, clearSnapTimer]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -172,18 +204,20 @@ export default function ServicesSection() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  });
+  }, [prev, next]);
 
-  const scrollToIndex = (idx: number) => {
-    const track = trackRef.current;
-    const el = cardRefs.current[idx];
-    if (!track || !el) return;
-    const left = el.offsetLeft - (track.clientWidth - el.clientWidth) / 2;
-    track.scrollTo({ left, behavior: "smooth" });
-  };
-
-  const next = () => scrollToIndex(Math.min(active + 1, items.length - 1));
-  const prev = () => scrollToIndex(Math.max(active - 1, 0));
+  // Pre-compute the style object to avoid inline casting noise
+  const trackStyle = useMemo<React.CSSProperties & Record<"--gap", string>>(
+    () => ({
+      "--gap": `${SIDE_GAP}px`,
+      WebkitOverflowScrolling: "touch",
+      maskImage:
+        "linear-gradient(to right, transparent, black var(--gap), black calc(100% - var(--gap)), transparent)",
+      WebkitMaskImage:
+        "linear-gradient(to right, transparent, black var(--gap), black calc(100% - var(--gap)), transparent)",
+    }),
+    []
+  );
 
   return (
     <MotionConfig
@@ -235,16 +269,7 @@ export default function ServicesSection() {
           <div
             ref={trackRef}
             className="no-scrollbar mx-auto w-full overflow-x-auto scroll-smooth snap-x snap-mandatory touch-pan-x"
-            style={
-              {
-                ["--gap" as any]: `${SIDE_GAP}px`,
-                WebkitOverflowScrolling: "touch",
-                maskImage:
-                  "linear-gradient(to right, transparent, black var(--gap), black calc(100% - var(--gap)), transparent)",
-                WebkitMaskImage:
-                  "linear-gradient(to right, transparent, black var(--gap), black calc(100% - var(--gap)), transparent)",
-              } as React.CSSProperties
-            }
+            style={trackStyle}
           >
             <motion.div
               variants={trackStagger}
@@ -259,7 +284,9 @@ export default function ServicesSection() {
                 return (
                   <motion.div
                     key={s.id}
-                    ref={(el) => (cardRefs.current[i] = el)}
+                    ref={(el) => {
+                      cardRefs.current[i] = el;
+                    }}
                     variants={cardVariants}
                     initial="hidden"
                     whileInView="show"

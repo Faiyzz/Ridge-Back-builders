@@ -25,7 +25,7 @@ const WORK_IMAGES = [
   "/images/10.avif",
   "/images/11.avif",
   "/images/12.avif",
-  "/images/14.heic", // <-- FIXED: convert .heic to .jpg or .avif
+  "/images/14.heic",
 ];
 
 export default function OurWorkSection() {
@@ -56,9 +56,9 @@ export default function OurWorkSection() {
             </p>
           </header>
 
-          {/* Constant 12-col grid on ALL breakpoints */}
-          <div className="mt-10 md:mt-14 grid grid-cols-12 gap-5 md:gap-6">
-            {/* Row 1 (12) */}
+          {/* Equal gutters */}
+          <div className="mt-10 md:mt-14 grid grid-cols-12 gap-x-5 gap-y-5 md:gap-x-6 md:gap-y-6">
+            {/* Row 1 (12) — all 4-col => same aspect */}
             <Figure
               src={WORK_IMAGES[0]}
               index={0}
@@ -81,17 +81,17 @@ export default function OurWorkSection() {
               isActive={active === 2}
               onClick={() => onCardClick(2)}
               className="col-span-4"
-              ratio="aspect-[5/6]"
+              ratio="aspect-[4/5]"
             />
 
-            {/* Row 2 (12) */}
+            {/* Row 2 (8 + 4) — 4-col aspect = (8-col aspect)/2 */}
             <Figure
               src={WORK_IMAGES[3]}
               index={3}
               isActive={active === 3}
               onClick={() => onCardClick(3)}
               className="col-span-8"
-              ratio="aspect-[16/7]"
+              ratio="aspect-[16/7]" // a1 ≈ 2.2857
             />
             <Figure
               src={WORK_IMAGES[4]}
@@ -99,17 +99,17 @@ export default function OurWorkSection() {
               isActive={active === 4}
               onClick={() => onCardClick(4)}
               className="col-span-4"
-              ratio="aspect-[4/4]"
+              ratio="aspect-[8/7]" // a2 = a1/2 ≈ 1.1429
             />
 
-            {/* Row 3 (12) */}
+            {/* Row 3 (6 + 3 + 3) — 3-col aspect = (6-col aspect)/2 */}
             <Figure
               src={WORK_IMAGES[5]}
               index={5}
               isActive={active === 5}
               onClick={() => onCardClick(5)}
               className="col-span-6"
-              ratio="aspect-[16/10]"
+              ratio="aspect-[16/10]" // a1 = 1.6
             />
             <Figure
               src={WORK_IMAGES[6]}
@@ -117,7 +117,7 @@ export default function OurWorkSection() {
               isActive={active === 6}
               onClick={() => onCardClick(6)}
               className="col-span-3"
-              ratio="aspect-[4/5]"
+              ratio="aspect-[4/5]" // a2 = 0.8
             />
             <Figure
               src={WORK_IMAGES[7]}
@@ -125,10 +125,10 @@ export default function OurWorkSection() {
               isActive={active === 7}
               onClick={() => onCardClick(7)}
               className="col-span-3"
-              ratio="aspect-[4/5]"
+              ratio="aspect-[4/5]" // a2 = 0.8
             />
 
-            {/* Row 4 (12) */}
+            {/* Row 4 (8 + 4) — same pairing rule as Row 2 */}
             <Figure
               src={WORK_IMAGES[8]}
               index={8}
@@ -143,17 +143,17 @@ export default function OurWorkSection() {
               isActive={active === 9}
               onClick={() => onCardClick(9)}
               className="col-span-4"
-              ratio="aspect-[4/4]"
+              ratio="aspect-[8/7]"
             />
 
-            {/* Row 5 (12) */}
+            {/* Row 5 (4 + 4 + 4) — all same aspect */}
             <Figure
               src={WORK_IMAGES[10]}
               index={10}
               isActive={active === 10}
               onClick={() => onCardClick(10)}
               className="col-span-4"
-              ratio="aspect-[16/10]"
+              ratio="aspect-[4/5]"
             />
             <Figure
               src={WORK_IMAGES[11]}
@@ -181,7 +181,7 @@ export default function OurWorkSection() {
 type FigureProps = {
   src: string;
   className?: string;
-  ratio?: string;
+  ratio?: string; // Tailwind aspect-ratio class (width/height)
   index: number;
   isActive: boolean;
   onClick: () => void;
@@ -195,14 +195,13 @@ function Figure({
   isActive,
   onClick,
 }: FigureProps) {
-  // FIXED: removed extra parenthesis in show
   const item = {
     hidden: { opacity: 0, y: 20, scale: 0.98 },
     show: (i: number) => ({
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { delay: i * 0.06 }, // picture-by-picture stagger
+      transition: { delay: i * 0.06 },
     }),
     exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.25 } },
   };
@@ -215,28 +214,26 @@ function Figure({
       whileInView="show"
       viewport={{ amount: 0.25, once: false }}
       exit="exit"
-      whileHover={{ y: -4, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.995 }} // keep container fixed so gutters don't shift
       onClick={onClick}
       className={[
         "group relative w-full",
         ratio,
         "overflow-hidden rounded-2xl bg-neutral-200",
-        // base shadow + ring
         "shadow-[0_10px_30px_rgba(0,0,0,0.10)] ring-1 ring-black/5",
-        // hover elevation
         "transition-all duration-300 will-change-transform",
         isActive
           ? "ring-2 ring-[color:var(--accent)] shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
           : "",
         className,
       ].join(" ")}
-      style={{ ["--accent" as any]: ACCENT }}
+      style={{ "--accent": ACCENT } as React.CSSProperties}
     >
-      {/* Image */}
+      {/* Image (hover scale on inner layer only) */}
       <motion.div
         className="absolute inset-0"
         animate={{ scale: isActive ? 1.03 : 1 }}
+        whileHover={{ scale: isActive ? 1.04 : 1.02 }}
         transition={{ type: "spring", stiffness: 160, damping: 18 }}
       >
         <Image
@@ -248,13 +245,13 @@ function Figure({
         />
       </motion.div>
 
-      {/* Hover shine sweep */}
+      {/* Shine */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 translate-x-[-120%] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.5),transparent)] opacity-0 transition-all duration-700 group-hover:translate-x-[240%] group-hover:opacity-100"
       />
 
-      {/* On hover: subtle top gradient to improve text contrast if you add captions later */}
+      {/* Subtle top gradient */}
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
@@ -263,7 +260,7 @@ function Figure({
         }}
       />
 
-      {/* Click overlay (appears/disappears per picture) */}
+      {/* Active overlay */}
       <AnimatePresence>
         {isActive && (
           <motion.div
@@ -273,14 +270,12 @@ function Figure({
             exit={{ opacity: 0 }}
             className="pointer-events-none absolute inset-0"
           >
-            {/* gold focus ring glow */}
             <div
               className="absolute inset-0 rounded-2xl"
               style={{
                 boxShadow: `0 0 0 2px ${ACCENT}, 0 20px 50px rgba(0,0,0,0.35)`,
               }}
             />
-            {/* soft center glow */}
             <div
               className="absolute inset-0 rounded-2xl"
               style={{

@@ -1,9 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import type React from "react"; // for React.CSSProperties
+import Link from "next/link";
 import { Send } from "lucide-react";
 
 const ACCENT = "#FFE241";
+
+// Type helper for CSS variables in style={}
+type CSSVars = React.CSSProperties & Record<"--acc", string>;
 
 export default function ContactSection() {
   const [loading, setLoading] = useState(false);
@@ -11,7 +16,7 @@ export default function ContactSection() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+
     // TODO: POST to your API route
     // await fetch("/api/contact", { method: "POST", body: JSON.stringify(data) })
     setTimeout(() => setLoading(false), 600);
@@ -25,7 +30,7 @@ export default function ContactSection() {
     <section
       id="contact"
       className="relative overflow-hidden bg-[#1E1E1E] text-white"
-      style={{ ["--acc" as any]: ACCENT }}
+      style={{ "--acc": ACCENT } as CSSVars}
     >
       {/* soft background glows */}
       <div className="pointer-events-none absolute inset-0">
@@ -140,12 +145,12 @@ export default function ContactSection() {
                 />
                 <span>
                   I agree to the{" "}
-                  <a
+                  <Link
                     href="/privacy"
                     className="text-[var(--acc)] underline underline-offset-4 hover:opacity-90"
                   >
                     Privacy Policy
-                  </a>
+                  </Link>
                   .
                 </span>
               </label>

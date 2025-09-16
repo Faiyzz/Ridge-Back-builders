@@ -20,7 +20,7 @@ export default function ReviewsCarousel() {
     },
   });
 
-  const reviews = Array.from({ length: 4 }).map((_, i) => ({
+  const reviews = Array.from({ length: 4 }).map(() => ({
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     author: "M Shajeel",
     role: "Home Owner",
@@ -30,10 +30,7 @@ export default function ReviewsCarousel() {
     <section className="mx-auto max-w-6xl px-6 py-16">
       {/* Heading */}
       <div className="mb-10">
-        <div
-          className="mb-2 h-1 w-12 rounded"
-          style={{ background: ACCENT }}
-        />
+        <div className="mb-2 h-1 w-12 rounded" style={{ background: ACCENT }} />
         <h3 className="text-4xl font-bold">
           Customer <span style={{ color: ACCENT }}>Reviews</span>
         </h3>
@@ -65,7 +62,9 @@ export default function ReviewsCarousel() {
             key={idx}
             onClick={() => instanceRef.current?.moveToIdx(idx)}
             className={`h-2 w-2 rounded-full transition ${
-              currentSlide === idx ? "bg-[var(--accent,#FFE241)] w-4" : "bg-gray-300"
+              currentSlide === idx
+                ? "bg-[var(--accent,#FFE241)] w-4"
+                : "bg-gray-300"
             }`}
           />
         ))}
