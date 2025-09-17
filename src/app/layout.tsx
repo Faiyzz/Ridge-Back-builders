@@ -4,7 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "RidgeBack-Builders",
+  title: "RidgebackBuilders",
   description: "Marketing site",
 };
 
