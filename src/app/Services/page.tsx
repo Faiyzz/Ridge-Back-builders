@@ -15,56 +15,56 @@ const ACCENT = "#FFE241";
 const SERVICES: Card[] = [
   {
     title: "Residential",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
+    desc: "Smart, modern homes built with comfort, durability, and attention to every detail.",
     img: "/images/residential.avif",
   },
   {
     title: "Commercial",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
+    desc: "Efficient, code-compliant spaces designed to support business growth and operations.",
     img: "/images/comertial.webp",
   },
   {
     title: "Renovation",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
+    desc: "Transform existing spaces with upgrades that blend style, safety, and long-lasting value.",
     img: "/images/renovation.avif",
   },
   {
     title: "Design Consultancy",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
+    desc: "Expert planning and guidance to turn ideas into practical, cost-effective designs.",
     img: "/images/dc.avif",
   },
   {
     title: "Structural Repair",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
+    desc: "Reliable repair solutions that restore strength, safety, and peace of mind in your property.",
     img: "/images/rebar.jpg",
   },
   {
     title: "Landscaping",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
+    desc: "Functional outdoor layouts that enhance beauty, usability, and long-term sustainability.",
     img: "/images/land.webp",
   },
 ];
 
 const PROJECTS: Card[] = [
   {
-    title: "Interior Design",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor",
-    img: "/images/project-1.jpg",
+    title: "Modern Living Spaces",
+    desc: "Homes styled for comfort and function, crafted with timeless detail.",
+    img: "/images/a.jpg",
   },
   {
-    title: "Interior Design",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor",
-    img: "/images/project-2.jpg",
+    title: "Commercial Excellence",
+    desc: "Workplaces designed for growth, efficiency, and professional appeal.",
+    img: "/images/b.jpg",
   },
   {
-    title: "Interior Design",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor",
-    img: "/images/project-3.jpg",
+    title: "Renovation & Remodeling",
+    desc: "Transforming old structures into renewed, modern environments.",
+    img: "/images/c.jpg",
   },
   {
-    title: "Interior Design",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor",
-    img: "/images/project-4.jpg",
+    title: "Structural Integrity",
+    desc: "Expert repairs that restore safety, stability, and lasting strength.",
+    img: "/images/d.webp",
   },
 ];
 
@@ -100,8 +100,8 @@ export default function ConstructionServicesPage() {
             </h1>
 
             <p className="mt-4 text-white/80 text-sm sm:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Building with integrity and precision, we deliver lasting
+              structures that stand strong and inspire confidence.
             </p>
             <button
               className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110"
@@ -165,9 +165,9 @@ export default function ConstructionServicesPage() {
                 <span style={{ color: ACCENT }}>Construction Voyage</span>
               </h2>
               <p className="mt-3 text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua, quis
-                nostrud exercitation ullamco laboris.
+                Crafting spaces with precision and care, we turn blueprints into
+                reality. From groundwork to finishing touches, our team builds
+                with skill, safety, and dedication that lasts.
               </p>
 
               <div className="mt-8 grid grid-cols-3 gap-4">

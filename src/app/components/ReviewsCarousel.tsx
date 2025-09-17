@@ -3,8 +3,15 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useState } from "react";
+import { User } from "lucide-react"; // 👈 profile icon
 
 const ACCENT = "#FFE241";
+
+type Review = {
+  text: string;
+  author: string;
+  role: string;
+};
 
 export default function ReviewsCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -20,14 +27,35 @@ export default function ReviewsCarousel() {
     },
   });
 
-  const reviews = Array.from({ length: 4 }).map(() => ({
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    author: "M Shajeel",
-    role: "Home Owner",
-  }));
+  const reviews: Review[] = [
+    {
+      text: "From consultation to handover, the crew was professional and fast. Our kitchen reno looks incredible!",
+      author: "Sarah Khan",
+      role: "Home Owner",
+    },
+    {
+      text: "Solid project management and clear timelines. Our office build-out finished on schedule and on budget.",
+      author: "Imran Ali",
+      role: "Operations Manager",
+    },
+    {
+      text: "They handled permits and inspections seamlessly. Quality work and great communication throughout.",
+      author: "Ayesha Noor",
+      role: "Real Estate Investor",
+    },
+    {
+      text: "Reliable team with excellent craftsmanship. The structural repair gave us peace of mind.",
+      author: "J. Rodriguez",
+      role: "Contractor",
+    },
+  ];
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
+    <section
+      className="mx-auto max-w-6xl px-6 py-16"
+      style={{ ["--accent" as any]: ACCENT }}
+      aria-label="Customer Reviews"
+    >
       {/* Heading */}
       <div className="mb-10">
         <div className="mb-2 h-1 w-12 rounded" style={{ background: ACCENT }} />
@@ -41,30 +69,44 @@ export default function ReviewsCarousel() {
         {reviews.map((review, i) => (
           <figure
             key={i}
-            className="keen-slider__slide rounded-2xl border border-gray-100 p-6 shadow-sm"
+            className="keen-slider__slide rounded-2xl border border-gray-100 p-6 shadow-sm bg-white"
           >
-            <div className="mb-4 h-10 w-10 rounded-full bg-black/5" />
-            <blockquote className="text-sm text-gray-700">
-              {review.text}
+            <div className="mb-4 flex items-center gap-3">
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-black/5 ring-2"
+                style={{ borderColor: ACCENT }}
+              >
+                <User className="h-5 w-5 text-gray-600" />
+              </div>
+              <figcaption className="text-sm font-semibold text-gray-900">
+                {review.author}{" "}
+                <span className="ml-1 text-xs font-normal text-gray-500">
+                  • {review.role}
+                </span>
+              </figcaption>
+            </div>
+
+            <blockquote className="text-sm leading-6 text-gray-700">
+              “{review.text}”
             </blockquote>
-            <figcaption className="mt-4 text-xs text-gray-500">
-              {review.author}{" "}
-              <span className="text-gray-400">• {review.role}</span>
-            </figcaption>
           </figure>
         ))}
       </div>
 
       {/* Dots */}
-      <div className="mt-6 flex justify-center gap-2">
+      <div
+        className="mt-6 flex justify-center gap-2"
+        aria-label="Slide selectors"
+      >
         {reviews.map((_, idx) => (
           <button
             key={idx}
             onClick={() => instanceRef.current?.moveToIdx(idx)}
-            className={`h-2 w-2 rounded-full transition ${
+            aria-label={`Go to slide ${idx + 1}`}
+            className={`h-2 rounded-full transition ${
               currentSlide === idx
                 ? "bg-[var(--accent,#FFE241)] w-4"
-                : "bg-gray-300"
+                : "bg-gray-300 w-2"
             }`}
           />
         ))}

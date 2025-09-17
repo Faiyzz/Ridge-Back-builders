@@ -100,7 +100,10 @@ export default function ReviewsSection({
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center mb-2 relative">
-          <div className="-top-2 h-1 w-18 rounded absolute" style={{ background: accent }} />
+          <div
+            className="-top-2 h-1 w-18 rounded absolute"
+            style={{ background: accent }}
+          />
           <h2 className="text-4xl font-bold text-gray-800">
             Customer <span className="text-yellow-400">Reviews</span>
           </h2>
@@ -126,8 +129,8 @@ export default function ReviewsSection({
         </div>
 
         <p className="text-gray-600 mb-12 max-w-2xl">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua.
+          Great team, fast turnaround, and excellent results. Will definitely
+          work with them again!
         </p>
 
         {/* ===== Mobile: 1-up slider with swipe ===== */}
@@ -164,7 +167,9 @@ export default function ReviewsSection({
                     )}
                   </div>
 
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{r.text}</p>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    {r.text}
+                  </p>
 
                   <div>
                     <div className="font-semibold text-gray-800">{r.name}</div>
@@ -195,7 +200,9 @@ export default function ReviewsSection({
                 )}
               </div>
 
-              <p className="text-gray-600 text-sm mb-4 leading-relaxed">{r.text}</p>
+              <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                {r.text}
+              </p>
 
               <div>
                 <div className="font-semibold text-gray-800">{r.name}</div>
@@ -219,7 +226,9 @@ export default function ReviewsSection({
                 aria-label={`Go to ${isMobile ? "slide" : "page"} ${i + 1}`}
                 aria-selected={page === i}
                 role="tab"
-                className={`w-2 h-2 rounded-full transition ${page === i ? "bg-yellow-400" : "bg-gray-300"}`}
+                className={`w-2 h-2 rounded-full transition ${
+                  page === i ? "bg-yellow-400" : "bg-gray-300"
+                }`}
               />
             ))}
           </div>

@@ -70,7 +70,7 @@ export default function Footer() {
         <div className="grid gap-10 lg:gap-12 md:grid-cols-12">
           {/* Brand / Intro */}
           <section
-            className="md:col-span-4 flex md:block flex-col items-center md:items-start text-center md:text-left"
+            className="md:col-span-4 flex flex-col items-center text-center"
             data-animate
           >
             <Link
@@ -82,7 +82,7 @@ export default function Footer() {
                 alt="Ridgeback Builders"
                 width={220}
                 height={80}
-                className="h-14 md:h-12 w-auto transition-[transform,opacity] duration-300"
+                className="h-19 md:h-19 w-auto transition-[transform,opacity] duration-300 "
                 priority={false}
               />
             </Link>
@@ -199,10 +199,10 @@ export default function Footer() {
               <p>123 Main Street,</p>
               <p>
                 <Link
-                  href="tel:+923001234567"
+                  href="tel:(813) 921-1717"
                   className="hover:text-white underline-offset-4 hover:underline"
                 >
-                  +92 300 1234567
+                  (813) 921-1717
                 </Link>
               </p>
               <p>
@@ -210,14 +210,14 @@ export default function Footer() {
                   href="mailto:hello@ridgebackbuilders.com"
                   className="hover:text-white underline-offset-4 hover:underline"
                 >
-                  hello@ridgebackbuilders.com
+                  info@ridgebackbuilt.com
                 </Link>
               </p>
-              <p>Mon–Sat: 9:00–18:00 PKT</p>
+              <p>Mon–Sat: 9:00–18:00 UCT</p>
             </address>
             <div className="mt-4">
               <Link
-                href="/contact"
+                href="/#getquote"
                 className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium bg-white/5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                 style={{ color: ACCENT, "--tw-ring-color": ACCENT } as CSSVars}
               >

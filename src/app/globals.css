@@ -13,3 +13,81 @@
   -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
           mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
+/* app/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Shine + animations (Tailwind utilities) ---- */
+@layer utilities {
+  @keyframes shine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  @keyframes floatInUp {
+    0% { transform: translate3d(0, 16px, 0) scale(0.98); opacity: 0; }
+    100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  }
+  @keyframes sweep {
+    0% { background-position: -150% 0; }
+    100% { background-position: 150% 0; }
+  }
+
+  .shine-text {
+    background-image: linear-gradient(90deg, #ffffff 0%, #FFE241 20%, #ffffff 40%, #FFE241 60%, #ffffff 80%, #FFE241 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 3.5s linear infinite;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  }
+  .shine-text-alt,
+  .shine-subtle {
+    background-image: linear-gradient(90deg, #111111 0%, #444444 25%, #FFE241 50%, #444444 75%, #111111 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 5s linear infinite;
+  }
+
+  .underline-shimmer {
+    position: absolute;
+    left: 0; right: 0; bottom: -0.5rem;
+    height: 3px; border-radius: 999px;
+    background: linear-gradient(90deg, transparent 0%, #FFE241 40%, #fff 60%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shine 2.8s linear infinite;
+    opacity: 0.9;
+  }
+
+  .float-in-up { animation: floatInUp 700ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+  .btn-shine {
+    color: #000;
+    background: linear-gradient(90deg, #f1d54f, #ffe45e);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0) 60%);
+    background-size: 200% 100%;
+    animation: sweep 2.2s ease-in-out infinite;
+    mix-blend-mode: screen; pointer-events: none; transform: translateZ(0);
+  }
+
+  .btn-outline-shine {
+    color: #FFE241;
+    border: 1px solid #FFE241;
+    background:
+      linear-gradient(#0000, #0000) padding-box,
+      linear-gradient(90deg, #FFE241, #ffffff, #FFE241) border-box;
+    background-size: 200% 100%, 200% 100%;
+    animation: shine 4s linear infinite;
+  }
+}

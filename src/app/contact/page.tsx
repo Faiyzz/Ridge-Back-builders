@@ -20,7 +20,7 @@ function HeroContact({
   imageSrc = "/images/c1.jpg",
   title = "Contact",
   highlight = "US",
-  subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  subtitle = "Have a project in mind? We’re here to help. Whether it’s construction, renovation, or repairs, our team is ready to discuss your needs and provide the right solution. Reach out today to get started.",
   ctaHref,
   ctaText,
 }: HeroContactProps) {
@@ -51,7 +51,7 @@ function HeroContact({
             {title} <span className="text-yellow-400">{highlight}</span>
           </h1>
 
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/90 md:text-base">
+          <p className="mt-4 max-w-2xl text-md leading-relaxed text-white/100 md:text-base">
             {subtitle}
           </p>
 
@@ -61,7 +61,10 @@ function HeroContact({
                 href={ctaHref}
                 className="inline-flex items-center rounded-full border border-yellow-300/70 bg-white/90 px-5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm backdrop-blur transition hover:bg-white"
               >
-                {ctaText} <span aria-hidden className="ml-2">›</span>
+                {ctaText}{" "}
+                <span aria-hidden className="ml-2">
+                  ›
+                </span>
               </Link>
             </div>
           )}

@@ -28,9 +28,11 @@ export default function HomePage() {
               <span className={GOLD_TEXT}>Blogs</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+              Strong foundations create more than just stability—they bring
+              peace of mind. Whether it’s renovating a home or repairing
+              structural issues, knowing the right methods and materials can
+              make all the difference in safety, durability, and long-term
+              value.
             </p>
           </div>
         </div>

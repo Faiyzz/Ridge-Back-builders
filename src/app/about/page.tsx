@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import ReviewsSection from "@/app/components/AboutReviews";
 import FadeInSection from "@/app/components/FadeInSection";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const ACCENT = "#FFE241";
 
@@ -10,25 +13,25 @@ const REVIEWS = [
     id: 1,
     name: "M Dhaybal",
     role: "Home Owner",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+    text: "Professional, reliable, and detail-oriented. The renovation exceeded our expectations and was completed on schedule!",
   },
   {
     id: 2,
     name: "Sarah Khan",
     role: "Real Estate Investor",
-    text: "Great team, fast turnaround, and excellent results. Will definitely work with them again!",
+    text: "From start to finish, the team communicated clearly and delivered exactly what we needed. Highly recommended!",
   },
   {
     id: 3,
     name: "J. Rodriguez",
     role: "Contractor",
-    text: "Professional and reliable. The communication was smooth and the quality was top-notch.",
+    text: "Quality workmanship and a crew that truly cares. Our office build-out looks fantastic and has impressed every client.",
   },
   {
     id: 4,
     name: "A. Williams",
     role: "Home Owner",
-    text: "They delivered exactly what we needed on time and within budget. Highly recommend.",
+    text: "They handled our structural repairs with expertise and efficiency. We feel confident and secure in our home again.",
   },
   {
     id: 5,
@@ -38,271 +41,367 @@ const REVIEWS = [
   },
 ];
 
-const AboutPage = () => {
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-
-      <section className="relative min-h-[100dvh] overflow-visible">
-        <Image
-          src="/images/aboutbg.jpg"
-          alt="Construction"
-          fill
-          priority
-          className="object-cover"
-        />
-
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/10" />
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-b from-transparent via-white/70 to-white" />
-
-        <div className="absolute -top-48 inset-0 z-20 grid place-items-center px-6 text-center">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
-              About{" "}
-              <span className="relative inline-block">
-                <span style={{ color: ACCENT }}>US</span>
-                {/* yellow underline */}
-                <span
-                  className="absolute left-0 right-0 -bottom-2 h-0.5 "
-                  style={{ background: ACCENT }}
-                  aria-hidden="true"
-                />
-              </span>
-            </h1>
-
-            <p className="mt-4 text-white/80 text-sm sm:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <button
-              className="mt-6 inline-flex items-center text-sm gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110 md:hidden"
-              style={{ background: ACCENT }}
-            >
-              Contact Us
-            </button>
-          </div>
-        </div>
-
-        <div className="pt-10 absolute left-1/2 top-[15rem] md:top-32 z-30 w-full max-w-4xl -translate-x-1/2 translate-y-1/2 pointer-events-auto">
-          <div className="flex items-end justify-end m-3 md:m-0 relative">
-            <div className="absolute left-0">
-              <Image
-                src="/images/abbg3.png"
-                alt="image"
-                width={450}
-                height={450}
-                className="h-[10rem] md:h-[25rem] w-full object-cover"
-              />
-            </div>
-            <div>
-              <Image
-                src="/images/abbg2.png"
-                alt="image"
-                width={650}
-                height={650}
-                className="h-[12rem] md:h-[28rem] w-full object-cover"
-              />
-              <div className="absolute right-0 top-8 md:top-32 max-w-[13.5rem] md:max-w-[27rem]">
-                <h1 className="font-medium text-sm md:font-bold md:text-4xl text-white">
-                  We Are Experts in Building Dreams
-                </h1>
-                <p className="text-xs md:text-sm text-white mt-1 md:mt-3">
-                  Construction is a general term meaning the art and science to
-                  form objects, systems, or organizations, and comes from Latin
-                  constructio and Old French construction.
-                </p>
-                <button className="bg-yellow-400 text-black text-xs md:text-lg px-3 py-1 md:px-6 md:py-2.5 mt-1 md:mt-4 rounded-lg md:font-semibold hover:bg-yellow-500 transition-colors">
-                  Read more
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Us Section */}
-      <FadeInSection>
-        <section className="mt-40">
-          <div className="container mx-auto px-6">
-            {/* Header Row */}
-            <div className="flex justify-between items-start mb-4 ">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-                About Us
-              </h2>
-              <button className="bg-yellow-400 text-black px-4 py-1.5 md:px-6 md:py-2 rounded-lg font-semibold shadow-md hover:bg-yellow-500 transition-colors">
-                Learn more
-              </button>
-            </div>
-
-            <p className="pt-10 text-gray-600 text-sm md:text-lg mb-8 md:mb-2 max-w-2xl">
-              At Besnik Consultancy, we take pride in our values – service,
-              integrity, and excellence.
-            </p>
-
-            {/* Grid with Text & Images */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-y-8 md:gap-y-0 md:gap-x-5">
-              {/* Left: Numbered Items */}
-              <div className="grid grid-cols-2 gap-10">
-                <div>
-                  <div className="text-2xl md:text-4xl font-bold text-gray-800 mb-2">
-                    1.
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    Who We Are
-                  </h3>
-                  <p className="text-sm md:text-lg text-gray-600">
-                    You get a 2-week free trial to kick the Smarty tries. We
-                    want you to.
-                  </p>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-4xl font-bold text-gray-800 mb-2">
-                    2.
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    What Do We Do
-                  </h3>
-                  <p className="text-sm md:text-lg text-gray-600">
-                    We give you a free course that guides you through the
-                    process.
-                  </p>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-4xl font-bold text-gray-800 mb-2">
-                    3.
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    How Do We Help
-                  </h3>
-                  <p className="text-sm md:text-lg text-gray-600">
-                    Use our multimedia lecturers, videos, and coaching sessions.
-                  </p>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-4xl font-bold text-gray-800 mb-2">
-                    4.
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    Create success story
-                  </h3>
-                  <p className="text-sm md:text-lg text-gray-600">
-                    With access to online learning resources anyone can
-                    transform.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right: Images */}
-              <div className="">
-                <Image
-                  src="/images/g4.png"
-                  alt="image"
-                  height={600}
-                  width={600}
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeInSection>
-
-      {/* Projects Section */}
-      <FadeInSection>
-        <section className="relative py-20">
-          <div className="container mx-auto px-6">
-            <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-12 lg:gap-16 items-start">
-              {/* LEFT — Copy + CTAs */}
-              <div>
-                <h2 className="mb-6 text-2xl sm:text-4xl font-bold tracking-wide text-black">
-                  ABOUT OUR PROJECTS
-                </h2>
-
-                <p className="text-sm md:text-lg mb-10 max-w-xl leading-8 text-[#8F969C]">
-                  And produce say the ten moments parties. Simple innate summer
-                  fat appear basket his desire joy. Outward clothes promise at
-                  gravity do excited. Sufficient particular impossible by
-                  reasonable oh expression is. Yet preference connection
-                  unpleasant yet melancholy but end appearance. And excellence
-                  partiality estimating terminated day everything.
-                </p>
-
-                {/* CTAs row with floor shadow */}
-                <div className="relative flex md:flex-wrap gap-x-4 md:gap-5">
-                  <button className="relative rounded-[6px] bg-[#F1D54F] px-4 py-1.5 md:px-8 md:py-3 font-semibold text-black transition hover:brightness-105">
-                    LEARN MORE
-                  </button>
-
-                  <button className="group relative inline-flex items-center gap-3 rounded-[6px] border border-[#F1D54F] px-5 py-1.5 md:px-8 md:py-3 font-semibold text-[#F1D54F]">
-                    Watch Video
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="h-8 w-8 transition-transform group-hover:translate-x-0.5"
-                      fill="currentColor"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* CENTER — Vertical divider (only on lg+) */}
-              <div className="relative hidden lg:block">
-                <div className="h-full w-px bg-[#2E2E2E]" />
-              </div>
-
-              {/* RIGHT — 2x2 metric cards, staggered */}
-              <div className="grid grid-cols-2 gap-8">
-                <div className="relative overflow-hidden bg-white p-12 text-center text-[#3C3F42] shadow-[0_14px_28px_rgba(0,0,0,0.25)]">
-                  <div className="text-3xl font-bold text-[#2F3236]">1000+</div>
-                  <div className="mt-2 text-sm text-[#6C7278]">
-                    Completed Projects
-                  </div>
-
-                  {/* thick underside strip like ref */}
-                  <span className="pointer-events-none absolute left-4 right-4 -bottom-3 h-3 rounded-sm bg-[#2B2B2B]/70" />
-                </div>
-
-                <div className="bg-[#ECECEC] p-12 text-center text-[#3C3F42]">
-                  <div className="text-3xl font-bold text-[#2F3236]">250+</div>
-                  <div className="mt-2 text-sm text-[#6C7278]">
-                    On Going Projects
-                  </div>
-                </div>
-
-                <div className="bg-[#ECECEC] p-12 text-center text-[#3C3F42]">
-                  <div className="text-3xl font-bold text-[#2F3236]">500+</div>
-                  <div className="mt-2 text-sm text-[#6C7278]">
-                    Happy Clients
-                  </div>
-                </div>
-
-                <div className="bg-[#ECECEC] p-12 text-center text-[#3C3F42]">
-                  <div className="text-3xl font-bold text-[#2F3236]">25</div>
-                  <div className="mt-2 text-sm text-[#6C7278]">
-                    Offices through out GLOB
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeInSection>
-
-      {/* Customer Reviews Section */}
-      <FadeInSection>
-        <section className="py-20 bg-gray-50">
-          <ReviewsSection
-            reviews={REVIEWS}
-            accent="#F59E0B"
-            pageSize={4}
-            showAllHref="/reviews"
-          />
-        </section>
-      </FadeInSection>
-    </div>
-  );
+/** ---------- Motion variants (simple + TS-safe) ---------- */
+const pageVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -12,
+    transition: { duration: 0.35, ease: "easeInOut" },
+  },
 };
 
-export default AboutPage;
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+export default function AboutPage() {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key="about-page"
+        variants={pageVariants}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        className="min-h-screen"
+      >
+        {/* --------------------------- HERO --------------------------- */}
+        <section className="relative overflow-hidden">
+          <Image
+            src="/images/aboutbg.jpg"
+            alt="Construction site background"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-white/100" />
+
+          <div className="relative z-20 container mx-auto px-6 pt-24 md:pt-58 pb-24 md:pb-36">
+            {/* Centered heading */}
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="show"
+              className="max-w-3xl mx-auto text-center"
+            >
+              <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-sm leading-tight">
+                About{" "}
+                <span className="relative inline-block align-baseline">
+                  {/* Shine is fully clipped to the text fill */}
+                  <span className="shine-in-text px-1">US</span>
+                  <span
+                    className="absolute left-0 right-0 -bottom-2 h-0.5"
+                    style={{ background: ACCENT }}
+                    aria-hidden="true"
+                  />
+                </span>
+              </h1>
+              <p className="mt-3 text-white/85 text-sm sm:text-base">
+                Building Trust, One Project at a Time
+              </p>
+            </motion.div>
+
+            {/* Cards under heading */}
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              animate="show"
+              className="mt-8 md:mt-12 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8"
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.15,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="relative rounded-3xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-1 ring-white/10 aspect-[16/11] sm:aspect-[5/4]"
+              >
+                <Image
+                  src="/images/abbg3.png"
+                  alt="Field crew with tools"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 560px"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.25,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="relative rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-black/10 bg-emerald-900/30 backdrop-blur-md p-5 sm:p-7 md:p-8"
+              >
+                <div className="max-w-md md:max-w-none">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 drop-shadow-[0_1px_0_rgba(255,255,255,0.35)]">
+                    We Are Experts in Building Dreams
+                  </h2>
+                  <p className="mt-2 text-[12px] sm:text-sm md:text-base text-gray-800/90">
+                    Construction is the art of turning ideas into lasting
+                    spaces. With skill and precision, we bring your vision to
+                    life.
+                  </p>
+                  <button className="mt-4 inline-flex items-center justify-center bg-yellow-400 text-black text-xs sm:text-sm md:text-base px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition-colors">
+                    Read More
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* --------------------------- ABOUT US --------------------------- */}
+        <FadeInSection>
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="mt-16 md:mt-24"
+          >
+            <div className="container mx-auto px-6">
+              <motion.div
+                variants={sectionVariants}
+                className="flex items-center justify-between gap-4 mb-4"
+              >
+                <h2 className="text-2xl md:text-4xl font-bold text-gray-900">
+                  About Us
+                </h2>
+                <button className="hidden sm:inline-flex bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-yellow-500 transition-colors">
+                  Learn more
+                </button>
+              </motion.div>
+
+              <motion.p
+                variants={sectionVariants}
+                className="pt-4 md:pt-6 text-gray-600 text-sm md:text-lg mb-8 max-w-2xl"
+              >
+                At Ridgeback Builders, we deliver reliable construction,
+                renovation, and structural repair services for both residential
+                and commercial projects. With quality craftsmanship and durable
+                materials, every build stands strong for years to come.
+              </motion.p>
+
+              <motion.div
+                variants={sectionVariants}
+                className="grid md:grid-cols-2 items-center gap-8 md:gap-10"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                  {[
+                    {
+                      k: "1.",
+                      h: "Who We Are",
+                      p: "A licensed team of builders, engineers, and project managers focused on safe, code-compliant work—commercial and residential.",
+                    },
+                    {
+                      k: "2.",
+                      h: "What We Do",
+                      p: "Ground-up builds, renovations, tenant improvements, and critical structural repairs—delivered start to finish.",
+                    },
+                    {
+                      k: "3.",
+                      h: "How We Help",
+                      p: "We handle permits, scheduling, site safety, and quality control so timelines hold and standards are met.",
+                    },
+                    {
+                      k: "4.",
+                      h: "The Outcome",
+                      p: "On-spec, on-schedule delivery with documented inspections and a clean handover—built strong, built right.",
+                    },
+                  ].map(({ k, h, p }) => (
+                    <motion.div
+                      key={h}
+                      variants={sectionVariants}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div className="text-2xl md:text-4xl font-bold text-gray-900 mb-1">
+                        {k}
+                      </div>
+                      <h3 className="text-lg md:text-xl font-semibold text-gray-900">
+                        {h}
+                      </h3>
+                      <p className="text-sm md:text-base text-gray-600 mt-1">
+                        {p}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6 }}
+                  className="relative w-full max-w-md md:max-w-none mx-auto aspect-[4/3] sm:aspect-[1/1] md:aspect-[4/3]"
+                >
+                  <Image
+                    src="/images/g4.png"
+                    alt="Ridgeback project montage"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 560px"
+                  />
+                </motion.div>
+              </motion.div>
+            </div>
+          </motion.section>
+        </FadeInSection>
+
+        {/* --------------------------- PROJECTS --------------------------- */}
+        <FadeInSection>
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="relative py-16 md:py-20"
+          >
+            <div className="container mx-auto px-6">
+              <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-10 lg:gap-16 items-start">
+                <motion.div variants={sectionVariants}>
+                  <h2 className="mb-4 md:mb-6 text-2xl sm:text-4xl font-bold tracking-wide text-black">
+                    ABOUT OUR PROJECTS
+                  </h2>
+
+                  <p className="text-sm md:text-lg mb-8 md:mb-10 max-w-xl leading-7 md:leading-8 text-[#6C7278]">
+                    Our projects reflect quality, durability, and attention to
+                    detail. From residential builds to large-scale commercial
+                    work, we deliver results that stand strong and create
+                    lasting value.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-3 md:gap-5">
+                    <button className="rounded-[6px] bg-[#F1D54F] px-4 py-2 md:px-8 md:py-3 font-semibold text-black transition hover:brightness-105">
+                      LEARN MORE
+                    </button>
+
+                    <button className="group inline-flex items-center gap-3 rounded-[6px] border border-[#F1D54F] px-5 py-2 md:px-8 md:py-3 font-semibold text-[#F1D54F]">
+                      Watch Video
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-6 w-6 md:h-8 md:w-8 transition-transform group-hover:translate-x-0.5"
+                        fill="currentColor"
+                        aria-hidden
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </button>
+                  </div>
+                </motion.div>
+
+                <div className="relative hidden lg:block">
+                  <div className="h-full w-px bg-[#2E2E2E]" />
+                </div>
+
+                <motion.div
+                  variants={sectionVariants}
+                  className="grid grid-cols-2 sm:grid-cols-2 gap-4 sm:gap-6"
+                >
+                  {[
+                    { n: "1000+", l: "Completed Projects" },
+                    { n: "250+", l: "Ongoing Projects" },
+                    { n: "500+", l: "Happy Clients" },
+                    { n: "25", l: "Offices Worldwide" },
+                  ].map((m, i) => (
+                    <motion.div
+                      key={m.l}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.45, delay: i * 0.06 }}
+                      className={
+                        i === 0
+                          ? "relative overflow-hidden bg-white p-8 md:p-12 text-center text-[#3C3F42] shadow-[0_14px_28px_rgba(0,0,0,0.15)] rounded-md"
+                          : "bg-[#ECECEC] p-8 md:p-12 text-center text-[#3C3F42] rounded-md"
+                      }
+                    >
+                      <div className="text-2xl md:text-3xl font-bold text-[#2F3236]">
+                        {m.n}
+                      </div>
+                      <div className="mt-2 text-xs md:text-sm text-[#6C7278]">
+                        {m.l}
+                      </div>
+                      {i === 0 && (
+                        <span className="pointer-events-none absolute left-4 right-4 -bottom-3 h-3 rounded-sm bg-[#2B2B2B]/70" />
+                      )}
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+          </motion.section>
+        </FadeInSection>
+
+        <FadeInSection>
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="py-16 md:py-20 bg-gray-50"
+          >
+            <ReviewsSection
+              reviews={REVIEWS}
+              accent="#F59E0B"
+              pageSize={4}
+              showAllHref="/reviews"
+            />
+          </motion.section>
+        </FadeInSection>
+
+        {/* --- Shine effect (clipped to glyphs) --- */}
+        <style jsx>{`
+          .shine-in-text {
+            --accent: ${ACCENT};
+            background-image: linear-gradient(
+              90deg,
+              var(--accent) 0%,
+              var(--accent) 40%,
+              #ffffff 50%,
+              var(--accent) 60%,
+              var(--accent) 100%
+            );
+            background-size: 200% 100%;
+            background-position: -100% 0%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            animation: shine-scan 2.4s ease-in-out infinite;
+          }
+          @keyframes shine-scan {
+            0% {
+              background-position: -120% 0%;
+            }
+            55% {
+              background-position: 120% 0%;
+            }
+            100% {
+              background-position: 120% 0%;
+            }
+          }
+        `}</style>
+      </motion.div>
+    </AnimatePresence>
+  );
+}

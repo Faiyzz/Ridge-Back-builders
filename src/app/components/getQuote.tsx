@@ -56,7 +56,10 @@ export default function QuoteSection() {
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(n);
 
   return (
-    <section className="relative mx-auto w-full max-w-[1200px] overflow-hidden rounded-3xl">
+    <section
+      id="getquote"
+      className="relative mx-auto w-full max-w-[1200px] overflow-hidden rounded-3xl"
+    >
       {/* BG image inside component */}
       <div className="absolute inset-0">
         <Image

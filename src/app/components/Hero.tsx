@@ -271,9 +271,11 @@ export default function HomePage() {
                 <span className={GOLD_TEXT}>BUILT</span> RIGHT
               </h1>
               <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                We specialize in commercial and residential construction,
+                renovations, and structural repairs. Every project is handled
+                with durable materials, skilled craftsmanship, and a commitment
+                to doing the job the right way.Ensuring strength, safety, and
+                lasting value.
               </p>
               <div className="mt-6 flex justify-center">
                 <Link
