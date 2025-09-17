@@ -88,8 +88,8 @@ export default function Footer() {
             </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-6 text-neutral-400">
-              Design-first construction & remodeling in Lahore. Premium
-              materials, transparent timelines, and craftsmanship that lasts.
+              Design-first construction & remodeling. Premium materials,
+              transparent timelines, and craftsmanship that lasts.
             </p>
 
             {/* Social */}
@@ -196,7 +196,7 @@ export default function Footer() {
               Contact Us
             </h3>
             <address className="not-italic mt-4 space-y-2 text-sm text-neutral-400">
-              <p>123 Main Street, Gulberg, Lahore, Pakistan</p>
+              <p>123 Main Street,</p>
               <p>
                 <Link
                   href="tel:+923001234567"

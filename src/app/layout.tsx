@@ -4,7 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TruScope",
+  title: "RidgeBack-Builders",
   description: "Marketing site",
 };
 
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth ">
       <body className="min-h-screen bg-white antialiased">
-        <Navbar/>
+        <Navbar />
         {children}
         <Footer />
       </body>
