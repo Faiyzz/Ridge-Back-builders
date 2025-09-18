@@ -3,9 +3,13 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useState } from "react";
-import { User } from "lucide-react"; // 👈 profile icon
+import { User } from "lucide-react"; 
+import { CSSProperties } from "react";// 👈 profile icon
 
 const ACCENT = "#FFE241";
+type CSSVariables = {
+  "--accent"?: string;
+};
 
 type Review = {
   text: string;
@@ -14,6 +18,9 @@ type Review = {
 };
 
 export default function ReviewsCarousel() {
+    const sectionStyle: CSSProperties & CSSVariables = {
+    "--accent": ACCENT,
+  };
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -53,7 +60,7 @@ export default function ReviewsCarousel() {
   return (
     <section
       className="mx-auto max-w-6xl px-6 py-16"
-      style={{ ["--accent" as any]: ACCENT }}
+      style={sectionStyle}
       aria-label="Customer Reviews"
     >
       {/* Heading */}
