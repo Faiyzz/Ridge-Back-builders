@@ -276,7 +276,7 @@ export default function ServicesSection() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="mx-auto flex max-w-7xl gap-6 px-[var(--gap)]"
+              className="mx-auto flex max-w-7xl gap-6 px-[var(--gap)] py-4"
             >
               {items.map((s, i) => {
                 const isActive = i === active;
@@ -332,8 +332,8 @@ export default function ServicesSection() {
                       </div>
 
                       {/* Content */}
-                      <div className="p-5 sm:p-6">
-                        <div className="flex items-start gap-4">
+                      <div className="p-5 sm:p-6 ">
+                        <div className="flex items-start gap-4 ">
                           <span
                             className="shrink-0 text-3xl font-extrabold sm:text-4xl"
                             style={{ color: ACCENT }}
@@ -341,10 +341,10 @@ export default function ServicesSection() {
                             {String(i + 1).padStart(2, "0")}
                           </span>
                           <div className="min-w-0">
-                            <h3 className="truncate text-lg font-semibold text-black sm:text-xl">
+                            <h3 className="truncate text-lg font-semibold text-black sm:text-xl ">
                               {s.title}
                             </h3>
-                            <p className="mt-2 text-sm leading-6 text-neutral-700">
+                            <p className="mt-2 text-sm leading-6 text-neutral-700 ">
                               {s.description}
                             </p>
                           </div>
@@ -371,7 +371,7 @@ export default function ServicesSection() {
           </div>
 
           {/* Dots */}
-          <div className="mt-6 flex justify-center gap-2">
+          <div className="pt-10 mt-6 flex justify-center gap-2">
             {items.map((_, i) => (
               <motion.button
                 key={i}

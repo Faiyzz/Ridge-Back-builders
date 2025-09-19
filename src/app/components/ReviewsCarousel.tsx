@@ -2,8 +2,9 @@
 
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { useState } from "react";
-import { User } from "lucide-react"; // 👈 profile icon
+import { useMemo, useState } from "react";
+import { User } from "lucide-react";
+import * as React from "react";
 
 const ACCENT = "#FFE241";
 
@@ -12,6 +13,9 @@ type Review = {
   author: string;
   role: string;
 };
+
+// Type-safe CSS var for --accent
+type AccentStyle = React.CSSProperties & Record<"--accent", string>;
 
 export default function ReviewsCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -50,17 +54,23 @@ export default function ReviewsCarousel() {
     },
   ];
 
+  // Memoized, type-safe CSS var style (no 'any')
+  const sectionStyle = useMemo<AccentStyle>(() => ({ "--accent": ACCENT }), []);
+
   return (
     <section
       className="mx-auto max-w-6xl px-6 py-16"
-      style={{ ["--accent" as any]: ACCENT }}
+      style={sectionStyle}
       aria-label="Customer Reviews"
     >
       {/* Heading */}
       <div className="mb-10">
-        <div className="mb-2 h-1 w-12 rounded" style={{ background: ACCENT }} />
+        <div
+          className="mb-2 h-1 w-12 rounded"
+          style={{ background: "var(--accent)" }}
+        />
         <h3 className="text-4xl font-bold">
-          Customer <span style={{ color: ACCENT }}>Reviews</span>
+          Customer <span style={{ color: "var(--accent)" }}>Reviews</span>
         </h3>
       </div>
 
@@ -74,7 +84,7 @@ export default function ReviewsCarousel() {
             <div className="mb-4 flex items-center gap-3">
               <div
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-black/5 ring-2"
-                style={{ borderColor: ACCENT }}
+                style={{ borderColor: "var(--accent)" }} // optional, ring uses currentColor; keeping inline for clarity
               >
                 <User className="h-5 w-5 text-gray-600" />
               </div>
@@ -104,10 +114,12 @@ export default function ReviewsCarousel() {
             onClick={() => instanceRef.current?.moveToIdx(idx)}
             aria-label={`Go to slide ${idx + 1}`}
             className={`h-2 rounded-full transition ${
-              currentSlide === idx
-                ? "bg-[var(--accent,#FFE241)] w-4"
-                : "bg-gray-300 w-2"
+              currentSlide === idx ? "w-4" : "w-2"
             }`}
+            style={{
+              backgroundColor:
+                currentSlide === idx ? "var(--accent)" : "rgba(0,0,0,0.2)",
+            }}
           />
         ))}
       </div>

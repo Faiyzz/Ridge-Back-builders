@@ -248,7 +248,7 @@ function Figure({
       {/* Shine */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 translate-x-[-120%] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.5),transparent)] opacity-0 transition-all duration-700 group-hover:translate-x-[240%] group-hover:opacity-100"
+        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/1 translate-x-[-120%] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.5),transparent)] opacity-0 transition-all duration-700 group-hover:translate-x-[240%] group-hover:opacity-100"
       />
 
       {/* Subtle top gradient */}
