@@ -1,228 +1,216 @@
 "use client";
-
+import { useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, FileText } from "lucide-react";
 
-/**
- * DocumentsSection
- * Next.js 15 + Tailwind CSS + TypeScript
- * - Hero with background image, dark overlay, fade to white bottom
- * - Centered hero text (no search bar)
- * - 4 animated cards; first overlaps the hero section
- * - Responsive; hover/tap shadows & motion
- *
- * Place images:
- * public/documents-hero.jpg
- * public/docs/1.jpg
- * public/docs/2.jpg
- * public/docs/3.jpg
- * public/docs/4.jpg
- */
+// ---- Animation helpers ----
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+const fadeUpProps = {
+  initial: fadeUp.initial,
+  whileInView: fadeUp.whileInView,
+  viewport: { once: true, amount: 0.6 as const },
+};
 
-// local hero image in /public
-const HERO_BG = "/documents-hero.jpg";
-
-// Toggle to alternate image side per card
-const ALTERNATE_LAYOUT = true; // controls L-R-L alternation
-
-// Demo docs (swap with real content)
-const docs: Array<{
+// ---- Card Type ----
+interface DocCard {
   id: number;
-  index: string;
   title: string;
-  excerpt: string;
-  tag: string;
-  href?: string; // optional link for View Details
-  file?: string; // optional PDF path for download
-}> = [
+  description: string;
+  image: string; // /public path (replace with your images)
+  align: "left" | "right"; // where the TEXT goes
+}
+
+const CARDS: DocCard[] = [
   {
     id: 1,
-    index: "01",
-    title: "Document",
-    excerpt:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    tag: "Connection Permit",
-    file: "/files/sample-1.pdf",
+    title: "Commercial Construction",
+    description:
+      "End-to-end delivery for offices, retail, hospitality, and industrial builds. We coordinate approvals, structural works, MEP, and finishing with strict timelines and HSE compliance to keep your business moving.",
+    image: "/images/comertial.webp", // e.g. /images/commercial.jpg
+    align: "right",
   },
   {
     id: 2,
-    index: "02",
-    title: "Design Brief",
-    excerpt:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    tag: "Internal",
-    file: "/files/sample-2.pdf",
+    title: "Residential Construction",
+    description:
+      "From single-family homes to multi-unit developments, we focus on durable materials, energy-efficient systems, and clean detailing. Transparent budgeting and on-site supervision ensure peace of mind.",
+    image: "/images/reside.jpg", // e.g. /images/residential.jpg
+    align: "left",
   },
   {
     id: 3,
-    index: "03",
-    title: "Safety Checklist",
-    excerpt:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    tag: "HSE",
-    file: "/files/sample-3.pdf",
+    title: "Renovation & Fit-Out",
+    description:
+      "Adaptive reuse, remodels, and interior fit-outs that respect existing structures while upgrading functionality. Minimal downtime, phased execution, and premium finishes tailored to your space.",
+    image: "/images/renovation.avif", // e.g. /images/renovation.jpg
+    align: "right",
   },
   {
     id: 4,
-    index: "04",
-    title: "QA Hand‑off",
-    excerpt:
-      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    tag: "Quality",
-    file: "/files/sample-4.pdf",
+    title: "Design Consultancy",
+    description:
+      "Concept to IFC drawings with 3D visualization, BOQs, and authority submissions. Our multidisciplinary team aligns architecture, structure, and MEP for a buildable, cost-smart design.",
+    image: "/images/dc.avif", // e.g. /images/design.jpg
+    align: "left",
   },
 ];
 
-export default function DocumentsSection() {
+export default function DocumentsPage() {
+  const hero = useMemo(
+    () => ({
+      bg: "/images/project.jpg",
+      heading: (
+        <>
+          Our Latest <span className="text-yellow-400">Projects</span>
+        </>
+      ),
+      sub: "A curated look at our commercial, residential, renovation, and consultancy work engineered for quality, efficiency, and lasting value.",
+    }),
+    []
+  );
+
   return (
-    <div className="w-full">
+    <main className="min-h-screen w-full bg-white text-neutral-900">
       {/* HERO */}
-      <section className="relative min-h-[100svh] w-full overflow-hidden bg-black">
+      <section className="relative isolate flex min-h-svh w-full items-center justify-center overflow-hidden text-center">
         {/* Background image */}
         <Image
-          src={HERO_BG}
-          alt="Documents background"
+          src={hero.bg}
+          alt="Background"
           fill
           priority
-          className="object-cover object-center opacity-90"
+          className="object-cover"
         />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/60" />
+        {/* Bottom fade to white */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-white" />
 
-        {/* Dark overlay + fade to white bottom */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-white" />
-        </div>
+        {/* Centered copy */}
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-center px-6 py-16 md:py-24">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+            }}
+            viewport={{ once: true, amount: 0.6 }}
+          >
+            <h1 className="text-5xl font-extrabold tracking-tight text-white md:text-7xl">
+              {hero.heading}
+            </h1>
+          </motion.div>
 
-        {/* Centered hero text */}
-        <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl"
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+            }}
+            viewport={{ once: true, amount: 0.6 }}
           >
-            Our <span className="text-yellow-400">Document</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
-            className="mt-4 max-w-2xl text-balance text-sm/6 text-white/80 sm:text-base/7"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </motion.p>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
+              {hero.sub}
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* CARDS */}
-      <section className="relative -mt-24 pb-24 pt-6 sm:-mt-28 sm:pt-0">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 sm:grid-cols-2 lg:grid-cols-2">
-          {docs.map((d, i) => (
-            <DocumentCard
-              key={d.id}
-              data={d}
-              overlap={i === 0}
-              // Alternate inner orientation: left, right, left, ...
-              reverse={ALTERNATE_LAYOUT ? i % 2 === 1 : false}
-            />
-          ))}
-        </div>
-      </section>
-    </div>
+      <div className="relative z-20 mx-auto -mt-40 flex max-w-6xl flex-col gap-16 px-4 pb-24 md:-mt-44 md:px-6">
+        {CARDS.map((card, idx) => (
+          <DocCard key={card.id} card={card} index={idx} />
+        ))}
+      </div>
+    </main>
   );
 }
 
-function DocumentCard({
-  data,
-  overlap,
-  reverse,
-}: {
-  data: {
-    id: number;
-    index: string;
-    title: string;
-    excerpt: string;
-    tag: string;
-    href?: string;
-    file?: string;
-  };
-  overlap?: boolean;
-}) {
+function DocCard({ card, index }: { card: DocCard; index: number }) {
+  const isTextLeft = card.align === "left";
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24, scale: 0.98 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ type: "spring", stiffness: 140, damping: 18 }}
-      whileHover={{ y: -4 }}
-      whileTap={{ scale: 0.98 }}
-      className={[
-        "group relative isolate overflow-hidden rounded-3xl bg-white/0 shadow-[0_10px_30px_rgba(0,0,0,0.14)] ring-1 ring-black/5 transition-shadow",
-        "hover:shadow-[0_22px_60px_rgba(0,0,0,0.2)]",
-        overlap ? "sm:col-span-2 sm:-mt-16" : "",
-      ].join(" ")}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.08,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="group relative grid min-h-[500px] overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-black/5 md:grid-cols-2"
     >
-      <div
-        className={[
-          "grid h-full grid-cols-1 overflow-hidden rounded-3xl sm:grid-cols-12",
-          reverse ? "sm:[direction:rtl]" : "",
-        ].join(" ")}
+      {/* Image side (edge-to-edge) */}
+      <figure
+        className={`${
+          isTextLeft ? "md:order-2" : "md:order-1"
+        } relative h-full w-full`}
       >
-        {/* Top glossy strip */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[6px] bg-gradient-to-r from-cyan-400/60 via-white/60 to-cyan-400/60" />
+        <Image
+          src={card.image}
+          alt={card.title}
+          width={1600}
+          height={1200}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/30 to-transparent md:hidden" />
+      </figure>
 
-        {/* Image side */}
-        <div className="relative h-80 sm:col-span-6 sm:h-[26rem] lg:h-[28rem]">
-          <Image
-            src={`/docs/${data.id}.jpg`}
-            alt={data.title}
-            fill
-            className="object-cover"
-          />
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-24 bg-gradient-to-l from-black/25 to-transparent sm:block" />
+      {/* Content side with cement/dust background */}
+      <motion.div
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+        className={`${
+          isTextLeft ? "md:order-1" : "md:order-2"
+        } relative flex h-full flex-col justify-center gap-4 bg-neutral-200/70 p-8 md:p-12`}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-extrabold text-yellow-600 md:text-3xl">
+            {String(card.id).padStart(2, "0")}
+          </span>
+          <h3 className="text-2xl font-semibold md:text-3xl">{card.title}</h3>
         </div>
 
-        {/* Content side */}
-        <div className="relative flex min-h-80 flex-col justify-start bg-[rgba(96,22,22,0.55)] p-5 text-white backdrop-blur-md sm:col-span-6 sm:p-8">
-          <div className="flex items-baseline gap-4">
-            <span className="text-3xl font-extrabold text-yellow-400 sm:text-4xl">
-              {data.index}
-            </span>
-            <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              {data.title}
-            </h3>
-          </div>
-          <div className="mt-3 h-px w-full bg-white/25" />
+        <p className="mt-3 text-sm leading-relaxed text-neutral-800 md:text-base">
+          {card.description}
+        </p>
 
-          <div className="mt-4 space-y-3">
-            <p className="text-sm/6 text-white/90 sm:text-base/7">
-              {data.excerpt}
-            </p>
-            <p className="text-sm/6 text-white/90 sm:text-base/7">
-              {data.excerpt}
-            </p>
-          </div>
-
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 px-3 py-1.5 text-xs font-medium text-white/90">
-              <FileText className="h-4 w-4" /> {data.tag}
-            </span>
-            <motion.a
-              href={data.file || "#"}
-              download
-              rel="noopener"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="ml-auto inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-neutral-900 shadow-md transition hover:bg-white"
+        <div className="mt-6">
+          <button className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-2xl active:scale-[0.98]">
+            <span>Learn More</span>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="transition-transform group-hover:translate-x-0.5"
             >
-              Download PDF <Download className="h-4 w-4" />
-            </motion.a>
-          </div>
+              <path
+                d="M5 12h14m0 0-5-5m5 5-5 5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </div>
-      </div>
-      <span className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 ring-2 ring-yellow-400/40 transition-opacity duration-300 group-active:opacity-100" />
+
+        {/* subtle hover glow */}
+        <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 transition group-hover:ring-8 group-hover:ring-yellow-400/10" />
+      </motion.div>
     </motion.article>
   );
 }
