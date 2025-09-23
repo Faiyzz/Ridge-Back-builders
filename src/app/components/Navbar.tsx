@@ -13,13 +13,7 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Blogs", href: "/blogs" },
   { label: "Services", href: "/services" },
-];
-
-const projectItems = [
-  { label: "All Projects", href: "/projects" },
-  { label: "Websites", href: "/projects/websites" },
-  { label: "Branding", href: "/projects/branding" },
-  { label: "Video", href: "/projects/video" },
+  { label: "Projects", href: "/projects" },
 ];
 
 export default function Navbar() {
@@ -63,80 +57,6 @@ export default function Navbar() {
             })}
 
             {/* Projects dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setProjectsOpen(true)}
-              onMouseLeave={() => setProjectsOpen(false)}
-            >
-              <button
-                type="button"
-                aria-expanded={projectsOpen}
-                className="group inline-flex items-center gap-1 text-sm font-semibold text-white/90 hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,.6)]"
-              >
-                Projects
-                <ChevronDown
-                  className={clsx(
-                    "h-4 w-4 transition-transform",
-                    projectsOpen && "rotate-180"
-                  )}
-                  style={{ color: ACCENT }}
-                />
-                <span
-                  className="absolute left-1/2 top-[1.65rem] -translate-x-1/2"
-                  aria-hidden
-                >
-                  <span
-                    className={clsx(
-                      "block h-1.5 w-1.5 rounded-full opacity-0 transition-opacity",
-                      projectsOpen && "opacity-100"
-                    )}
-                    style={{ backgroundColor: ACCENT }}
-                  />
-                </span>
-              </button>
-
-              <div
-                className={clsx(
-                  "absolute left-1/2 -translate-x-1/2 mt-3 w-56 rounded-xl border border-white/10 bg-black/60 backdrop-blur-md shadow-xl transition-all",
-                  projectsOpen
-                    ? "opacity-100 translate-y-0 visible"
-                    : "opacity-0 -translate-y-1 invisible"
-                )}
-              >
-                <ul className="py-2">
-                  {projectItems.map((item) => {
-                    const active = pathname === item.href;
-                    return (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          className={clsx(
-                            "block px-3 py-2 text-sm hover:text-black",
-                            active ? "text-white" : "text-white/90"
-                          )}
-                          style={{
-                            transition: "color .2s, background-color .2s",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = ACCENT;
-                            e.currentTarget.style.color = "#000";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor =
-                              "transparent";
-                            e.currentTarget.style.color = active
-                              ? "#fff"
-                              : "rgba(255,255,255,0.9)";
-                          }}
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
 
             {/* CTA */}
             <Link
@@ -154,7 +74,7 @@ export default function Navbar() {
                 <span className="relative z-10">Contact Us</span>
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-y-0 -left-full w-1/2 translate-x-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.9),transparent)] transition-transform duration-700 group-hover:translate-x-[280%]"
+                  className="pointer-events-none absolute inset-y-0 -left-full w-1/1 translate-x-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.9),transparent)] transition-transform duration-700 group-hover:translate-x-[280%]"
                 />
               </span>
             </Link>
@@ -248,38 +168,7 @@ export default function Navbar() {
                         ? "max-h-96 opacity-100"
                         : "max-h-0 opacity-0"
                     )}
-                  >
-                    <ul className="mt-1 space-y-1 pl-3">
-                      {projectItems.map((p) => {
-                        const active = pathname === p.href;
-                        return (
-                          <li key={p.href}>
-                            <Link
-                              href={p.href}
-                              onClick={() => setMobileOpen(false)}
-                              className={clsx(
-                                "block rounded-lg px-3 py-2 text-sm hover:text-black",
-                                active ? "text-white" : "text-white/85"
-                              )}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = ACCENT;
-                                e.currentTarget.style.color = "#000";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor =
-                                  "transparent";
-                                e.currentTarget.style.color = active
-                                  ? "#fff"
-                                  : "rgba(255,255,255,0.85)";
-                              }}
-                            >
-                              {p.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                  ></div>
                 </li>
 
                 <li>
