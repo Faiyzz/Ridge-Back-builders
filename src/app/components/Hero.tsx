@@ -1,5 +1,7 @@
+// app/page.tsx
 "use client";
 
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
@@ -12,6 +14,25 @@ import {
   MotionConfig,
   useReducedMotion,
 } from "framer-motion";
+
+export const metadata: Metadata = {
+  title: "Florida Remodeling & Renovation — RidgebackBuilders",
+  description:
+    "Kitchens, bathrooms, and full-home renovations built to last. Transparent timelines, durable materials, and craftsmanship you can trust in Florida.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "https://www.ridgebackbuilders.com/",
+    siteName: "RidgebackBuilders",
+    title: "Florida Remodeling & Renovation — RidgebackBuilders",
+    description:
+      "Kitchens, bathrooms, and full-home renovations built to last. Transparent timelines, durable materials, and craftsmanship you can trust.",
+    images: ["/default.png"],
+    locale: "en_US",
+  },
+};
+
+export const revalidate = 3600;
 
 type Project = {
   id: number;
@@ -48,11 +69,9 @@ const PROJECTS: Project[] = [
   },
 ];
 
-// Gold base gradient for text
 const GOLD_TEXT =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)] bg-clip-text text-transparent";
 
-// Gold + inside-text shine on hover
 const GOLD_TEXT_SHINE = [
   "bg-clip-text text-transparent",
   "[background-image:linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%),linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent)]",
@@ -67,7 +86,6 @@ const GOLD_TEXT_SHINE = [
 const GOLD_BG =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)]";
 
-// ===== Framer Motion variants / timing =====
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const heroVariants = {
@@ -109,7 +127,6 @@ const cardVariants = {
   },
 };
 
-// Reusable “animate on enter + animate back when scrolled out” wrapper
 function InOutCard({
   children,
   as: Tag = motion.article,
@@ -120,7 +137,7 @@ function InOutCard({
   className?: string;
 }) {
   const controls = useAnimation();
-  const ref = useRef<HTMLElement | null>(null); // <- HTMLElement, not any
+  const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { amount: 0.3, margin: "0px 0px -10% 0px" });
 
   useEffect(() => {
@@ -129,7 +146,7 @@ function InOutCard({
 
   return (
     <Tag
-      ref={ref} // <- no any cast
+      ref={ref}
       className={clsx(
         "transform-gpu will-change-transform will-change-opacity",
         className
@@ -146,23 +163,20 @@ function InOutCard({
   );
 }
 
-/* ---------- Pretty project card with separate image + text panel ---------- */
 function ProjectCard({
   p,
   imageHeightClass,
 }: {
   p: Project;
-  imageHeightClass: string; // e.g. "h-[22rem]" or "h-[22rem] lg:h-[24rem] xl:h-[26rem]"
+  imageHeightClass: string;
 }) {
   return (
     <InOutCard
       className={clsx(
         "group relative overflow-visible rounded-[28px]",
-        // big soft shadow + inner ring
         "shadow-[0_18px_60px_-12px_rgba(0,0,0,0.45)]"
       )}
     >
-      {/* Outer container with subtle border and hover elevation */}
       <div
         className={clsx(
           "relative rounded-[28px] bg-neutral-950/90 ring-1 ring-white/10",
@@ -178,11 +192,11 @@ function ProjectCard({
         >
           <Image
             src={p.img}
-            alt={p.title}
+            alt={`${p.title} — RidgebackBuilders project`}
             fill
             className="object-cover transform-gpu will-change-transform transition-transform duration-700 group-hover:scale-[1.04]"
+            sizes="(max-width: 768px) 85vw, (max-width: 1024px) 45vw, 30vw"
           />
-          {/* dark overlay + top glow */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div
             className="pointer-events-none absolute -inset-8 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20"
@@ -191,14 +205,13 @@ function ProjectCard({
                 "radial-gradient(600px at 50% 20%, #ffe24133, transparent 60%)",
             }}
           />
-          {/* subtle shine sweep */}
           <span
             aria-hidden
             className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/1 translate-x-[-120%] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.55),transparent)] opacity-0 transition-all duration-700 group-hover:translate-x-[240%] group-hover:opacity-100"
           />
         </div>
 
-        {/* Floating text panel (separate card) */}
+        {/* Floating text panel */}
         <div className="relative -mt-8 px-5 pb-5 sm:px-6 sm:pb-6">
           <div
             className={clsx(
@@ -207,7 +220,6 @@ function ProjectCard({
               "shadow-[0_12px_40px_-18px_rgba(0,0,0,0.9)]"
             )}
           >
-            {/* tiny gold accent line */}
             <div
               className="h-[3px] w-14 rounded-full mx-auto mt-4"
               style={{ background: "linear-gradient(90deg,#d4af37,#ffe241)" }}
@@ -232,9 +244,31 @@ function ProjectCard({
   );
 }
 
-export default function HomePage() {
+const HomePage = () => {
   const prefersReduced = useReducedMotion();
   const POSTS = useMemo(() => PROJECTS, []);
+
+  const orgLd = {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    name: "RidgebackBuilders",
+    url: "https://www.ridgebackbuilders.com",
+    logo: "https://www.ridgebackbuilders.com/images/logo.png",
+    areaServed: "Florida, USA",
+    telephone: "+1-000-000-0000",
+  };
+
+  const siteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: "https://www.ridgebackbuilders.com",
+    name: "RidgebackBuilders",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://www.ridgebackbuilders.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
 
   return (
     <MotionConfig
@@ -243,20 +277,20 @@ export default function HomePage() {
     >
       <main className="min-h-screen w-full bg-white">
         {/* HERO */}
-        <section className="relative isolate">
+        <section className="relative isolate" aria-label="Hero">
           <div className="relative h-[min(100svh,900px)] w-full overflow-hidden bg-white">
             <Image
               src="/images/h1.HEIC"
-              alt="City highrise"
+              alt="RidgebackBuilders — Florida skyline and construction backdrop"
               fill
               priority
               className="object-cover brightness-[.6] transform-gpu will-change-transform"
+              sizes="100vw"
             />
             <div className="pointer-events-none absolute inset-0 bg-black/45" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[32%] bg-gradient-to-b from-transparent via-white/25 to-white" />
           </div>
 
-          {/* Hero copy with entrance + exit */}
           <motion.div
             className="absolute inset-0 z-10 flex items-end justify-center pb-[clamp(5rem,30vh,18rem)]"
             variants={heroVariants}
@@ -274,12 +308,13 @@ export default function HomePage() {
                 We specialize in commercial and residential construction,
                 renovations, and structural repairs. Every project is handled
                 with durable materials, skilled craftsmanship, and a commitment
-                to doing the job the right way.Ensuring strength, safety, and
+                to doing the job the right way — ensuring strength, safety, and
                 lasting value.
               </p>
               <div className="mt-6 flex justify-center">
                 <Link
                   href="#projects"
+                  aria-label="View RidgebackBuilders projects"
                   className={clsx(
                     "group relative overflow-hidden rounded-full px-6 py-2.5 text-sm font-semibold text-black",
                     "shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]",
@@ -301,10 +336,11 @@ export default function HomePage() {
         {/* PROJECT CARDS */}
         <section
           id="projects"
+          aria-label="Featured projects"
           className="relative z-20 -mt-[clamp(8rem,12vh,14rem)] pb-28 pt-4"
         >
           <div className="mx-auto max-w-6xl px-4">
-            {/* ===== MOBILE: horizontal snap scroll ===== */}
+            {/* Mobile: horizontal snap */}
             <AnimatePresence mode="popLayout">
               <motion.div
                 key="mobile-list"
@@ -336,7 +372,7 @@ export default function HomePage() {
               </motion.div>
             </AnimatePresence>
 
-            {/* ===== DESKTOP/TABLET: grid ===== */}
+            {/* Desktop/tablet: grid */}
             <AnimatePresence mode="popLayout">
               <motion.div
                 key="desktop-grid"
@@ -364,6 +400,18 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
+      {/* JSON-LD (inject at end of page) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd) }}
+      />
     </MotionConfig>
   );
-}
+};
+
+export default HomePage;

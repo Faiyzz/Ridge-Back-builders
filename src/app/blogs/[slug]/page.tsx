@@ -1,27 +1,69 @@
+// app/blogs/[slug]/page.tsx
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { BLOGS } from "../../data";
 import Link from "next/link";
+import type { Metadata } from "next";
+import { BLOGS } from "../../data";
+import { slugify } from "@/lib/slug";
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true; // allow any slug at runtime
 
 const ACCENT = "#FFE241";
 
-// Narrow type for the optional Desc field used below
 type WithDesc = { Desc?: { paragraph?: string } };
 
-export default async function BlogDetail({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const postId = Number(id);
-  const post = BLOGS.find((p) => p.id === postId);
+function findPostBySlug(rawSlug: string) {
+  const slug = decodeURIComponent((rawSlug || "").trim().toLowerCase());
+
+  // 1) Exact slug field
+  let post =
+    BLOGS.find((p: any) => (p.slug || "").toLowerCase() === slug) ||
+    // 2) Derived from title (must match index)
+    BLOGS.find((p: any) => slugify(p.title ?? String(p.id)) === slug);
+
+  // 3) Fallback: numeric id (in case some old links exist)
+  if (!post) {
+    const idNum = Number(slug);
+    if (!Number.isNaN(idNum)) {
+      post = BLOGS.find((p: any) => p.id === idNum);
+    }
+  }
+
+  return post;
+}
+
+// Optional dynamic metadata
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const post = findPostBySlug(params.slug);
+  if (!post) return { title: "Article not found" };
+
+  const title = post.seoTitle ?? post.title;
+  const description = post.seoDescription ?? post.excerpt ?? "";
+  const url = `/blogs/${params.slug}`;
+  const ogImage = post.ogImage ?? post.banner?.image?.src ?? "/placeholder-hero.jpg";
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "article",
+      images: [{ url: ogImage }],
+    },
+  };
+}
+
+export default function BlogDetail({ params }: { params: { slug: string } }) {
+  const post = findPostBySlug(params.slug);
   if (!post) return notFound();
 
-  // Basics
   const title = post.seoTitle ?? post.title;
   const excerpt = post.seoDescription ?? post.excerpt;
   const author = post.author ?? "Ridgeback Builders";
@@ -31,12 +73,10 @@ export default async function BlogDetail({
     post.banner?.image?.src ?? post.ogImage ?? "/placeholder-hero.jpg";
   const heroAlt = post.banner?.image?.alt ?? post.title;
 
-  // Safely access optional Desc paragraph without using `any`
   const descParagraph = (post as WithDesc).Desc?.paragraph;
 
   return (
     <main className="relative isolate min-h-screen bg-white text-black">
-      {/* Vertical darken overlay behind content */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
@@ -46,9 +86,7 @@ export default async function BlogDetail({
         }}
       />
 
-      {/* All actual content sits above the overlay */}
       <div className="relative z-10">
-        {/* Title + meta */}
         <section className="mx-auto max-w-4xl px-4 py-10 md:py-24">
           <h1 className="text-[28px] leading-tight md:text-[44px] md:leading-[1.1] font-extrabold tracking-tight">
             {title}
@@ -69,7 +107,6 @@ export default async function BlogDetail({
             )}
           </div>
 
-          {/* Banner */}
           <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-2xl ring-1 ring-black/10">
             <Image
               src={heroImage}
@@ -77,10 +114,10 @@ export default async function BlogDetail({
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, 1024px"
             />
           </div>
 
-          {/* Optional description */}
           {descParagraph && (
             <section className="mx-auto mt-8 max-w-5xl px-2 pb-4">
               <div className="p-2">
@@ -92,7 +129,6 @@ export default async function BlogDetail({
           )}
         </section>
 
-        {/* Case Study */}
         {post.caseStudy?.paragraph && (
           <section className="mx-auto max-w-4xl px-4 pb-4">
             <div className="rounded-2xl border bg-gray-50 p-6 md:p-8">
@@ -104,11 +140,9 @@ export default async function BlogDetail({
               </div>
               {post.caseStudy.bullets?.length ? (
                 <ul className="ml-5 mt-2 list-disc space-y-2 text-sm md:text-[17px] text-black/80">
-                  {post.caseStudy.bullets.map((b, i) => (
+                  {post.caseStudy.bullets.map((b: string, i: number) => (
                     <li key={i}>
-                      <ReactMarkdown components={{ p: "span" }}>
-                        {b}
-                      </ReactMarkdown>
+                      <ReactMarkdown components={{ p: "span" }}>{b}</ReactMarkdown>
                     </li>
                   ))}
                 </ul>
@@ -117,7 +151,6 @@ export default async function BlogDetail({
           </section>
         )}
 
-        {/* How We Do It */}
         {post.howWeDoIt?.steps?.length > 0 && (
           <section className="mx-auto max-w-5xl px-4 py-10 md:py-14">
             {!!post.howWeDoIt.heading && (
@@ -127,7 +160,7 @@ export default async function BlogDetail({
             )}
 
             <div className="mt-8 space-y-14">
-              {post.howWeDoIt.steps.map((step, idx) => {
+              {post.howWeDoIt.steps.map((step: any, idx: number) => {
                 const key = `${step.number ?? "x"}-${step.title}-${idx}`;
                 return (
                   <article key={key} className="flex flex-col gap-6">
@@ -138,6 +171,7 @@ export default async function BlogDetail({
                             src={step.media.src}
                             alt={step.media.alt ?? `${step.title} — example`}
                             fill
+                            sizes="(max-width: 768px) 100vw, 560px"
                             className="object-cover"
                           />
                         </div>
@@ -166,7 +200,7 @@ export default async function BlogDetail({
                         )}
                         {step.bullets?.length ? (
                           <ul className="ml-5 list-disc space-y-2 text-sm md:text-[17px] text-black/80">
-                            {step.bullets.map((b, i) => (
+                            {step.bullets.map((b: string, i: number) => (
                               <li key={i}>
                                 <ReactMarkdown components={{ p: "span" }}>
                                   {b}
@@ -184,7 +218,6 @@ export default async function BlogDetail({
           </section>
         )}
 
-        {/* CTA */}
         <section id="consult" className="mx-auto max-w-5xl px-4 py-12 md:py-16">
           <div className="rounded-2xl border border-yellow-300 bg-yellow-100/70 p-6 md:p-8 flex flex-col items-center justify-center text-center">
             <h3 className="text-lg font-extrabold tracking-tight md:text-3xl text-black">
@@ -221,7 +254,6 @@ export default async function BlogDetail({
           )}
         </section>
 
-        {/* Footer */}
         <section className="mx-auto max-w-5xl px-4 pb-12">
           <p className="text-center text-[11px] leading-relaxed text-black/50">
             Serving Lehigh Acres, Fort Myers, Naples, Port Charlotte, Sarasota,

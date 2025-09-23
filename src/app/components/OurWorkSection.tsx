@@ -2,46 +2,67 @@
 
 import Image from "next/image";
 import { Poppins } from "next/font/google";
-import { useState } from "react";
-import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-});
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700", "800"] });
 
 const ACCENT = "#FFE241";
 
+// Prefer web-friendly formats; avoid .heic
 const WORK_IMAGES = [
-  "/images/1.avif",
-  "/images/2.avif",
-  "/images/3.avif",
-  "/images/4.avif",
-  "/images/5.avif",
-  "/images/6.avif",
-  "/images/7.avif",
-  "/images/8.avif",
-  "/images/9.avif",
-  "/images/10.avif",
-  "/images/11.avif",
-  "/images/12.avif",
-  "/images/14.heic",
+  { src: "/images/1.avif", alt: "Modern kitchen remodel with matte cabinetry", caption: "Kitchen remodel — matte cabinetry & stone island" },
+  { src: "/images/2.avif", alt: "Bathroom renovation with walk-in glass shower", caption: "Bathroom renovation — walk-in glass shower" },
+  { src: "/images/3.avif", alt: "Open-plan living area with oak floors", caption: "Open-plan living — oak floors" },
+  { src: "/images/4.avif", alt: "Exterior facade upgrade with new siding", caption: "Exterior facade upgrade" },
+  { src: "/images/5.avif", alt: "Backyard deck with rail lighting", caption: "Backyard deck + lighting" },
+  { src: "/images/6.avif", alt: "Custom staircase with metal balustrade", caption: "Custom staircase" },
+  { src: "/images/7.avif", alt: "Minimalist bedroom with wall paneling", caption: "Bedroom wall paneling" },
+  { src: "/images/8.avif", alt: "Home office built-in shelving", caption: "Home office built-ins" },
+  { src: "/images/9.avif", alt: "Duplex exterior with landscaped entry", caption: "Duplex exterior" },
+  { src: "/images/10.avif", alt: "Laundry room with stacked units", caption: "Laundry upgrade" },
+  { src: "/images/11.avif", alt: "Dining nook with banquette seating", caption: "Dining nook" },
+  { src: "/images/12.avif", alt: "Shower niche tiling close-up", caption: "Shower niche detail" },
+  { src: "/images/14.heic", alt: "Concrete patio and pergola", caption: "Patio + pergola" },
 ];
 
 export default function OurWorkSection() {
   const [active, setActive] = useState<number | null>(null);
-  const onCardClick = (i: number) =>
-    setActive((prev) => (prev === i ? null : i));
+  const prefersReduced = useReducedMotion();
+
+  const items = useMemo(() => WORK_IMAGES, []);
+  const onCardClick = (i: number) => setActive((prev) => (prev === i ? null : i));
+
+  // JSON-LD to describe the gallery as an ItemList of ImageObject
+  const galleryLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Our Work Gallery",
+    itemListElement: items.map((img, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      item: {
+        "@type": "ImageObject",
+        contentUrl: `https://www.ridgebackbuilders.com${img.src}`,
+        name: img.caption || img.alt,
+        description: img.alt,
+      },
+    })),
+  };
 
   return (
     <MotionConfig
       transition={{ type: "spring", stiffness: 140, damping: 22, mass: 0.6 }}
+      reducedMotion={prefersReduced ? "always" : "user"}
     >
-      <section className={`${poppins.className} bg-white py-14 md:py-20`}>
+      <section
+        className={`${poppins.className} bg-white py-14 md:py-20`}
+        aria-labelledby="our-work-heading"
+      >
         <div className="mx-auto max-w-7xl px-5 md:px-10">
           {/* Heading */}
           <header className="text-center">
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-black">
+            <h2 id="our-work-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight text-black">
               Our{" "}
               <span
                 className="underline decoration-8 underline-offset-[10px]"
@@ -51,127 +72,50 @@ export default function OurWorkSection() {
               </span>
             </h2>
             <p className="mx-auto mt-3 md:mt-4 max-w-2xl text-xs md:text-sm italic text-neutral-500">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore.
+              A selection of recent builds and renovations across Florida.
             </p>
           </header>
 
-          {/* Equal gutters */}
+          {/* Equal gutters grid */}
           <div className="mt-10 md:mt-14 grid grid-cols-12 gap-x-5 gap-y-5 md:gap-x-6 md:gap-y-6">
-            {/* Row 1 (12) — all 4-col => same aspect */}
-            <Figure
-              src={WORK_IMAGES[0]}
-              index={0}
-              isActive={active === 0}
-              onClick={() => onCardClick(0)}
-              className="col-span-4"
-              ratio="aspect-[4/5]"
-            />
-            <Figure
-              src={WORK_IMAGES[1]}
-              index={1}
-              isActive={active === 1}
-              onClick={() => onCardClick(1)}
-              className="col-span-4"
-              ratio="aspect-[4/5]"
-            />
-            <Figure
-              src={WORK_IMAGES[2]}
-              index={2}
-              isActive={active === 2}
-              onClick={() => onCardClick(2)}
-              className="col-span-4"
-              ratio="aspect-[4/5]"
-            />
-
-            {/* Row 2 (8 + 4) — 4-col aspect = (8-col aspect)/2 */}
-            <Figure
-              src={WORK_IMAGES[3]}
-              index={3}
-              isActive={active === 3}
-              onClick={() => onCardClick(3)}
-              className="col-span-8"
-              ratio="aspect-[16/7]" // a1 ≈ 2.2857
-            />
-            <Figure
-              src={WORK_IMAGES[4]}
-              index={4}
-              isActive={active === 4}
-              onClick={() => onCardClick(4)}
-              className="col-span-4"
-              ratio="aspect-[8/7]" // a2 = a1/2 ≈ 1.1429
-            />
-
-            {/* Row 3 (6 + 3 + 3) — 3-col aspect = (6-col aspect)/2 */}
-            <Figure
-              src={WORK_IMAGES[5]}
-              index={5}
-              isActive={active === 5}
-              onClick={() => onCardClick(5)}
-              className="col-span-6"
-              ratio="aspect-[16/10]" // a1 = 1.6
-            />
-            <Figure
-              src={WORK_IMAGES[6]}
-              index={6}
-              isActive={active === 6}
-              onClick={() => onCardClick(6)}
-              className="col-span-3"
-              ratio="aspect-[4/5]" // a2 = 0.8
-            />
-            <Figure
-              src={WORK_IMAGES[7]}
-              index={7}
-              isActive={active === 7}
-              onClick={() => onCardClick(7)}
-              className="col-span-3"
-              ratio="aspect-[4/5]" // a2 = 0.8
-            />
-
-            {/* Row 4 (8 + 4) — same pairing rule as Row 2 */}
-            <Figure
-              src={WORK_IMAGES[8]}
-              index={8}
-              isActive={active === 8}
-              onClick={() => onCardClick(8)}
-              className="col-span-8"
-              ratio="aspect-[16/7]"
-            />
-            <Figure
-              src={WORK_IMAGES[9]}
-              index={9}
-              isActive={active === 9}
-              onClick={() => onCardClick(9)}
-              className="col-span-4"
-              ratio="aspect-[8/7]"
-            />
-
-            {/* Row 5 (4 + 4 + 4) — all same aspect */}
-            <Figure
-              src={WORK_IMAGES[10]}
-              index={10}
-              isActive={active === 10}
-              onClick={() => onCardClick(10)}
-              className="col-span-4"
-              ratio="aspect-[4/5]"
-            />
-            <Figure
-              src={WORK_IMAGES[11]}
-              index={11}
-              isActive={active === 11}
-              onClick={() => onCardClick(11)}
-              className="col-span-4"
-              ratio="aspect-[4/5]"
-            />
-            <Figure
-              src={WORK_IMAGES[12]}
-              index={12}
-              isActive={active === 12}
-              onClick={() => onCardClick(12)}
-              className="col-span-4"
-              ratio="aspect-[4/5]"
-            />
+            {items.map((img, i) => {
+              // map your original layout spans/ratios by index:
+              const config: Record<number, { span: string; ratio: string }> = {
+                0: { span: "col-span-4", ratio: "aspect-[4/5]" },
+                1: { span: "col-span-4", ratio: "aspect-[4/5]" },
+                2: { span: "col-span-4", ratio: "aspect-[4/5]" },
+                3: { span: "col-span-8", ratio: "aspect-[16/7]" },
+                4: { span: "col-span-4", ratio: "aspect-[8/7]" },
+                5: { span: "col-span-6", ratio: "aspect-[16/10]" },
+                6: { span: "col-span-3", ratio: "aspect-[4/5]" },
+                7: { span: "col-span-3", ratio: "aspect-[4/5]" },
+                8: { span: "col-span-8", ratio: "aspect-[16/7]" },
+                9: { span: "col-span-4", ratio: "aspect-[8/7]" },
+                10: { span: "col-span-4", ratio: "aspect-[4/5]" },
+                11: { span: "col-span-4", ratio: "aspect-[4/5]" },
+                12: { span: "col-span-4", ratio: "aspect-[4/5]" },
+              };
+              return (
+                <Figure
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  caption={img.caption}
+                  index={i}
+                  isActive={active === i}
+                  onClick={() => onCardClick(i)}
+                  className={config[i]?.span ?? "col-span-4"}
+                  ratio={config[i]?.ratio ?? "aspect-[4/5]"}
+                />
+              );
+            })}
           </div>
+
+          {/* JSON-LD */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(galleryLd) }}
+          />
         </div>
       </section>
     </MotionConfig>
@@ -180,8 +124,10 @@ export default function OurWorkSection() {
 
 type FigureProps = {
   src: string;
+  alt: string;
+  caption?: string;
   className?: string;
-  ratio?: string; // Tailwind aspect-ratio class (width/height)
+  ratio?: string;
   index: number;
   isActive: boolean;
   onClick: () => void;
@@ -189,6 +135,8 @@ type FigureProps = {
 
 function Figure({
   src,
+  alt,
+  caption = "Project highlight",
   className = "",
   ratio = "aspect-[4/5]",
   index,
@@ -197,13 +145,16 @@ function Figure({
 }: FigureProps) {
   const item = {
     hidden: { opacity: 0, y: 20, scale: 0.98 },
-    show: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { delay: i * 0.06 },
-    }),
+    show: (i: number) => ({ opacity: 1, y: 0, scale: 1, transition: { delay: i * 0.06 } }),
     exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.25 } },
+  };
+
+  // keyboard toggle (accessibility)
+  const onKeyDown: React.KeyboardEventHandler<HTMLElement> = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onClick();
+    }
   };
 
   return (
@@ -214,17 +165,20 @@ function Figure({
       whileInView="show"
       viewport={{ amount: 0.25, once: false }}
       exit="exit"
-      whileTap={{ scale: 0.995 }} // keep container fixed so gutters don't shift
+      whileTap={{ scale: 0.995 }}
       onClick={onClick}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-pressed={isActive}
+      aria-label={`${caption} (image ${index + 1} of ${12})`}
       className={[
         "group relative w-full",
         ratio,
         "overflow-hidden rounded-2xl bg-neutral-200",
         "shadow-[0_10px_30px_rgba(0,0,0,0.10)] ring-1 ring-black/5",
         "transition-all duration-300 will-change-transform",
-        isActive
-          ? "ring-2 ring-[color:var(--accent)] shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
-          : "",
+        isActive ? "ring-2 ring-[color:var(--accent)] shadow-[0_30px_80px_rgba(0,0,0,0.35)]" : "",
         className,
       ].join(" ")}
       style={{ "--accent": ACCENT } as React.CSSProperties}
@@ -238,10 +192,13 @@ function Figure({
       >
         <Image
           src={src}
-          alt="Our work image"
+          alt={alt}
           fill
+          decoding="async"
           className="object-cover"
+          // Mobile: full width, Desktop: about half width each in grid context
           sizes="(max-width: 768px) 100vw, 50vw"
+          // Let Next lazy-load by default; no priority here
         />
       </motion.div>
 
@@ -254,36 +211,31 @@ function Figure({
       {/* Subtle top gradient */}
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.15), transparent 60%)",
-        }}
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.15), transparent 60%)" }}
       />
 
-      {/* Active overlay */}
+      {/* Active overlay + caption */}
       <AnimatePresence>
         {isActive && (
-          <motion.div
+          <motion.figcaption
             key="activeOverlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="pointer-events-none absolute inset-0"
+            className="pointer-events-none absolute inset-0 flex flex-col items-center justify-end p-4 text-center"
           >
             <div
               className="absolute inset-0 rounded-2xl"
-              style={{
-                boxShadow: `0 0 0 2px ${ACCENT}, 0 20px 50px rgba(0,0,0,0.35)`,
-              }}
+              style={{ boxShadow: `0 0 0 2px ${ACCENT}, 0 20px 50px rgba(0,0,0,0.35)` }}
             />
             <div
               className="absolute inset-0 rounded-2xl"
-              style={{
-                background:
-                  "radial-gradient(400px at 50% 65%, rgba(255,226,65,0.18), transparent 60%)",
-              }}
+              style={{ background: "radial-gradient(400px at 50% 65%, rgba(255,226,65,0.18), transparent 60%)" }}
             />
-          </motion.div>
+            <span className="relative z-10 mt-auto rounded bg-black/55 px-3 py-1.5 text-xs font-medium text-white backdrop-blur">
+              {caption}
+            </span>
+          </motion.figcaption>
         )}
       </AnimatePresence>
     </motion.figure>
