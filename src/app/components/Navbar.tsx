@@ -18,7 +18,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [projectsOpen, setProjectsOpen] = useState(false);
+
   const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -29,11 +29,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/images/PNG 1.png"
+              src="/images/logo.png"
               alt="RB"
-              width={90}
-              height={90}
-              className="h-15 w-15 drop-shadow-[0_2px_12px_rgba(0,0,0,.6)]"
+              width={100}
+              height={100}
+              className="h-full w-full drop-shadow-[0_2px_12px_rgba(0,0,0,.6)]"
               priority
             />
           </Link>
@@ -55,8 +55,6 @@ export default function Navbar() {
                 </Link>
               );
             })}
-
-            {/* Projects dropdown */}
 
             {/* CTA */}
             <Link
@@ -146,54 +144,6 @@ export default function Navbar() {
                 })}
 
                 {/* Mobile Projects accordion */}
-                <li>
-                  <button
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-base text-white/90"
-                    onClick={() => setMobileProjectsOpen((s) => !s)}
-                    aria-expanded={mobileProjectsOpen}
-                  >
-                    <span>Projects</span>
-                    <ChevronDown
-                      className={clsx(
-                        "h-5 w-5 transition-transform",
-                        mobileProjectsOpen && "rotate-180"
-                      )}
-                      style={{ color: ACCENT }}
-                    />
-                  </button>
-                  <div
-                    className={clsx(
-                      "overflow-hidden transition-[max-height,opacity] duration-300",
-                      mobileProjectsOpen
-                        ? "max-h-96 opacity-100"
-                        : "max-h-0 opacity-0"
-                    )}
-                  ></div>
-                </li>
-
-                <li>
-                  <Link
-                    href="/articles"
-                    onClick={() => setMobileOpen(false)}
-                    className={clsx(
-                      "block rounded-lg px-3 py-2 text-base hover:text-black",
-                      pathname === "/articles" ? "text-white" : "text-white/90"
-                    )}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = ACCENT;
-                      e.currentTarget.style.color = "#000";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color =
-                        pathname === "/articles"
-                          ? "#fff"
-                          : "rgba(255,255,255,0.9)";
-                    }}
-                  >
-                    Articles
-                  </Link>
-                </li>
               </ul>
 
               <div className="mt-6">

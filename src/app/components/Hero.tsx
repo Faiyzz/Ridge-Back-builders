@@ -69,9 +69,7 @@ const PROJECTS: Project[] = [
   },
 ];
 
-const GOLD_TEXT =
-  "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)] bg-clip-text text-transparent";
-
+/** Text shine fills */
 const GOLD_TEXT_SHINE = [
   "bg-clip-text text-transparent",
   "[background-image:linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%),linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent)]",
@@ -80,12 +78,21 @@ const GOLD_TEXT_SHINE = [
   "transition-[background-position] duration-1000 ease-out",
   "group-hover:[background-position:0%_0%,200%_0%]",
   "drop-shadow-[0_0_8px_rgba(255,226,65,.45)]",
-  "uppercase tracking-wider font-semibold",
+].join(" ");
+
+const SHINE_WHITE = [
+  "bg-clip-text text-transparent",
+  "[background-image:linear-gradient(0deg,#ffffff,#ffffff),linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent)]",
+  "[background-size:100%_100%,200%_100%]",
+  "[background-position:0%_0%,-200%_0%]",
+  "transition-[background-position] duration-1000 ease-out",
+  "group-hover:[background-position:0%_0%,200%_0%]",
 ].join(" ");
 
 const GOLD_BG =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)]";
 
+/** Motion */
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const heroVariants = {
@@ -244,6 +251,91 @@ function ProjectCard({
   );
 }
 
+/** Shine sweep overlay for buttons */
+function ShineOverlay() {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-y-0 -left-full w-1/1 translate-x-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.85),transparent)] transition-transform duration-1000 group-hover:translate-x-[300%]"
+    />
+  );
+}
+
+function PrimaryCTA({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={clsx(
+        "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5",
+        "text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(0,0,0,.35)]",
+        "bg-white hover:bg-[#ff8a00] hover:text-white transition-colors duration-300"
+      )}
+      aria-label="Get a free estimate"
+    >
+      <span className="relative z-10">{children}</span>
+      <ShineOverlay />
+    </Link>
+  );
+}
+
+function SecondaryCTA({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={clsx(
+        "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5",
+        "text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]",
+        GOLD_BG,
+        "transition-colors duration-300 hover:brightness-105"
+      )}
+      aria-label="Book a free consultation"
+    >
+      <span className="relative z-10">{children}</span>
+      <ShineOverlay />
+    </Link>
+  );
+}
+
+const TRUST_POINTS = [
+  "Licensed & Insured",
+  "OSHA Certified",
+  "Family-Owned",
+  "Warrantied Work",
+  "Transparent Process",
+];
+
+function TrustRow() {
+  return (
+    <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
+      {TRUST_POINTS.map((t) => (
+        <span
+          key={t}
+          className={clsx(
+            "inline-flex items-center gap-2 rounded-full border border-white/15",
+            "bg-white/10 px-3.5 py-2 text-xs text-white/90 backdrop-blur-sm",
+            "transition-all duration-200 hover:bg-white/15 hover:text-white"
+          )}
+        >
+          <span className="inline-block h-4 w-4 rounded-full bg-emerald-400/90 ring-2 ring-emerald-300/30" />
+          {t}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 const HomePage = () => {
   const prefersReduced = useReducedMotion();
   const POSTS = useMemo(() => PROJECTS, []);
@@ -299,36 +391,38 @@ const HomePage = () => {
             exit="exit"
             layout
           >
-            <div className="mx-auto max-w-4xl px-4 text-center text-white">
-              <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
-                BUILT <span className={GOLD_TEXT}>STRONG</span>,{" "}
-                <span className={GOLD_TEXT}>BUILT</span> RIGHT
+            {/* WIDENED text container */}
+            <div className="mx-auto max-w-6xl px-6 text-center text-white">
+              {/* MAIN HEADING with shine fills on both parts (white + yellow) */}
+              <h1
+                id="about-hero-title"
+                className="group text-balance text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-sm leading-tight"
+              >
+                <span className={SHINE_WHITE}>
+                  Florida&apos;s Trusted Building &amp; Remodeling Experts{" "}
+                </span>
+                {/* ✨ auto-shining, inside the glyphs */}
+                <span className="shine-text">Free Estimates In 24 Hours</span>
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
-                We specialize in commercial and residential construction,
-                renovations, and structural repairs. Every project is handled
-                with durable materials, skilled craftsmanship, and a commitment
-                to doing the job the right way — ensuring strength, safety, and
-                lasting value.
+
+              {/* WIDENED subhead */}
+              <p className="mx-auto mt-4 max-w-4xl px-2 text-pretty text-sm text-white/90 md:text-base">
+                We build with integrity; no surprises, no shortcuts, and no
+                cutting corners. From kitchen &amp; bathroom remodels to new
+                construction, we make the process smooth, transparent, and
+                stress-free.
               </p>
-              <div className="mt-6 flex justify-center">
-                <Link
-                  href="#projects"
-                  aria-label="View RidgebackBuilders projects"
-                  className={clsx(
-                    "group relative overflow-hidden rounded-full px-6 py-2.5 text-sm font-semibold text-black",
-                    "shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]",
-                    "transform-gpu will-change-transform",
-                    GOLD_BG
-                  )}
-                >
-                  <span className="relative z-10">Our Projects</span>
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-y-0 -left-full w-1/2 translate-x-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,.85),transparent)] transition-transform duration-1000 group-hover:translate-x-[300%]"
-                  />
-                </Link>
+
+              {/* CTAs with shine */}
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3.5">
+                <PrimaryCTA href="/estimate">Get A Free Estimate</PrimaryCTA>
+                <SecondaryCTA href="/consultation">
+                  Book a Free Consultation
+                </SecondaryCTA>
               </div>
+
+              {/* Trust Row under CTAs */}
+              <TrustRow />
             </div>
           </motion.div>
         </section>
@@ -361,7 +455,7 @@ const HomePage = () => {
                 exit="exit"
                 layout
               >
-                {POSTS.map((p) => (
+                {PROJECTS.map((p) => (
                   <div
                     key={`m-${p.id}`}
                     className="shrink-0 snap-center w-[85%] first:ml-3 last:mr-3"
@@ -388,7 +482,7 @@ const HomePage = () => {
                 exit="exit"
                 layout
               >
-                {POSTS.map((p) => (
+                {PROJECTS.map((p) => (
                   <ProjectCard
                     key={`d-${p.id}`}
                     p={p}
@@ -413,5 +507,34 @@ const HomePage = () => {
     </MotionConfig>
   );
 };
+<style jsx global>{`
+  .shine-text {
+    background-image: linear-gradient(
+        130deg,
+        #ffe241 0%,
+        #f5d23a 28%,
+        #e9c838 52%,
+        #d4af37 76%,
+        #b88c1a 100%
+      ),
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+    background-size: 100% 100%, 200% 100%;
+    background-position: 0% 0%, -200% 0%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rb-shimmer 1.2s linear infinite; /* ⚡ faster swipe */
+    text-shadow: 0 0 8px rgba(255, 226, 65, 0.35);
+  }
+
+  @keyframes rb-shimmer {
+    0% {
+      background-position: 0% 0%, -200% 0%;
+    }
+    100% {
+      background-position: 0% 0%, 200% 0%;
+    }
+  }
+`}</style>;
 
 export default HomePage;

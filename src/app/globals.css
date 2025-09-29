@@ -91,3 +91,44 @@
     animation: shine 4s linear infinite;
   }
 }
+
+/* === Shine text (gold) === */
+.shine-in-text {
+  background-image:
+    linear-gradient(130deg,#ffe241 0%,#f5d23a 28%,#e9c838 52%,#d4af37 76%,#b88c1a 100%),
+    linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-size: 100% 100%, 200% 100%;
+  background-position: 0% 0%, -200% 0%;
+  transition: background-position 1000ms ease-out;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 600;
+  filter: drop-shadow(0 0 8px rgba(255,226,65,.45));
+}
+
+.group:hover .shine-in-text {
+  background-position: 0% 0%, 200% 0%;
+}
+
+/* === Button shine sweep === */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(110deg, transparent, rgba(255,255,255,.65), transparent);
+  transition: transform 700ms ease;
+  pointer-events: none;
+  z-index: 1; /* above background, below text */
+}
+.btn-shine:hover::after {
+  transform: translateX(120%);
+}
