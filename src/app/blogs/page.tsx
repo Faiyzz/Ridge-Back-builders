@@ -6,6 +6,19 @@ import { Metadata } from "next";
 import { BLOGS } from "../data";
 import { slugify } from "@/lib/slug";
 
+// ✅ Add strict types for the BLOG items you use on this page
+type BlogImage = { src: string; alt?: string };
+type BlogBanner = { image?: BlogImage };
+
+type Blog = {
+  id: string | number;
+  title: string;
+  slug?: string;
+  ogImage?: string;
+  banner?: BlogBanner;
+  excerpt?: string;
+};
+
 const GOLD_TEXT =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)] bg-clip-text text-transparent";
 
@@ -24,7 +37,8 @@ export const metadata: Metadata = {
 };
 
 function BlogsItemListJsonLd() {
-  const items = BLOGS.map((b: any, idx: number) => {
+  // ✅ Replace any with Blog
+  const items = (BLOGS as readonly Blog[]).map((b: Blog, idx: number) => {
     const slug = b.slug ?? slugify(b.title ?? String(b.id));
     return {
       "@type": "ListItem",
@@ -100,7 +114,7 @@ export default function BlogsIndexPage() {
               "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
             ].join(" ")}
           >
-            {BLOGS.map((b: any) => {
+            {(BLOGS as readonly Blog[]).map((b: Blog) => {
               const imgSrc =
                 b.ogImage ?? b.banner?.image?.src ?? "/placeholder-hero.jpg";
               const imgAlt = b.banner?.image?.alt ?? b.title ?? "Blog cover";
@@ -161,7 +175,7 @@ export default function BlogsIndexPage() {
 
           {/* Desktop grid */}
           <div className="hidden grid-cols-2 gap-7 md:grid lg:grid-cols-3">
-            {BLOGS.map((b: any) => {
+            {(BLOGS as readonly Blog[]).map((b: Blog) => {
               const imgSrc =
                 b.ogImage ?? b.banner?.image?.src ?? "/placeholder-hero.jpg";
               const imgAlt = b.banner?.image?.alt ?? b.title ?? "Blog cover";

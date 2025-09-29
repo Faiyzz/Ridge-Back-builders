@@ -12,22 +12,54 @@ export const dynamicParams = true; // allow any slug at runtime
 
 const ACCENT = "#FFE241";
 
-type WithDesc = { Desc?: { paragraph?: string } };
+// -------- Types used on this page (subset of your data shape) --------
+type BlogImage = { src: string; alt?: string };
+type BlogBanner = { image?: BlogImage };
+
+type HowWeDoItStep = {
+  number?: number;
+  title: string;
+  summary?: string;
+  bullets?: string[];
+  media?: { src: string; alt?: string };
+};
+
+type Blog = {
+  id: number | string;
+  slug?: string;
+  title: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  excerpt?: string;
+  author?: string;
+  publishedAt?: string | Date;
+  updatedAt?: string | Date;
+  ogImage?: string;
+  banner?: BlogBanner;
+
+  // Optional sections used below
+  Desc?: { paragraph?: string };
+  caseStudy?: { paragraph?: string; bullets?: string[] };
+  howWeDoIt?: { heading?: string; steps: HowWeDoItStep[] };
+};
+
+// Helper to safely view BLOGS with our local type
+const BLOG_LIST = BLOGS as readonly Blog[];
 
 function findPostBySlug(rawSlug: string) {
   const slug = decodeURIComponent((rawSlug || "").trim().toLowerCase());
 
   // 1) Exact slug field
   let post =
-    BLOGS.find((p: any) => (p.slug || "").toLowerCase() === slug) ||
+    BLOG_LIST.find((p) => (p.slug || "").toLowerCase() === slug) ||
     // 2) Derived from title (must match index)
-    BLOGS.find((p: any) => slugify(p.title ?? String(p.id)) === slug);
+    BLOG_LIST.find((p) => slugify(p.title ?? String(p.id)) === slug);
 
   // 3) Fallback: numeric id (in case some old links exist)
   if (!post) {
     const idNum = Number(slug);
     if (!Number.isNaN(idNum)) {
-      post = BLOGS.find((p: any) => p.id === idNum);
+      post = BLOG_LIST.find((p) => p.id === idNum);
     }
   }
 
@@ -35,16 +67,20 @@ function findPostBySlug(rawSlug: string) {
 }
 
 // Optional dynamic metadata
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
-  const post = findPostBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = findPostBySlug(slug);
   if (!post) return { title: "Article not found" };
 
   const title = post.seoTitle ?? post.title;
   const description = post.seoDescription ?? post.excerpt ?? "";
-  const url = `/blogs/${params.slug}`;
-  const ogImage = post.ogImage ?? post.banner?.image?.src ?? "/placeholder-hero.jpg";
+  const url = `/blogs/${slug}`;
+  const ogImage =
+    post.ogImage ?? post.banner?.image?.src ?? "/placeholder-hero.jpg";
 
   return {
     title,
@@ -60,8 +96,13 @@ export async function generateMetadata(
   };
 }
 
-export default function BlogDetail({ params }: { params: { slug: string } }) {
-  const post = findPostBySlug(params.slug);
+export default async function BlogDetail({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = findPostBySlug(slug);
   if (!post) return notFound();
 
   const title = post.seoTitle ?? post.title;
@@ -73,7 +114,7 @@ export default function BlogDetail({ params }: { params: { slug: string } }) {
     post.banner?.image?.src ?? post.ogImage ?? "/placeholder-hero.jpg";
   const heroAlt = post.banner?.image?.alt ?? post.title;
 
-  const descParagraph = (post as WithDesc).Desc?.paragraph;
+  const descParagraph = post.Desc?.paragraph;
 
   return (
     <main className="relative isolate min-h-screen bg-white text-black">
@@ -135,14 +176,16 @@ export default function BlogDetail({ params }: { params: { slug: string } }) {
               <h2 className="text-lg font-extrabold tracking-tight md:text-3xl">
                 Case Study
               </h2>
-              <div className="mt-3 text-sm md:text-[17px] prose max-w-none text-black">
+              <div className="mt-3 text-sm md:text-[17px] prose max-w-none text黑">
                 <ReactMarkdown>{post.caseStudy.paragraph}</ReactMarkdown>
               </div>
               {post.caseStudy.bullets?.length ? (
                 <ul className="ml-5 mt-2 list-disc space-y-2 text-sm md:text-[17px] text-black/80">
                   {post.caseStudy.bullets.map((b: string, i: number) => (
                     <li key={i}>
-                      <ReactMarkdown components={{ p: "span" }}>{b}</ReactMarkdown>
+                      <ReactMarkdown components={{ p: "span" }}>
+                        {b}
+                      </ReactMarkdown>
                     </li>
                   ))}
                 </ul>
@@ -151,7 +194,7 @@ export default function BlogDetail({ params }: { params: { slug: string } }) {
           </section>
         )}
 
-        {post.howWeDoIt?.steps?.length > 0 && (
+        {post.howWeDoIt?.steps?.length ? (
           <section className="mx-auto max-w-5xl px-4 py-10 md:py-14">
             {!!post.howWeDoIt.heading && (
               <h2 className="text-xl font-extrabold tracking-tight md:text-3xl text-black">
@@ -160,7 +203,7 @@ export default function BlogDetail({ params }: { params: { slug: string } }) {
             )}
 
             <div className="mt-8 space-y-14">
-              {post.howWeDoIt.steps.map((step: any, idx: number) => {
+              {post.howWeDoIt.steps.map((step: HowWeDoItStep, idx: number) => {
                 const key = `${step.number ?? "x"}-${step.title}-${idx}`;
                 return (
                   <article key={key} className="flex flex-col gap-6">
@@ -216,7 +259,7 @@ export default function BlogDetail({ params }: { params: { slug: string } }) {
               })}
             </div>
           </section>
-        )}
+        ) : null}
 
         <section id="consult" className="mx-auto max-w-5xl px-4 py-12 md:py-16">
           <div className="rounded-2xl border border-yellow-300 bg-yellow-100/70 p-6 md:p-8 flex flex-col items-center justify-center text-center">
