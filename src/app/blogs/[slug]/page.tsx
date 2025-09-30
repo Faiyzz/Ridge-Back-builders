@@ -126,9 +126,13 @@ export default async function BlogDetail({
             "linear-gradient(to bottom, rgba(0,0,0,0.28) , rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.04) 32%, rgba(0,0,0,0.04) 68%, rgba(0,0,0,0.12) 82%, rgba(0,0,0,0.28))",
         }}
       />
+     
 
       <div className="relative z-10">
         <section className="mx-auto max-w-4xl px-4 py-10 md:py-24">
+          {/* Back to Blogs — place this ABOVE the section */}
+
+
           <h1 className="text-[28px] leading-tight md:text-[44px] md:leading-[1.1] font-extrabold tracking-tight">
             {title}
           </h1>

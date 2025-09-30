@@ -108,24 +108,7 @@ export default function ReviewsSection({
             Customer <span className="text-yellow-400">Reviews</span>
           </h2>
 
-          {showAllHref ? (
-            <Link
-              href={showAllHref}
-              aria-label="Show All"
-              className="rounded-lg border-2 hidden md:block border-amber-300 text-amber-300 bg-white px-4 py-2 text-sm font-semibold transition hover:bg-white/90"
-            >
-              Show All &nbsp; &raquo;
-            </Link>
-          ) : (
-            <button
-              onClick={onShowAll}
-              className="rounded-lg border-2 hidden md:block border-amber-300 text-amber-300 bg-white px-4 py-2 text-sm font-semibold transition hover:bg-white/90"
-              aria-label="Show All"
-              type="button"
-            >
-              Show All &nbsp; &raquo;
-            </button>
-          )}
+         
         </div>
 
         <p className="text-gray-600 mb-12 max-w-2xl">

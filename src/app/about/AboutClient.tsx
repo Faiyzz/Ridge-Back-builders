@@ -155,9 +155,10 @@ export default function AboutClient() {
                     We Are Experts in Building Dreams
                   </h2>
                   <p className="mt-2 text-[12px] sm:text-sm md:text-base text-gray-800/90">
-                    Construction is the art of turning ideas into lasting
-                    spaces. With skill and precision, we bring your vision to
-                    life.
+                    At RidgeBackBuilders, we deliver trusted construction solutions that stand the test of time.
+                     From residential homes to commercial projects, our team combines craftsmanship, innovation,
+                      and reliability to bring your vision to life. Whether it’s new construction, remodeling,
+                     or turnkey contracting, we build with integrity and precision—on time and on budget.
                   </p>
                   <Link
                     href="/projects"

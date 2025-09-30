@@ -99,10 +99,12 @@ export default function ServicesClient() {
               </span>
             </h1>
 
-            <p className="mt-4 text-white/80 text-sm sm:text-base">
-              Building with integrity and precision, we deliver lasting
-              structures that stand strong and inspire confidence.
-            </p>
+           <p className="mt-4 text-white/80 text-m sm:text-base">
+  As a trusted construction company, we specialize in building durable homes 
+  and commercial projects with integrity and precision. Our team ensures 
+  every structure is safe, reliable, and designed to add long-term value.
+</p>
+
             <button
               className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110"
               style={{ background: ACCENT }}

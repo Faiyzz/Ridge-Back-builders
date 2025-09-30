@@ -80,18 +80,18 @@ export default function BlogsIndexPage() {
         </div>
 
         <div className="absolute inset-0 z-10 flex items-end justify-center pb-[clamp(5rem,30vh,18rem)]">
-          <header className="mx-auto max-w-4xl px-4 text-center text-white">
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
-              <span className={GOLD_TEXT}>Blogs</span>
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
-              Strong foundations create more than just stability—they bring
-              peace of mind. Whether it’s renovating a home or repairing
-              structural issues, knowing the right methods and materials can
-              make all the difference in safety, durability, and long-term
-              value.
-            </p>
-          </header>
+         <header className="mx-auto max-w-4xl px-4 text-center text-white">
+  <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
+    <span className={GOLD_TEXT}>Construction Insights & Blogs</span>
+  </h1>
+  <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
+    Discover expert tips, industry trends, and practical guides on building, 
+    remodeling, and repairs. From residential projects to commercial 
+    construction, our blogs help you make informed decisions that add 
+    safety, durability, and long-term value to every structure.
+  </p>
+</header>
+
         </div>
       </section>
 

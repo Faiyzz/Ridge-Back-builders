@@ -145,11 +145,12 @@ export default function ProjectsClient() {
             whileInView={prefersReducedMotion ? undefined : variants.fadeUp.in}
             viewport={{ once: true, amount: 0.6 }}
           >
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
-              A curated look at our commercial, residential, renovation, and
-              consultancy work engineered for quality, efficiency, and lasting
-              value.
-            </p>
+           <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
+  Explore our portfolio of commercial construction, residential building, 
+  home renovations, and consultancy projects—crafted with quality, 
+  efficiency, and lasting value in every detail.
+</p>
+
           </motion.div>
         </div>
       </section>
