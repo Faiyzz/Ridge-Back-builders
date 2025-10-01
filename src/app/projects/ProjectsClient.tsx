@@ -184,7 +184,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
   return (
     <motion.article
       className="
-        group relative grid min-h-[500px] overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-black/5
+        group relative grid min-h-[500px] overflow-hidden rounded-3xl bg-white shadow-xl
         md:[grid-template-columns:minmax(0,1fr)_minmax(0,1fr)]  /* both halves shrinkable */
         isolate
       "
@@ -219,7 +219,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
         className={`${
           isTextLeft ? "md:order-1" : "md:order-2"
         } relative flex h-full min-w-0 flex-col justify-center gap-4
-           bg-neutral-200/70 p-8 md:p-12 overflow-hidden`}
+           bg-neutral-200/70 p-8 md:p-12 overflow-hidden focus:outline-none`}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl font-extrabold text-yellow-600 md:text-3xl">
@@ -236,7 +236,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
           {card.href ? (
             <Link
               href="/blogs"
-              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/40"
+              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-0"
               aria-label={`Learn more about ${card.title}`}
             >
               <span>Learn More</span>
@@ -261,7 +261,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
           ) : (
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/40 active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-2xl focus-visible:outline-none active:scale-[0.98]"
             >
               <span>Learn More</span>
               <svg
@@ -285,11 +285,14 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
           )}
         </div>
 
-        {/* hover glow clipped to text half */}
-        <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 transition group-hover:ring-8 group-hover:ring-yellow-400/10" />
-
-        {/* optional inner divider for clarity on desktop */}
-        {/* <span className="pointer-events-none absolute left-0 top-0 hidden h-full w-px bg-black/10 md:block" /> */}
+        {/* soft hover glow overlay (no dark border) */}
+        <div
+          className="
+            pointer-events-none absolute inset-0 rounded-3xl
+            transition
+            group-hover:shadow-[0_0_0_8px_rgba(250,204,21,0.12)]
+          "
+        />
       </motion.div>
     </motion.article>
   );

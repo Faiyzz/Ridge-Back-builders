@@ -15,7 +15,6 @@ import {
   useReducedMotion,
 } from "framer-motion";
 
-const ACCENT = "#FFE241";
 export const metadata: Metadata = {
   title: "Florida Remodeling & Renovation — RidgebackBuilders",
   description:

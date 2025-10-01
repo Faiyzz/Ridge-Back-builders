@@ -163,21 +163,21 @@ export default function ServicesClient() {
 
               <div className="mt-8 grid grid-cols-3 gap-4">
                 <div>
-                  <div className="text-2xl font-extrabold">6000+</div>
+                  <div className="text-2xl font-extrabold">1000+</div>
                   <div className="text-xs text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur.
+                    Strong Foundations Built with Quality & Care
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-extrabold">9000+</div>
+                  <div className="text-2xl font-extrabold">500+</div>
                   <div className="text-xs text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur.
+                    Happy Families & Businesses Served
                   </div>
                 </div>
                 <div>
                   <div className="text-2xl font-extrabold">99%</div>
                   <div className="text-xs text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur.
+                    Client Satisfaction with Our Workmanship
                   </div>
                 </div>
               </div>
