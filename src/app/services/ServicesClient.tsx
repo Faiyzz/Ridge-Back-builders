@@ -79,26 +79,27 @@ export default function ServicesClient() {
           className="object-cover"
         />
 
+        {/* background gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/10" />
-
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-b from-transparent via-white/70 to-white" />
 
-        <div className="absolute -top-36 inset-0 z-20 grid place-items-center px-6 text-center">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+        {/* TEXT */}
+        <div className="absolute -top-36 inset-0 z-20 grid place-items-center px-6 lg:px-10 xl:px-12 text-center">
+          {/* widened container for text */}
+          <div className="w-full max-w-6xl xl:max-w-7xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight text-balance">
               Our{" "}
               <span className="relative inline-block">
                 <span style={{ color: ACCENT }}>Services</span>
-                {/* yellow underline */}
                 <span
-                  className="absolute left-0 right-0 -bottom-2 h-0.5 "
+                  className="absolute left-0 right-0 -bottom-2 h-0.5"
                   style={{ background: ACCENT }}
                   aria-hidden="true"
                 />
               </span>
             </h1>
 
-            <p className="mt-4 text-white/80 text-m sm:text-base">
+            <p className="mx-auto mt-4 text-white/80 text-base md:text-lg max-w-none lg:max-w-5xl xl:max-w-6xl">
               As a trusted construction company, we specialize in building
               durable homes and commercial projects with integrity and
               precision. Our team ensures every structure is safe, reliable, and
@@ -109,11 +110,12 @@ export default function ServicesClient() {
               className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110"
               style={{ background: ACCENT }}
             >
-              Learn More <span className="translate-y-[1px]"></span>
+              Learn More <span className="translate-y-[1px]" />
             </button>
           </div>
         </div>
 
+        {/* IMAGE/VIDEO CARD stays the same size */}
         <div className="absolute left-1/2 bottom-0 z-30 w-full max-w-4xl -translate-x-1/2 translate-y-1/2 pointer-events-auto">
           <div className="rounded-[24px] border-[3px] border-amber-400">
             <div

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import type { Metadata } from "next";
 import { BLOGS } from "../data";
 import { slugify } from "@/lib/slug";
-
+const ACCENT = "#FFE241";
 // ✅ Types (same as yours)
 type BlogImage = { src: string; alt?: string };
 type BlogBanner = { image?: BlogImage };
@@ -90,11 +90,29 @@ export default function BlogsIndexPage({
         </div>
 
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[clamp(5rem,30vh,18rem)]">
-          <header className="mx-auto max-w-4xl px-4 text-center text-white">
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl md:-mt-65">
-              <span className={GOLD_TEXT}>Construction Insights & Blogs</span>
+          <header className="mx-auto max-w-6xl px-4 text-center text-white">
+            {/* <h1 className="text-xl font-extrabold tracking-tight md:text-7xl md:-mt-65">
+              Construction {""}
+              <span className={GOLD_TEXT}>Insights & Blogs</span>
+              <span
+                className="absolute left-0 right-0 -bottom-2 h-0.5 "
+                style={{ background: ACCENT }}
+                aria-hidden="true"
+              />
+            </h1> */}
+            <h1 className="text-xl font-extrabold tracking-tight md:text-7xl md:-mt-65">
+              Construction{" "}
+              <span className="relative inline-block">
+                <span style={{ color: ACCENT }}>Insights & Blogs</span>
+                {/* yellow underline */}
+                <span
+                  className="absolute left-0 right-0 -bottom-2 h-0.5 "
+                  style={{ background: ACCENT }}
+                  aria-hidden="true"
+                />
+              </span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-m text-white/90 md:text-base">
+            <p className="mx-auto mt-4 max-w-7xl text-m text-white/90 md:text-m">
               Discover expert tips, industry trends, and practical guides on
               building, remodeling, and repairs. From residential projects to
               commercial construction, our blogs help you make informed

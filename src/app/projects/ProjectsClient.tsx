@@ -126,16 +126,23 @@ export default function ProjectsClient() {
         <div className="absolute inset-0 bg-black/60" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-white" />
 
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-center px-6 py-16 md:py-24">
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-16 md:py-24">
           <motion.div
             initial={prefersReducedMotion ? undefined : variants.fadeUp.initial}
             whileInView={prefersReducedMotion ? undefined : variants.fadeUp.in}
             viewport={{ once: true, amount: 0.6 }}
           >
-            <h1 className="text-5xl font-extrabold tracking-tight text-white md:text-7xl">
-              <>
-                Our Latest <span className="text-yellow-400">Projects</span>
-              </>
+            <h1 className="text-5xl font-extrabold tracking-tight text-white md:text-7xl text-balance">
+              Our Latest{" "}
+              <span className="relative inline-block">
+                <span className="text-yellow-400">Projects</span>
+                {/* underline accent */}
+                <span
+                  className="absolute left-0 right-0 -bottom-2 h-0.5"
+                  style={{ background: "#facc15" }}
+                  aria-hidden="true"
+                />
+              </span>
             </h1>
           </motion.div>
 
@@ -145,7 +152,7 @@ export default function ProjectsClient() {
             whileInView={prefersReducedMotion ? undefined : variants.fadeUp.in}
             viewport={{ once: true, amount: 0.6 }}
           >
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/85 md:text-m text-m">
+            <p className="mx-auto w-full max-w-4xl md:max-w-5xl xl:max-w-6xl text-base leading-relaxed text-white/85 md:text-lg">
               Explore our portfolio of commercial construction, residential
               building, home renovations, and consultancy projects—crafted with
               quality, efficiency, and lasting value in every detail.
@@ -168,7 +175,7 @@ export default function ProjectsClient() {
 }
 
 /* =========================
-   Card
+   Card (overlap-safe)
    ========================= */
 const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -176,7 +183,11 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
 
   return (
     <motion.article
-      className="group relative grid min-h-[500px] overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-black/5 md:grid-cols-2"
+      className="
+        group relative grid min-h-[500px] overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-black/5
+        md:[grid-template-columns:minmax(0,1fr)_minmax(0,1fr)]  /* both halves shrinkable */
+        isolate
+      "
       initial={prefersReducedMotion ? undefined : variants.card(index).initial}
       whileInView={prefersReducedMotion ? undefined : variants.card(index).in}
       viewport={{ once: true, amount: 0.3 }}
@@ -185,7 +196,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
       <figure
         className={`${
           isTextLeft ? "md:order-2" : "md:order-1"
-        } relative h-full w-full`}
+        } relative h-full w-full min-w-0 overflow-hidden`}
       >
         <Image
           src={card.image}
@@ -196,6 +207,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           loading="lazy"
         />
+        {/* mobile top fade only */}
         <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/30 to-transparent md:hidden" />
       </figure>
 
@@ -206,7 +218,8 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
         transition={{ type: "spring", stiffness: 300, damping: 24 }}
         className={`${
           isTextLeft ? "md:order-1" : "md:order-2"
-        } relative flex h-full flex-col justify-center gap-4 bg-neutral-200/70 p-8 md:p-12`}
+        } relative flex h-full min-w-0 flex-col justify-center gap-4
+           bg-neutral-200/70 p-8 md:p-12 overflow-hidden`}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl font-extrabold text-yellow-600 md:text-3xl">
@@ -272,7 +285,11 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
           )}
         </div>
 
+        {/* hover glow clipped to text half */}
         <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 transition group-hover:ring-8 group-hover:ring-yellow-400/10" />
+
+        {/* optional inner divider for clarity on desktop */}
+        {/* <span className="pointer-events-none absolute left-0 top-0 hidden h-full w-px bg-black/10 md:block" /> */}
       </motion.div>
     </motion.article>
   );

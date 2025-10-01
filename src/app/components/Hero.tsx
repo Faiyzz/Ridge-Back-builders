@@ -409,7 +409,7 @@ const HomePage = () => {
 
               {/* WIDENED subhead */}
               <p
-                className="mx-auto mt-4 text-pretty text-m md:text-md text-white/90
+                className="mx-auto mt-4 text-pretty text-m md:text-m text-white/90
                   max-w-[60rem] md:max-w-[70rem] lg:max-w-[80rem] px-2"
               >
                 We build with integrity; no surprises, no shortcuts, and no
@@ -435,7 +435,7 @@ const HomePage = () => {
         <section
           id="projects"
           aria-label="Featured projects"
-          className="relative z-20  pb-28 pt-4"
+          className="relative z-20  pb-28 pt-8"
         >
           {/* -mt-[clamp(8rem,12vh,14rem)] */}
           <div className="mx-auto max-w-6xl px-4">
