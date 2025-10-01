@@ -102,47 +102,81 @@ export default function BlogsIndexPage({
               every structure.
             </p>
 
-            {/* 🔎 Simple server-side search bar (GET /blogs?q=...) */}
+            {/* 🔎 Glassy, rounded-full search with icon */}
             <form
               action="/blogs"
               method="get"
-              className="mt-6 w-full max-w-md mx-auto"
+              className="mt-6 w-full max-w-xl mx-auto"
               role="search"
               aria-label="Search blogs"
             >
-              <div className="relative">
+              <div
+                className={[
+                  "relative group",
+                  // nice soft glow on focus
+                  "",
+                ].join(" ")}
+              >
+                {/* Search icon (inline SVG to keep Server Component) */}
+                <span className="pointer-events-none absolute left-4 inset-y-0 flex items-center opacity-90">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-white/80"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                  </svg>
+                </span>
+
                 <input
                   type="text"
                   name="q"
                   defaultValue={q}
                   placeholder="Search blogs by title…"
-                  className="w-full rounded-xl border border-gray-300 bg-white/90 px-4 py-3 text-sm text-black shadow-sm outline-none focus:border-[#FFD333] focus:ring-2 focus:ring-[#FFD333]"
+                  className={[
+                    "w-full rounded-full",
+                    // glass effect
+                    "bg-white/10 backdrop-blur-xl",
+                    // subtle inner highlight + outer shadow
+                    "shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_12px_40px_rgba(0,0,0,0.35)]",
+                    // border/ring that brightens on focus
+                    "ring-1 ring-white/20 focus:ring-2 focus:ring-yellow-300/60",
+                    // spacing to make room for icon/clear
+                    "pl-12 pr-20 py-3",
+                    "text-sm md:text-base text-white placeholder:text-white/70",
+                    "outline-none transition-all duration-300",
+                  ].join(" ")}
                 />
+
+                {/* Clear button when q exists */}
                 {q && (
                   <Link
                     href="/blogs"
-                    className="absolute inset-y-0 right-2 flex items-center text-xs font-medium text-neutral-700 hover:text-black"
                     aria-label="Clear search"
+                    className={[
+                      "absolute right-2 inset-y-0 my-auto h-9 px-3 rounded-full",
+                      "text-xs font-medium",
+                      "bg-white/20 hover:bg-white/30 text-white",
+                      "backdrop-blur-md ring-1 ring-white/25",
+                      "flex items-center transition-colors",
+                    ].join(" ")}
                   >
                     Clear
                   </Link>
                 )}
+
+                {/* Decorative ring (subtle) */}
+                <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/10" />
               </div>
-              {/* Optional tiny helper row
-              <div className="mt-2 text-center text-xs text-neutral-200">
-                {q ? (
-                  <>
-                    Showing{" "}
-                    <span className="font-semibold">
-                      {filteredBlogs.length}
-                    </span>{" "}
-                    result{filteredBlogs.length === 1 ? "" : "s"} for{" "}
-                    <span className="italic">“{q}”</span>
-                  </>
-                ) : (
-                  <>Type and press Enter to search</>
-                )}
-              </div> */}
             </form>
           </header>
         </div>
