@@ -1,11 +1,13 @@
+// app/blogs/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { BLOGS } from "../data";
 import { slugify } from "@/lib/slug";
+
 const ACCENT = "#FFE241";
-// ✅ Types (same as yours)
+
 type BlogImage = { src: string; alt?: string };
 type BlogBanner = { image?: BlogImage };
 type Blog = {
@@ -17,10 +19,11 @@ type Blog = {
   excerpt?: string;
 };
 
-const GOLD_TEXT =
-  "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)] bg-clip-text text-transparent";
+type Q = { q?: string | string[] };
 
-// ✅ Keep metadata here (Server Component)
+// ======================
+// Metadata (Server Component)
+// ======================
 export const metadata: Metadata = {
   title: "Blogs | Construction & Remodeling Insights",
   description:
@@ -35,6 +38,9 @@ export const metadata: Metadata = {
   },
 };
 
+// ======================
+// JSON-LD Helper
+// ======================
 function BlogsItemListJsonLd() {
   const items = (BLOGS as readonly Blog[]).map((b: Blog, idx: number) => {
     const slug = b.slug ?? slugify(b.title ?? String(b.id));
@@ -60,23 +66,30 @@ function BlogsItemListJsonLd() {
   );
 }
 
-// 🔎 Server-side search using URL query (?q=...)
-export default function BlogsIndexPage({
+// ======================
+// Page (async, Promise-safe searchParams)
+// ======================
+export default async function BlogsIndexPage({
   searchParams,
 }: {
-  searchParams?: { q?: string };
+  searchParams?: Promise<Q>;
 }) {
-  const q = (searchParams?.q ?? "").trim();
-  const filteredBlogs = q
-    ? (BLOGS as Blog[]).filter((b) =>
-        (b.title || "").toLowerCase().includes(q.toLowerCase())
-      )
-    : (BLOGS as Blog[]) ?? [];
+  // resolve promise or fall back to {}
+  const sp = (await searchParams) ?? {};
+  const qRaw = Array.isArray(sp.q) ? sp.q[0] : sp.q ?? "";
+  const q = qRaw.trim();
+
+  const filteredBlogs =
+    q.length > 0
+      ? (BLOGS as Blog[]).filter((b) =>
+          (b.title || "").toLowerCase().includes(q.toLowerCase())
+        )
+      : (BLOGS as Blog[]) ?? [];
 
   return (
     <main className="min-h-screen w-full bg-white">
       <section className="relative isolate">
-        <div className="relative h=[min(100svh,900px)] h-[min(100svh,900px)] w-full overflow-hidden bg-white">
+        <div className="relative h-[min(100svh,900px)] w-full overflow-hidden bg-white">
           <Image
             src="/images/c1.jpg"
             alt="Construction site background image"
@@ -91,27 +104,18 @@ export default function BlogsIndexPage({
 
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[clamp(5rem,30vh,18rem)]">
           <header className="mx-auto max-w-6xl px-4 text-center text-white">
-            {/* <h1 className="text-xl font-extrabold tracking-tight md:text-7xl md:-mt-65">
-              Construction {""}
-              <span className={GOLD_TEXT}>Insights & Blogs</span>
-              <span
-                className="absolute left-0 right-0 -bottom-2 h-0.5 "
-                style={{ background: ACCENT }}
-                aria-hidden="true"
-              />
-            </h1> */}
             <h1 className="text-xl font-extrabold tracking-tight md:text-7xl md:-mt-65">
               Construction{" "}
               <span className="relative inline-block">
                 <span style={{ color: ACCENT }}>Insights & Blogs</span>
-                {/* yellow underline */}
                 <span
-                  className="absolute left-0 right-0 -bottom-2 h-0.5 "
+                  className="absolute left-0 right-0 -bottom-2 h-0.5"
                   style={{ background: ACCENT }}
                   aria-hidden="true"
                 />
               </span>
             </h1>
+
             <p className="mx-auto mt-4 max-w-7xl text-m text-white/90 md:text-m">
               Discover expert tips, industry trends, and practical guides on
               building, remodeling, and repairs. From residential projects to
@@ -120,7 +124,7 @@ export default function BlogsIndexPage({
               every structure.
             </p>
 
-            {/* 🔎 Glassy, rounded-full search with icon */}
+            {/* Search */}
             <form
               action="/blogs"
               method="get"
@@ -128,14 +132,8 @@ export default function BlogsIndexPage({
               role="search"
               aria-label="Search blogs"
             >
-              <div
-                className={[
-                  "relative group",
-                  // nice soft glow on focus
-                  "",
-                ].join(" ")}
-              >
-                {/* Search icon (inline SVG to keep Server Component) */}
+              <div className="relative group">
+                {/* search icon */}
                 <span className="pointer-events-none absolute left-4 inset-y-0 flex items-center opacity-90">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -162,20 +160,16 @@ export default function BlogsIndexPage({
                   placeholder="Search blogs by title…"
                   className={[
                     "w-full rounded-full",
-                    // glass effect
                     "bg-white/10 backdrop-blur-xl",
-                    // subtle inner highlight + outer shadow
                     "shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_12px_40px_rgba(0,0,0,0.35)]",
-                    // border/ring that brightens on focus
                     "ring-1 ring-white/20 focus:ring-2 focus:ring-yellow-300/60",
-                    // spacing to make room for icon/clear
                     "pl-12 pr-20 py-3",
                     "text-sm md:text-base text-white placeholder:text-white/70",
                     "outline-none transition-all duration-300",
                   ].join(" ")}
                 />
 
-                {/* Clear button when q exists */}
+                {/* clear button */}
                 {q && (
                   <Link
                     href="/blogs"
@@ -192,7 +186,6 @@ export default function BlogsIndexPage({
                   </Link>
                 )}
 
-                {/* Decorative ring (subtle) */}
                 <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/10" />
               </div>
             </form>
@@ -344,7 +337,7 @@ export default function BlogsIndexPage({
           )}
         </div>
 
-        {/* JSON-LD for ItemList */}
+        {/* JSON-LD */}
         <BlogsItemListJsonLd />
       </section>
     </main>

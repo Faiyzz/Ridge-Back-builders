@@ -1,77 +1,94 @@
-// app/sitemap.ts
-import type { MetadataRoute } from "next";
-import { BLOGS } from "./data";
+// src/app/sitemap.ts
+import { MetadataRoute } from "next";
 import { slugify } from "@/lib/slug";
+// Your blogs live here per screenshot
+import { BLOGS } from "./data";
 
-// Minimal shape needed for sitemap generation
-type BlogForMap = {
-  id: number | string;
-  title: string;
-  slug?: string;
-  updatedAt?: string | Date;
-  publishedAt?: string | Date;
+// Prefer an env; never include a trailing slash
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://example.com";
+
+// Helper to coerce a valid date
+const asDate = (d?: string | number | Date) => {
+  try {
+    return d ? new Date(d) : new Date();
+  } catch {
+    return new Date();
+  }
 };
 
-// Type guard without `any`
-function hasSlug(x: unknown): x is { slug: string } {
-  return (
-    typeof x === "object" &&
-    x !== null &&
-    "slug" in x &&
-    typeof (x as { slug: unknown }).slug === "string" &&
-    (x as { slug: string }).slug.length > 0
-  );
-}
-
-function toDate(d?: string | Date): Date {
-  if (!d) return new Date();
-  return typeof d === "string" ? new Date(d) : d;
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://your-domain.com";
+  const now = new Date();
 
-  // Static pages
-  const staticPages: MetadataRoute.Sitemap = [
-    "",
-    "/about",
-    "/services",
-    "/projects",
-    "/blogs",
-    "/contact",
-  ].map((path) => ({
-    url: `${baseUrl}${path}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 1,
-  }));
-
-  // Treat BLOGS as the minimal shape we need here
-  const BLOG_LIST = BLOGS as readonly BlogForMap[];
-
-  // Blogs (use slug if present, else derive from title)
-  const blogPages: MetadataRoute.Sitemap = BLOG_LIST.map((b) => {
-    const computedSlug =
-      hasSlug(b) && b.slug ? b.slug : slugify(b.title ?? String(b.id));
-    const lastModified = toDate(b.updatedAt ?? b.publishedAt ?? new Date());
-
-    return {
-      url: `${baseUrl}/blogs/${computedSlug}`,
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    };
-  });
-
-  // Projects root
-  const projectPages: MetadataRoute.Sitemap = [
+  // 1) Static routes that exist in your tree
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}/projects`,
-      lastModified: new Date(),
+      url: `${SITE_URL}/`,
+      lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 1.0,
+    },
+    {
+      url: `${SITE_URL}/about`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${SITE_URL}/services`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/projects`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${SITE_URL}/blogs`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/contact`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${SITE_URL}/privacy`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${SITE_URL}/terms`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
     },
   ];
 
-  return [...staticPages, ...blogPages, ...projectPages];
+  // 2) Dynamic blog routes from your data.ts
+  type Blog = {
+    id: string | number;
+    title?: string;
+    slug?: string;
+    updatedAt?: string | number | Date;
+  };
+
+  const blogRoutes: MetadataRoute.Sitemap = (BLOGS as Blog[]).map((b) => {
+    const slug = b.slug ?? slugify(b.title ?? String(b.id));
+    return {
+      url: `${SITE_URL}/blogs/${slug}`,
+      lastModified: asDate(b.updatedAt),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    };
+  });
+
+  return [...staticRoutes, ...blogRoutes];
 }
