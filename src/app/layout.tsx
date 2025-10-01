@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/footer";
+import ClientCookies from "./components/ClientCookies";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -106,7 +107,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: `{
               "@context": "https://schema.org",
@@ -147,6 +147,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="min-h-screen bg-white text-black antialiased">
         <Navbar />
         {children}
+        <ClientCookies />
         <Footer />
       </body>
     </html>

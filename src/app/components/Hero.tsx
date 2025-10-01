@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   motion,
   AnimatePresence,
@@ -308,37 +308,36 @@ function SecondaryCTA({
   );
 }
 
-const TRUST_POINTS = [
-  "Licensed & Insured",
-  "OSHA Certified",
-  "Family-Owned",
-  "Warrantied Work",
-  "Transparent Process",
-];
+// const TRUST_POINTS = [
+//   "Licensed & Insured",
+//   "OSHA Certified",
+//   "Family-Owned",
+//   "Warrantied Work",
+//   "Transparent Process",
+// ];
 
-function TrustRow() {
-  return (
-    <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
-      {TRUST_POINTS.map((t) => (
-        <span
-          key={t}
-          className={clsx(
-            "inline-flex items-center gap-2 rounded-full border border-white/15",
-            "bg-white/10 px-3.5 py-2 text-xs text-white/90 backdrop-blur-sm",
-            "transition-all duration-200 hover:bg-white/15 hover:text-white"
-          )}
-        >
-          <span className="inline-block h-4 w-4 rounded-full bg-emerald-400/90 ring-2 ring-emerald-300/30" />
-          {t}
-        </span>
-      ))}
-    </div>
-  );
-}
+// function TrustRow() {
+//   return (
+//     <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
+//       {TRUST_POINTS.map((t) => (
+//         <span
+//           key={t}
+//           className={clsx(
+//             "inline-flex items-center gap-2 rounded-full border border-white/15",
+//             "bg-white/10 px-3.5 py-2 text-xs text-white/90 backdrop-blur-sm",
+//             "transition-all duration-200 hover:bg-white/15 hover:text-white"
+//           )}
+//         >
+//           <span className="inline-block h-4 w-4 rounded-full bg-emerald-400/90 ring-2 ring-emerald-300/30" />
+//           {t}
+//         </span>
+//       ))}
+//     </div>
+//   );
+// }
 
 const HomePage = () => {
   const prefersReduced = useReducedMotion();
-  const POSTS = useMemo(() => PROJECTS, []);
 
   const orgLd = {
     "@context": "https://schema.org",
@@ -392,28 +391,34 @@ const HomePage = () => {
             layout
           >
             {/* WIDENED text container */}
-            <div className="mx-auto max-w-6xl px-6 text-center text-white">
-              {/* MAIN HEADING with shine fills on both parts (white + yellow) */}
+            <div
+              className="mx-auto w-full px-4 sm:px-6 lg:px-10 text-center text-white 
+                  max-w-[90rem] md:max-w-[100rem] 2xl:max-w-[120rem]"
+            >
+              {/* MAIN HEADING */}
               <h1
                 id="about-hero-title"
-                className="group text-balance text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-sm leading-tight"
+                className="group mx-auto text-balance text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-sm leading-tight
+                 max-w-[78rem] md:max-w-[88rem] 2xl:max-w-[100rem]"
               >
                 <span className={SHINE_WHITE}>
                   Florida&apos;s Trusted Building &amp; Remodeling Experts{" "}
                 </span>
-                {/* ✨ auto-shining, inside the glyphs */}
                 <span className="shine-text">Free Estimates In 24 Hours</span>
               </h1>
 
               {/* WIDENED subhead */}
-              <p className="mx-auto mt-4 max-w-4xl px-2 text-pretty text-sm text-white/90 md:text-base">
+              <p
+                className="mx-auto mt-4 text-pretty text-m md:text-md text-white/90
+                  max-w-[60rem] md:max-w-[70rem] lg:max-w-[80rem] px-2"
+              >
                 We build with integrity; no surprises, no shortcuts, and no
                 cutting corners. From kitchen &amp; bathroom remodels to new
                 construction, we make the process smooth, transparent, and
                 stress-free.
               </p>
 
-              {/* CTAs with shine */}
+              {/* CTAs */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3.5">
                 <PrimaryCTA href="/estimate">Get A Free Estimate</PrimaryCTA>
                 <SecondaryCTA href="/consultation">
@@ -421,8 +426,7 @@ const HomePage = () => {
                 </SecondaryCTA>
               </div>
 
-              {/* Trust Row under CTAs */}
-              <TrustRow />
+              {/*  <TrustRow />*/}
             </div>
           </motion.div>
         </section>
@@ -431,8 +435,9 @@ const HomePage = () => {
         <section
           id="projects"
           aria-label="Featured projects"
-          className="relative z-20 -mt-[clamp(8rem,12vh,14rem)] pb-28 pt-4"
+          className="relative z-20  pb-28 pt-4"
         >
+          {/* -mt-[clamp(8rem,12vh,14rem)] */}
           <div className="mx-auto max-w-6xl px-4">
             {/* Mobile: horizontal snap */}
             <AnimatePresence mode="popLayout">

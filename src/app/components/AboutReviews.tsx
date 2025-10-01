@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 
 type Review = {
   id: string | number;
@@ -27,8 +26,6 @@ export default function ReviewsSection({
   reviews,
   accent = "#F59E0B",
   pageSize = 4,
-  showAllHref,
-  onShowAll,
 }: {
   reviews: Review[];
   accent?: string;
@@ -107,8 +104,6 @@ export default function ReviewsSection({
           <h2 className="text-4xl font-bold text-gray-800">
             Customer <span className="text-yellow-400">Reviews</span>
           </h2>
-
-         
         </div>
 
         <p className="text-gray-600 mb-12 max-w-2xl">

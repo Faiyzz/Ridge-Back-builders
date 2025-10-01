@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import ContactSection from "../components/Faq";
+
 import ContactUs from "../components/contactUs";
 
 // Optional: Reusable hero component (NOT the default export)
@@ -51,7 +51,7 @@ function HeroContact({
             {title} <span className="text-yellow-400">{highlight}</span>
           </h1>
 
-          <p className="mt-4 max-w-2xl text-md leading-relaxed text-white/100 md:text-base">
+          <p className="mt-4 max-w-2xl text-m leading-relaxed text-white/100 md:text-m">
             {subtitle}
           </p>
 
@@ -72,7 +72,6 @@ function HeroContact({
       </div>
 
       <ContactUs />
-      <ContactSection />
     </section>
   );
 }

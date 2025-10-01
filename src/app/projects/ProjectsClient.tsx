@@ -13,9 +13,9 @@ interface DocCard {
   id: number;
   title: string;
   description: string;
-  image: string;           // /public path
+  image: string; // /public path
   align: "left" | "right"; // where the TEXT goes
-  href?: string;           // optional link
+  href?: string; // optional link
 }
 
 const CARDS: DocCard[] = [
@@ -145,12 +145,11 @@ export default function ProjectsClient() {
             whileInView={prefersReducedMotion ? undefined : variants.fadeUp.in}
             viewport={{ once: true, amount: 0.6 }}
           >
-           <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
-  Explore our portfolio of commercial construction, residential building, 
-  home renovations, and consultancy projects—crafted with quality, 
-  efficiency, and lasting value in every detail.
-</p>
-
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/85 md:text-m text-m">
+              Explore our portfolio of commercial construction, residential
+              building, home renovations, and consultancy projects—crafted with
+              quality, efficiency, and lasting value in every detail.
+            </p>
           </motion.div>
         </div>
       </section>
@@ -184,7 +183,9 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
     >
       {/* Image side */}
       <figure
-        className={`${isTextLeft ? "md:order-2" : "md:order-1"} relative h-full w-full`}
+        className={`${
+          isTextLeft ? "md:order-2" : "md:order-1"
+        } relative h-full w-full`}
       >
         <Image
           src={card.image}
@@ -203,7 +204,9 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
         whileHover={prefersReducedMotion ? undefined : { y: -2 }}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
         transition={{ type: "spring", stiffness: 300, damping: 24 }}
-        className={`${isTextLeft ? "md:order-1" : "md:order-2"} relative flex h-full flex-col justify-center gap-4 bg-neutral-200/70 p-8 md:p-12`}
+        className={`${
+          isTextLeft ? "md:order-1" : "md:order-2"
+        } relative flex h-full flex-col justify-center gap-4 bg-neutral-200/70 p-8 md:p-12`}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl font-extrabold text-yellow-600 md:text-3xl">
@@ -219,7 +222,7 @@ const DocCard = ({ card, index }: { card: DocCard; index: number }) => {
         <div className="mt-6">
           {card.href ? (
             <Link
-              href={card.href}
+              href="/blogs"
               className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/40"
               aria-label={`Learn more about ${card.title}`}
             >

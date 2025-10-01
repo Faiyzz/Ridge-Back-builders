@@ -113,7 +113,7 @@ export default function AboutClient() {
                   />
                 </span>
               </h1>
-              <p className="mt-3 text-white/85 text-sm sm:text-base">
+              <p className="mt-3 text-white/85 text-m sm:text-base">
                 Building Trust, One Project at a Time
               </p>
             </motion.div>
@@ -155,10 +155,13 @@ export default function AboutClient() {
                     We Are Experts in Building Dreams
                   </h2>
                   <p className="mt-2 text-[12px] sm:text-sm md:text-base text-gray-800/90">
-                    At RidgeBackBuilders, we deliver trusted construction solutions that stand the test of time.
-                     From residential homes to commercial projects, our team combines craftsmanship, innovation,
-                      and reliability to bring your vision to life. Whether it’s new construction, remodeling,
-                     or turnkey contracting, we build with integrity and precision—on time and on budget.
+                    At RidgeBackBuilders, we deliver trusted construction
+                    solutions that stand the test of time. From residential
+                    homes to commercial projects, our team combines
+                    craftsmanship, innovation, and reliability to bring your
+                    vision to life. Whether it’s new construction, remodeling,
+                    or turnkey contracting, we build with integrity and
+                    precision—on time and on budget.
                   </p>
                   <Link
                     href="/projects"
@@ -214,13 +217,13 @@ export default function AboutClient() {
                 >
                   About Us
                 </h2>
-                <Link
+                {/* <Link
                   href="/about#details"
                   className="hidden sm:inline-flex bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-yellow-500 transition-colors"
                   aria-label="Learn more about RidgebackBuilders"
                 >
                   Learn more
-                </Link>
+                </Link> */}
               </div>
 
               <p className="pt-4 md:pt-6 text-gray-600 text-sm md:text-lg mb-8 max-w-2xl">
@@ -283,7 +286,7 @@ export default function AboutClient() {
                   className="relative w-full max-w-md md:max-w-none mx-auto aspect-[4/3] sm:aspect-[1/1] md:aspect-[4/3]"
                 >
                   <Image
-                    src="/images/g4.png"
+                    src="/images/4g.png"
                     alt="RidgebackBuilders project collage"
                     fill
                     sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 560px"
@@ -333,7 +336,7 @@ export default function AboutClient() {
                     </Link>
 
                     <Link
-                      href="/projects#video"
+                      href="https://www.youtube.com/@RidgebackBuilt"
                       className="group inline-flex items-center gap-3 rounded-[6px] border border-[#F1D54F] px-5 py-2 md:px-8 md:py-3 font-semibold text-[#F1D54F]"
                       aria-label="Watch a project video"
                     >
@@ -391,7 +394,7 @@ export default function AboutClient() {
         </FadeInSection>
 
         {/* REVIEWS */}
-        <FadeInSection>
+        {/* <FadeInSection>
           <section
             className="py-16 md:py-20 bg-gray-50"
             aria-labelledby="reviews-heading"
@@ -406,7 +409,7 @@ export default function AboutClient() {
               showAllHref="/reviews"
             />
           </section>
-        </FadeInSection>
+        </FadeInSection> */}
 
         {/* Shine effect */}
         <style jsx>{`

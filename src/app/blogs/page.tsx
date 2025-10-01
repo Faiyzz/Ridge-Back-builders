@@ -1,15 +1,13 @@
-// app/blogs/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { BLOGS } from "../data";
 import { slugify } from "@/lib/slug";
 
-// ✅ Add strict types for the BLOG items you use on this page
+// ✅ Types (same as yours)
 type BlogImage = { src: string; alt?: string };
 type BlogBanner = { image?: BlogImage };
-
 type Blog = {
   id: string | number;
   title: string;
@@ -22,6 +20,7 @@ type Blog = {
 const GOLD_TEXT =
   "bg-[linear-gradient(130deg,#ffe241_0%,#f5d23a_28%,#e9c838_52%,#d4af37_76%,#b88c1a_100%)] bg-clip-text text-transparent";
 
+// ✅ Keep metadata here (Server Component)
 export const metadata: Metadata = {
   title: "Blogs | Construction & Remodeling Insights",
   description:
@@ -37,7 +36,6 @@ export const metadata: Metadata = {
 };
 
 function BlogsItemListJsonLd() {
-  // ✅ Replace any with Blog
   const items = (BLOGS as readonly Blog[]).map((b: Blog, idx: number) => {
     const slug = b.slug ?? slugify(b.title ?? String(b.id));
     return {
@@ -62,11 +60,23 @@ function BlogsItemListJsonLd() {
   );
 }
 
-export default function BlogsIndexPage() {
+// 🔎 Server-side search using URL query (?q=...)
+export default function BlogsIndexPage({
+  searchParams,
+}: {
+  searchParams?: { q?: string };
+}) {
+  const q = (searchParams?.q ?? "").trim();
+  const filteredBlogs = q
+    ? (BLOGS as Blog[]).filter((b) =>
+        (b.title || "").toLowerCase().includes(q.toLowerCase())
+      )
+    : (BLOGS as Blog[]) ?? [];
+
   return (
     <main className="min-h-screen w-full bg-white">
       <section className="relative isolate">
-        <div className="relative h-[min(100svh,900px)] w-full overflow-hidden bg-white">
+        <div className="relative h=[min(100svh,900px)] h-[min(100svh,900px)] w-full overflow-hidden bg-white">
           <Image
             src="/images/c1.jpg"
             alt="Construction site background image"
@@ -79,19 +89,62 @@ export default function BlogsIndexPage() {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[32%] bg-gradient-to-b from-transparent via-white/25 to-white" />
         </div>
 
-        <div className="absolute inset-0 z-10 flex items-end justify-center pb-[clamp(5rem,30vh,18rem)]">
-         <header className="mx-auto max-w-4xl px-4 text-center text-white">
-  <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
-    <span className={GOLD_TEXT}>Construction Insights & Blogs</span>
-  </h1>
-  <p className="mx-auto mt-4 max-w-2xl text-sm text-white/90 md:text-base">
-    Discover expert tips, industry trends, and practical guides on building, 
-    remodeling, and repairs. From residential projects to commercial 
-    construction, our blogs help you make informed decisions that add 
-    safety, durability, and long-term value to every structure.
-  </p>
-</header>
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[clamp(5rem,30vh,18rem)]">
+          <header className="mx-auto max-w-4xl px-4 text-center text-white">
+            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl md:-mt-65">
+              <span className={GOLD_TEXT}>Construction Insights & Blogs</span>
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-m text-white/90 md:text-base">
+              Discover expert tips, industry trends, and practical guides on
+              building, remodeling, and repairs. From residential projects to
+              commercial construction, our blogs help you make informed
+              decisions that add safety, durability, and long-term value to
+              every structure.
+            </p>
 
+            {/* 🔎 Simple server-side search bar (GET /blogs?q=...) */}
+            <form
+              action="/blogs"
+              method="get"
+              className="mt-6 w-full max-w-md mx-auto"
+              role="search"
+              aria-label="Search blogs"
+            >
+              <div className="relative">
+                <input
+                  type="text"
+                  name="q"
+                  defaultValue={q}
+                  placeholder="Search blogs by title…"
+                  className="w-full rounded-xl border border-gray-300 bg-white/90 px-4 py-3 text-sm text-black shadow-sm outline-none focus:border-[#FFD333] focus:ring-2 focus:ring-[#FFD333]"
+                />
+                {q && (
+                  <Link
+                    href="/blogs"
+                    className="absolute inset-y-0 right-2 flex items-center text-xs font-medium text-neutral-700 hover:text-black"
+                    aria-label="Clear search"
+                  >
+                    Clear
+                  </Link>
+                )}
+              </div>
+              {/* Optional tiny helper row
+              <div className="mt-2 text-center text-xs text-neutral-200">
+                {q ? (
+                  <>
+                    Showing{" "}
+                    <span className="font-semibold">
+                      {filteredBlogs.length}
+                    </span>{" "}
+                    result{filteredBlogs.length === 1 ? "" : "s"} for{" "}
+                    <span className="italic">“{q}”</span>
+                  </>
+                ) : (
+                  <>Type and press Enter to search</>
+                )}
+              </div> */}
+            </form>
+          </header>
         </div>
       </section>
 
@@ -114,7 +167,7 @@ export default function BlogsIndexPage() {
               "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
             ].join(" ")}
           >
-            {(BLOGS as readonly Blog[]).map((b: Blog) => {
+            {filteredBlogs.map((b) => {
               const imgSrc =
                 b.ogImage ?? b.banner?.image?.src ?? "/placeholder-hero.jpg";
               const imgAlt = b.banner?.image?.alt ?? b.title ?? "Blog cover";
@@ -175,7 +228,7 @@ export default function BlogsIndexPage() {
 
           {/* Desktop grid */}
           <div className="hidden grid-cols-2 gap-7 md:grid lg:grid-cols-3">
-            {(BLOGS as readonly Blog[]).map((b: Blog) => {
+            {filteredBlogs.map((b) => {
               const imgSrc =
                 b.ogImage ?? b.banner?.image?.src ?? "/placeholder-hero.jpg";
               const imgAlt = b.banner?.image?.alt ?? b.title ?? "Blog cover";
@@ -230,6 +283,13 @@ export default function BlogsIndexPage() {
               );
             })}
           </div>
+
+          {/* Empty state */}
+          {filteredBlogs.length === 0 && (
+            <p className="mt-10 text-center text-gray-600">
+              No blogs found for <span className="font-semibold">{q}</span>
+            </p>
+          )}
         </div>
 
         {/* JSON-LD for ItemList */}

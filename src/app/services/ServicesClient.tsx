@@ -1,6 +1,5 @@
 "use client";
 
-import ReviewsCarousel from "@/app/components/ReviewsCarousel";
 import FadeInSection from "@/app/components/FadeInSection";
 import Image from "next/image";
 
@@ -49,12 +48,12 @@ const PROJECTS: Card[] = [
   {
     title: "Modern Living Spaces",
     desc: "Homes styled for comfort and function, crafted with timeless detail.",
-    img: "/images/a.jpg",
+    img: "/images/duplex.jpeg",
   },
   {
     title: "Commercial Excellence",
     desc: "Workplaces designed for growth, efficiency, and professional appeal.",
-    img: "/images/b.jpg",
+    img: "/images/p2.avif",
   },
   {
     title: "Renovation & Remodeling",
@@ -99,46 +98,34 @@ export default function ServicesClient() {
               </span>
             </h1>
 
-           <p className="mt-4 text-white/80 text-m sm:text-base">
-  As a trusted construction company, we specialize in building durable homes 
-  and commercial projects with integrity and precision. Our team ensures 
-  every structure is safe, reliable, and designed to add long-term value.
-</p>
+            <p className="mt-4 text-white/80 text-m sm:text-base">
+              As a trusted construction company, we specialize in building
+              durable homes and commercial projects with integrity and
+              precision. Our team ensures every structure is safe, reliable, and
+              designed to add long-term value.
+            </p>
 
             <button
               className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-black transition hover:brightness-110"
               style={{ background: ACCENT }}
             >
-              Learn More{" "}
-              <span className="translate-y-[1px]">&raquo;&raquo;</span>
+              Learn More <span className="translate-y-[1px]"></span>
             </button>
           </div>
         </div>
 
-        <div className="absolute left-1/2 bottom-0 z-30 w-full max-w-3xl -translate-x-1/2 translate-y-1/2 pointer-events-auto">
+        <div className="absolute left-1/2 bottom-0 z-30 w-full max-w-4xl -translate-x-1/2 translate-y-1/2 pointer-events-auto">
           <div className="rounded-[24px] border-[3px] border-amber-400">
             <div
               className="relative aspect-[16/9] overflow-hidden rounded-[24px] shadow-xl"
               style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.35)" }}
             >
               <Image
-                src="/images/home.jpg"
+                src="/images/grp.png"
                 alt="Video cover"
                 fill
                 className="object-cover"
               />
-              <button
-                className="absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-black shadow-lg transition hover:scale-105"
-                aria-label="Play Video"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-7 w-7 translate-x-[2px]"
-                  fill="currentColor"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
@@ -251,12 +238,6 @@ export default function ServicesClient() {
                   Recent <span style={{ color: ACCENT }}>Projects</span>
                 </h3>
               </div>
-              <button
-                className="rounded-lg border-2 border-amber-300 text-amber-300 bg-white px-4 py-2 text-sm font-semibold transition hover:bg-white/90 hidden md:block"
-                aria-label="Show All"
-              >
-                Show All &nbsp; &raquo;
-              </button>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 w-full">
@@ -278,12 +259,7 @@ export default function ServicesClient() {
                     <p className="mt-1 line-clamp-2 text-sm text-gray-600">
                       {p.desc}
                     </p>
-                    <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-                      <span>Interior • Aug 2022</span>
-                      <span className="inline-block rounded bg-gray-100 px-2 py-0.5">
-                        •••
-                      </span>
-                    </div>
+                    <div className="mt-2 flex items-center justify-between text-xs text-gray-500"></div>
                   </div>
                 </article>
               ))}
@@ -291,11 +267,11 @@ export default function ServicesClient() {
           </div>
         </section>
       </FadeInSection>
-      <FadeInSection>
+      {/* <FadeInSection>
         <section className="mx-auto max-w-6xl px-6 py-16">
           <ReviewsCarousel />
         </section>
-      </FadeInSection>
+      </FadeInSection> */}
     </div>
   );
 }
