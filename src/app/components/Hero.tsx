@@ -261,30 +261,25 @@ function ShineOverlay() {
   );
 }
 
-function PrimaryCTA({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      className={clsx(
-        "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5",
-        "text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(0,0,0,.35)]",
-        "bg-white hover:bg-[#ff8a00] hover:text-white transition-colors duration-300"
-      )}
-      aria-label="Get a free estimate"
-    >
-      <span className="relative z-10">{children}</span>
-      <ShineOverlay />
-    </Link>
-  );
-}
+// function PrimaryCTA({}: { href: string; children: React.ReactNode }) {
+//   // return (
+//   //   <Link
+//   //     href={href}
+//   //     className={clsx(
+//   //       "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5",
+//   //       "text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(0,0,0,.35)]",
+//   //       "bg-white hover:bg-[#ff8a00] hover:text-white transition-colors duration-300"
+//   //     )}
+//   //     aria-label="Get a free estimate"
+//   //   >
+//   //     <span className="relative z-10">{children}</span>
+//   //     <ShineOverlay />
+//   //   </Link>
+//   // );
+// }
 
 function SecondaryCTA({
+  href,
   children,
 }: {
   href: string;
@@ -294,10 +289,12 @@ function SecondaryCTA({
     <Link
       href="/contact"
       className={clsx(
-        "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5",
-        "text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]",
+        "group relative inline-flex items-center justify-center overflow-hidden",
+        "rounded-full px-8 py-3 md:px-10 md:py-3.5", // ⬅ bigger padding
+        "text-base md:text-lg font-bold tracking-wide text-black", // ⬅ bolder + bigger font
+        "shadow-[0_12px_40px_-12px_rgba(255,226,65,.65)]", // ⬅ stronger shadow
         GOLD_BG,
-        "transition-colors duration-300 hover:brightness-105"
+        "transition-transform duration-300 hover:scale-105 hover:brightness-110 active:scale-95"
       )}
       aria-label="Book a free consultation"
     >
@@ -419,7 +416,7 @@ const HomePage = () => {
 
               {/* CTAs */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3.5">
-                <PrimaryCTA href="/estimate">Get A Free Estimate</PrimaryCTA>
+                {/* <PrimaryCTA href="/estimate">Get A Free Estimate</PrimaryCTA> */}
                 <SecondaryCTA href="/consultation">
                   Book a Free Consultation
                 </SecondaryCTA>

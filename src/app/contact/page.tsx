@@ -38,11 +38,11 @@ function HeroContact({
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-transparent"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-white"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white"
         />
 
         {/* Content */}
