@@ -12,14 +12,6 @@ const ACCENT = "#FFE241";
 
 const groups: { heading: string; links: LinkItem[] }[] = [
   {
-    heading: "  Our Work",
-    links: [
-      { label: "Residence", href: "/blogs" },
-      { label: "Commercial", href: "/blogs" },
-      { label: "Projects", href: "/projects" },
-    ],
-  },
-  {
     heading: "Company",
     links: [
       { label: "Services", href: "/services" },
@@ -55,13 +47,13 @@ export default function Footer() {
     <footer className="bg-neutral-950 text-neutral-300">
       {/* Top grid */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-10 gap-x-10 lg:gap-x-12">
-          {/* Col 1: Brand + blurb + Calendly */}
-          <section
-            className="md:col-span-4 flex flex-col items-center text-center md:items-start md:text-left"
-            data-animate
-          >
-            <Link href="/" className="inline-flex items-center gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-10 justify-items-center text-center">
+          {/* Brand + blurb + Calendly */}
+          <section className="max-w-sm" data-animate>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-3"
+            >
               <Image
                 src="/images/logo.png"
                 alt="Ridgeback Builders"
@@ -72,7 +64,7 @@ export default function Footer() {
               />
             </Link>
 
-            <p className="mt-4 max-w-sm text-sm leading-6 text-neutral-400">
+            <p className="mt-4 text-sm leading-6 text-neutral-400">
               Design-first construction & remodeling. Premium materials,
               transparent timelines, and craftsmanship that lasts.
             </p>
@@ -94,23 +86,16 @@ export default function Footer() {
             </Link>
           </section>
 
-          {/* Col 2: Links (Work) */}
-          <LinksColumn g={groups[0]} className="md:col-span-3" />
+          {/* Links (Company) */}
+          <LinksColumn g={groups[0]} />
 
-          {/* Col 3: Links (Company) */}
-          <LinksColumn g={groups[1]} className="md:col-span-3" />
-
-          {/* Col 4: Social / Get in touch */}
-          <section
-            className="md:col-span-2"
-            data-animate
-            aria-label="Get in touch"
-          >
+          {/* Social / Get in touch */}
+          <section className="max-w-sm" data-animate aria-label="Get in touch">
             <h3 className="text-sm font-semibold tracking-wide text-neutral-200">
               Get in touch
             </h3>
 
-            <div className="mt-4 flex items-center gap-3 justify-center md:justify-start">
+            <div className="mt-4 flex items-center justify-center gap-3">
               <SocialIcon
                 label="Instagram"
                 href="https://www.instagram.com/ridgebackbuilders/"
@@ -154,7 +139,7 @@ export default function Footer() {
               </SocialIcon>
             </div>
 
-            <div className="mt-4 space-y-2 text-sm text-neutral-400 text-center md:text-left">
+            <div className="mt-4 space-y-2 text-sm text-neutral-400">
               <Link
                 href="tel:(813) 921-1717"
                 className="hover:text-white underline-offset-4 hover:underline"
@@ -172,26 +157,14 @@ export default function Footer() {
           </section>
         </div>
 
-        {/* Newsletter full-width row under columns */}
+        {/* Newsletter row */}
         <section className="mt-8" data-animate aria-label="Newsletter">
-          <div className="rounded-2xl  px-5 -py-7 sm:px-8  relative overflow-hidden">
-            {/* subtle accent glow */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -inset-x-10 -top-20 h-40 opacity-20 blur-3xl"
-              style={{
-                background: ``,
-              }}
-            />
-            <div className="relative mx-auto max-w-5xl text-center">
+          <div className="relative overflow-hidden rounded-2xl px-5 sm:px-8">
+            <div className="relative mx-auto max-w-3xl text-center">
               <h3 className="text-lg sm:text-xl font-semibold tracking-tight text-neutral-50">
                 Subscribe to our newsletter
               </h3>
-
-              {/* Inline CTA (no gap) */}
               <NewsletterInline
-                title="" // avoid duplicate headings
-                subtitle=""
                 ctaText="Subscribe"
                 accentColor={ACCENT}
                 newsletterApi="/api/newsletter"
@@ -218,11 +191,6 @@ export default function Footer() {
                 Terms
               </Link>
             </li>
-            {/* <li>
-              <Link href="/sitemap" className="hover:text-white">
-                Sitemap
-              </Link>
-            </li> */}
           </ul>
         </div>
       </div>
@@ -246,19 +214,10 @@ export default function Footer() {
 }
 
 /* ---------- Pieces ---------- */
-function LinksColumn({
-  g,
-  className,
-}: {
-  g: { heading: string; links: LinkItem[] };
-  className?: string;
-}) {
+function LinksColumn({ g }: { g: { heading: string; links: LinkItem[] } }) {
   return (
-    <section className={className} data-animate>
-      <nav
-        aria-labelledby={`footer-${g.heading.replace(/\s+/g, "-")}`}
-        className="mx-auto md:mx-0"
-      >
+    <section className="max-w-sm" data-animate>
+      <nav aria-labelledby={`footer-${g.heading.replace(/\s+/g, "-")}`}>
         <h3
           id={`footer-${g.heading.replace(/\s+/g, "-")}`}
           className="text-sm font-semibold tracking-wide text-neutral-200"
@@ -314,14 +273,10 @@ function SocialIcon({
 
 /* ---------- Newsletter (inline CTA) ---------- */
 function NewsletterInline({
-  title = "",
-  subtitle = "",
   ctaText = "Subscribe",
   accentColor = ACCENT,
   newsletterApi = "/api/newsletter",
 }: {
-  title?: string;
-  subtitle?: string;
   ctaText?: string;
   accentColor?: string;
   newsletterApi?: string;
@@ -352,9 +307,8 @@ function NewsletterInline({
   return (
     <div className="mt-4 sm:mt-5">
       <form onSubmit={onSubmit} aria-label="Newsletter subscription">
-        <div className="mx-auto w-full sm:w-[620px]">
+        <div className="mx-auto w-full max-w-2xl">
           <div className="relative">
-            {/* input */}
             <input
               id="newsletter-email"
               type="email"
@@ -366,7 +320,6 @@ function NewsletterInline({
               style={{ "--tw-ring-color": accentColor } as CSSVars}
               aria-label="Email address"
             />
-            {/* button (no gap) */}
             <button
               type="submit"
               disabled={status === "loading"}
@@ -383,7 +336,6 @@ function NewsletterInline({
           </div>
         </div>
 
-        {/* status line */}
         <div
           className="mt-2 h-5 text-center text-sm"
           aria-live="polite"
