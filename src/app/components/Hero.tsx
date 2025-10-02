@@ -285,7 +285,6 @@ function PrimaryCTA({
 }
 
 function SecondaryCTA({
-  href,
   children,
 }: {
   href: string;
@@ -293,7 +292,7 @@ function SecondaryCTA({
 }) {
   return (
     <Link
-      href={href}
+      href="/contact"
       className={clsx(
         "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5",
         "text-sm font-semibold text-black shadow-[0_10px_30px_-10px_rgba(255,226,65,.55)]",
