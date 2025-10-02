@@ -279,7 +279,6 @@ function ShineOverlay() {
 // }
 
 function SecondaryCTA({
-  href,
   children,
 }: {
   href: string;
